@@ -1,0 +1,110 @@
+<section class="log-in-section section-b-space">
+  <!-- <div class="whiteBox"> -->
+  <div class="container w-100 whiteBox">
+    <h2 class="error-msg"><u>This is a TESTING Portal. Please refrain from making any purchases !!!</u></h2>
+    <BR/>
+    <div class="row justify-content-between">
+      <div class="col-md-7 log-in-box slider-sec">
+        
+         
+           <owl-carousel-o [options]="customOptions">
+              <ng-container *ngFor="let item of bannerData; let i = index">
+                
+                <ng-template carouselSlide>
+                  <div class="col-12">
+                    <div class="col-12">
+                    <img [src]="item.imageUrl">
+                    </div>
+                  </div>
+                </ng-template>
+              </ng-container>
+            </owl-carousel-o>
+
+
+
+        
+        </div>
+      
+      <div class="col-md-5">
+        <!-- <app-alert></app-alert> -->
+        <div class="log-in-box logo-hight" >
+          <div class="logo">
+            <img src="assets/images/logo/logo.jpg" alt="">
+          </div>
+          <div class="log-in-title">
+           
+            <h3>Log In</h3>
+
+            <div class="alert alert-danger login-alert" role="alert" *ngIf="alert">
+              <i class="ri-error-warning-line"></i> Pan card is already registered. Please verify your OTP.
+            </div>
+
+            <div class="alert alert-danger login-alert" role="alert" *ngIf="errormsg">
+              <i class="ri-error-warning-line"></i> {{errormsg}}
+            </div>
+          </div>
+          <div class="input-box">
+            <form class="row g-4" [formGroup]="form" (ngSubmit)="submit();">
+              <div class="col-12">
+                <div class="form-floating theme-form-floating log-in-form">
+                  <input type="text" class="form-control" id="PAN" formControlName="PAN" placeholder=" "
+                    aria-label="Please enter your PAN card number" maxlength="10" />
+                  <label for="PAN">Please enter your PAN</label>
+                  <div *ngIf="form.controls['PAN'].touched && form.controls['PAN'].errors?.['required']"
+                    class="invalid-feedback" role="alert">
+                    PAN is required.
+                  </div>
+                  <div *ngIf="form.controls['PAN'].hasError('minlength')" class="invalid-feedback">
+                    PAN is invalid
+                  </div>
+                  <div *ngIf="form.controls['PAN'].hasError('pattern')" class="invalid-feedback">
+                    Invalid Pan Pattern
+                  </div>
+                </div>
+              </div>
+              <div class="col-12" *ngIf="status !== 'Existing User'">
+                <app-button [disabled]="!form.valid" [class]="'btn btn-theme w-100 justify-content-center'" [spinner]="spinnerLoader" [id]="'login_btn'">
+                  Generate OTP
+                </app-button>
+                
+                <div class="sign-up-box">
+                  <h4>If you don't have an account? <a class="pointer" [routerLink]="['/auth/register']">Please Register</a></h4>
+                  
+                </div>
+              </div>
+            </form>
+            <form class="row g-4 mt-2" [formGroup]="formOtp" (ngSubmit)="submitOTP();" *ngIf="status == 'Existing User'">
+              <div class="col-12" >
+                <div class="form-floating theme-form-floating log-in-form">
+                  <input type="text" class="form-control" id="Otp" formControlName="Otp" maxlength="6"
+                    placeholder="Enter your OTP" aria-label="Enter your OTP" />
+                  <label for="Otp">OTP</label>
+                  <p *ngIf="displayTimer" class="otpTimer">{{ display }}</p>
+                  <button *ngIf="resendOtp"  (click)="submit()" class="borderBtn">Resend OTP</button>
+
+                  <div *ngIf="formOtp.controls['Otp'].touched && formOtp.controls['Otp'].errors?.['required']"
+                  class="invalid-feedback" role="alert">
+                  OTP is required.
+                </div>
+                <div *ngIf="formOtp.controls['Otp'].hasError('minlength')" class="invalid-feedback">
+                  Invalid OTP. Please enter a valid OTP.
+                </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <app-button [disabled]="!formOtp.valid"  [spinner]="spinnerLoader" [class]="'btn btn-theme w-100 justify-content-center'" [id]="'login_btn'">
+                  Verify OTP
+                </app-button>
+                <div class="sign-up-box">
+                  <h4>If you don't have an account? <a class="pointer" [routerLink]="['/auth/register']" class="greenText">Please Register</a></h4>                  
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- </div> -->
+</section>

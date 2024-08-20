@@ -1,0 +1,31 @@
+
+<div class="container-fluid">
+    <h3>My Portfolio</h3>
+    <div class="row">
+        <div class="col-12">
+            <div class="filter-buttons portfolio-tab">
+
+                <app-button
+                    [class]="seletedtab =='My'?'btn btn-outline ml-4 mb-4 greenBtntotal greenBtn':'btn btn-outline ml-4 mb-4 '"
+                    [spinner]="false" (click)="activePortfolio('My')"> Total Investment</app-button>
+               
+                <app-button
+                    [class]=" seletedtab =='SIP'?'btn btn-outline ml-4 mb-4 greenBtntotal  greenBtn':'btn btn-outline ml-4 mb-4'"
+                    [spinner]="false" (click)="activePortfolio('SIP')">My SIP</app-button>
+                  
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="" *ngIf="seletedtab=='My'">
+
+    <app-portfolio></app-portfolio>
+</div>
+<!-- <div class="container" *ngIf="seletedtab=='Family'">
+   <app-family-portfolio></app-family-portfolio>
+
+</div> -->
+<div class="container" *ngIf="seletedtab=='SIP'">
+    <app-mysip></app-mysip>
+</div>

@@ -1,0 +1,161 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item" [ngClass]="selectedTab=='account' ? 'active' : '' " (click)="tabView('account')">
+    <a class="nav-link" aria-current="page">Account Statement</a>
+  </li>
+  <li class="nav-item" [ngClass]="selectedTab=='capital' ? 'active' : '' " (click)="tabView('capital')">
+    <a class="nav-link">Capital Gains Statement</a>
+  </li>
+</ul>
+
+<div class="container-fluid mt-4 mb-4">
+  <h3 class="orange-title">{{selectedTab ==='account'?'Account Statement':'Capital Gains Statement'}}</h3>
+  <form [formGroup]="formGroup">
+    <div class="pg ">
+      <div class="flex justify-content-center">
+
+
+        <ul class="radio-switch ">
+          <li class="radio-switch__item">
+            <input class="radio-switch__input ri5-sr-only" type="radio" formControlName="FolioPan" name="FolioPan"
+              id="radio-1" value="folio" checked>
+            <label class="radio-switch__label" for="radio-1">By Folio</label>
+          </li>
+
+          <li class="radio-switch__item">
+            <input class="radio-switch__input ri5-sr-only" type="radio" formControlName="FolioPan" name="FolioPan"
+              id="radio-2" value="pan">
+            <label class="radio-switch__label" for="radio-2">Pan Based</label>
+            <div aria-hidden="true" class="radio-switch__marker"></div>
+          </li>
+        </ul>
+        <!-- <p-selectButton [options]="stateOptions" formControlName="FolioPan" optionLabel="label" optionValue="value">
+        </p-selectButton> -->
+      </div>
+
+    </div>
+
+
+
+
+    <div class="row">
+      <div class="col-md-3" *ngIf="formGroup.controls['FolioPan'].value=='folio'">
+        <label for="Plan" class="lable">Select Folio Number</label>
+        <select name="custom-select" formControlName="Folio" class="custom-select mb-3 form-control">
+          <option value="">--Please Select--</option>
+          <option *ngFor="let data of folio" [value]="data">{{data}}</option>
+        </select>
+        <div class="invalid-feedback"
+          *ngIf="formGroup.controls['Folio'].touched && formGroup.controls['Folio'].errors?.['required']">
+          Folio is required
+        </div>
+      </div>
+      <div class="col-6" *ngIf="formGroup.controls['FolioPan'].value=='pan'">
+        <label for="Plan">Selected PAN</label>
+        <input type="text" formControlName="Pan" class="form-control form-control-sm" placeholder="Enter Code">
+      </div>
+    </div>
+    <div class="row mt-3">
+      <h4 class="lable borderT pt-4">Select time Peroid</h4>
+      <div class="col-lg-2 col-md-4">
+        <input formControlName="curretFnYear" class="form-check-input" type="radio" name="curretFnYear" value="current">
+        <label class="form-check-label" for="curretFnYear">
+          Current Financial year
+        </label>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <input formControlName="curretFnYear" class="form-check-input" type="radio" name="curretFnYear"
+          value="previous">
+        <label class="form-check-label" for="curretFnYear">
+          Previous Financial Year
+        </label>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <input formControlName="curretFnYear" class="form-check-input" type="radio" name="curretFnYear" value="custom">
+        <label class="form-check-label" for="curretFnYear">
+          Custom Data Range
+        </label>
+      </div>
+    </div>
+    <div class="row mt-3" *ngIf="formGroup.controls['curretFnYear'].value=='custom'">
+      <!-- <div class="col-lg-3">
+        <div class="dp-hidden position-absolute">
+          <div class="input-group">
+            <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+              [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+              outsideDays="hidden" [startDate]="fromDate!" tabindex="-1" />
+            <ng-template #t let-date let-focused="focused">
+              <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                (mouseleave)="hoveredDate = null">
+                {{ date.day }}
+              </span>
+            </ng-template>
+
+
+          </div>
+        </div>
+        <div class="input-group">
+          <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate"
+            [value]="formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)" />
+
+          <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
+            <i class="ri-calendar-line"></i>
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="input-group">
+          <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate"
+            [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)" />
+          <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
+            <i class="ri-calendar-line"></i>
+          </button>
+        </div>
+      </div> -->
+
+      
+        <div class="form-group col-5">
+          <p-calendar placeholder="From date" formControlName="Fromdate"  [showIcon]="true"
+            inputId="start-icon"></p-calendar>
+        </div>
+        <div class="invalid-feedback"
+          *ngIf="formGroup.controls['Fromdate'].touched && formGroup.controls['Fromdate'].errors?.['required']">
+          Start date is required
+        </div>
+
+        <div class="form-group col-5">
+          <p-calendar placeholder="To date" formControlName="Todate" [minDate]="formGroup.controls['Fromdate'].value"
+            [showIcon]="true" inputId="end-icon"></p-calendar>
+        </div>
+        <div class="invalid-feedback"
+          *ngIf="formGroup.controls['Todate'].touched && formGroup.controls['Todate'].errors?.['required']">
+          End Date is required
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="row mt-4">
+      <h4 class="lable borderT pt-4">Request</h4>
+      <div class="col-lg-2 col-md-4">
+        <input formControlName="Mailback" class="form-check-input" type="radio" name="Mailback" value="N">
+        <label class="form-check-label" for="Mailback">
+          Download File
+        </label>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <input formControlName="Mailback" class="form-check-input" type="radio" name="Mailback" value="Y">
+        <label class="form-check-label" for="Mailback">
+          Send mail
+        </label>
+      </div>
+      <!-- <div class="col-lg-2 col-md-4" style="cursor: not-allowed;">
+        <input formControlName="Mailback" class="form-check-input" type="radio" name="Mailback" value="whatsapp" [attr.disabled]="isWhatsappDisabled ? true : null">
+        <label class="form-check-label" for="Mailback">
+          Send on whatsapp
+        </label>
+      </div> -->
+
+    </div>
+    <app-button [class]="'btn mt-4 btn-animation mb-4'" [spinner]="spinnerLoader" (click)="submit()">Submit</app-button>
+
+  </form>
+</div>

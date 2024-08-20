@@ -1,0 +1,139 @@
+.card {
+    background-color: #F8F8F8;
+}
+
+.shadowBox {
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    margin-bottom: 50px;
+  }
+
+
+  .accordion {
+    border: 0px;
+    border-radius: 0;
+    border-top: 1px solid #EAEAEA;
+    margin-top: 20px;
+  }
+  .accordion-item {
+    border: 0px;
+    border-bottom: 1px solid #EAEAEA;
+    background: transparent;
+    border-radius: 0;
+  }
+  .accordion-button {
+    color: #595B61;
+    font-size: 16px;
+    background: transparent;
+    padding-left: 0;
+    padding-right: 0;
+    font-weight: 500;
+  }
+  .accordion-button:not(.collapsed) {
+    color: #1A1818;
+    background: transparent;
+    box-shadow: none;
+    padding-bottom: 10px;
+  }
+  .accordion-body {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    color: #707176;
+
+    p {
+        color: #707176;
+        margin-bottom: 8px;
+    }
+  }
+  .accordion-button:focus {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .bgGrey {
+    background: #F8F8F8;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+.looking-for {
+    h4 {
+        color: #595B61;
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+    p {
+        color: #707176;
+        padding-bottom: 16px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+        gap: 8px;
+        line-height: normal;
+    }
+}
+.looking-for p:last-child {
+    padding-bottom: 0;
+}
+.or-line {
+    color: #4A4A4A;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    position: relative;
+    margin-bottom: 16px;
+}
+.or-line:before {
+    content: '';
+    border-top: 1px solid #c4c4c4;
+    width: 96%;
+    height: 1px;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+}
+
+.link-btn {
+    color: var(--theme-color2);
+    display: inline-flex;
+    margin-top: 20px;
+}
+.get-touch {
+    padding: 15px 0;
+}
+.get-touch h5 {
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+.get-touch p {
+    margin-bottom: 0;
+}
+.form-control {
+    background: #F8F8F8;
+    border-radius: 5px;
+    border: 0px;
+}
+@media screen and (min-width: 768px) {
+    .get-touch .col-md-4 {
+        border-right: 1px solid #C4C4C4;
+    }
+    .get-touch .col-md-4:last-child {
+        border-right: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .looking-for .or-line {
+        display: none;
+    }
+
+    .get-touch .col-md-4 {
+        margin-bottom: 15px;
+    }
+    .get-touch .col-md-4:last-child {
+        margin-bottom: 0;
+    }
+}

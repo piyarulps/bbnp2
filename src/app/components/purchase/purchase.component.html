@@ -1,0 +1,788 @@
+<app-loader *ngIf="loadingStatus"></app-loader>
+
+<div class="container-fluid">
+  <div class="row rowgap">
+    <div class="col-md-2">
+      <h5 class="label">Fund Type</h5>
+      <h3 class="value">
+        {{ cartData?.fund_type_name }}
+      </h3>
+    </div>
+    <div class="col-md-4">
+      <h5 class="label">Fund Name</h5>
+      <h3 class="value">{{ cartData?.fund_name }}</h3>
+    </div>
+    <div class="col-lg-2 col-md-3">
+      <a class="back" (click)="back()">Back to Explore Funds</a>
+    </div>
+    <div class="col-2"></div>
+  </div>
+  <div class="blank-div"></div>
+
+  <div class="row">
+    <div class="container-fluid">
+      <form [formGroup]="formGroup">
+        <div class="row">
+          <div class="col-lg-7 col-md-12 col-sm-12 select-type mb-5">
+            <div class="orange-title">
+              <h3>Select Investment Type</h3>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="flex justify-content-center">
+                  <ul class="radio-switch">
+                    <li class="radio-switch__item">
+                      <input class="radio-switch__input ri5-sr-only" type="radio" formControlName="Sipflag"
+                        name="Sipflag" id="radio-1" value="No" />
+                      <label class="radio-switch__label" for="radio-1">Lumpsum</label>
+                    </li>
+
+                    <li class="radio-switch__item">
+                      <input class="radio-switch__input ri5-sr-only" type="radio" formControlName="Sipflag"
+                        name="Sipflag" id="radio-2" value="Yes" checked />
+                      <label class="radio-switch__label" for="radio-2">SIP</label>
+                      <div aria-hidden="true" class="radio-switch__marker"></div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-6"></div>
+              <ng-container *ngIf="formGroup.controls['Sipflag'].value === 'Yes'">
+                <div class="col-12 sip-frequeny">
+                  <label for="Plan" class="mob-fullwidth">SIP Frequency</label>
+                  <input class="form-check-input mobmargin" type="radio" formControlName="Sipfrequency" id="rbYes"
+                    name="Sipfrequency" value="Monthly" />
+                  <label class="form-check-label" for="rbYes">
+                    Monthly SIP
+                  </label>
+                  <input class="form-check-input" type="radio" formControlName="Sipfrequency" id="rbNo"
+                    name="Sipfrequency" value="Weekly" />
+                  <label class="form-check-label" for="rbNo">
+                    Weekly SIP
+                  </label>
+                  <input class="form-check-input" type="radio" formControlName="Sipfrequency" id="rbdaily"
+                    name="Sipfrequency" value="Daily" />
+                  <label class="form-check-label" for="rbNo"> Daily SIP </label>
+                </div>
+              </ng-container>
+              <!-- <ng-container *ngIf="formGroup.controls['Sipflag'].value === 'Yes'">
+                <div class="col-6">
+                  <label for="Frequency">Sip Frequency</label>
+                  <select name="custom-select" formControlName="Sipfrequency" class="custom-select mb-3 form-control">
+                    <option value="">--Please Select--</option>
+                    <option *ngFor="let data of frequencydata" [value]="data.Frequency">{{data.Frequency}}</option>
+
+                  </select>
+                  <div class="invalid-feedback"
+                    *ngIf="formGroup.controls['Sipfrequency'].touched && formGroup.controls['Sipfrequency'].errors?.['required']">
+                    Frequency is required
+                  </div>
+
+                </div>
+
+              </ng-container> -->
+            </div>
+            <div class="row space-between mb-5 mt-4">
+              <div class="col-md-6 borderR">
+                <div id="section1">
+                  <div class="">
+                    <div class="">
+                      <label for="" class="label mb-2">Enter Amount </label>
+                      <input type="number" formControlName="Amount" class="form-control amt-input"
+                        placeholder="Enter Amount" />
+                    </div>
+                    <div class="invalid-feedback" *ngIf="minAmount > formGroup.controls['Amount'].value">
+                      Minimum amount : {{ minAmount }}
+                    </div>
+                  </div>
+                </div>
+                <ng-container *ngIf="formGroup.controls['Sipflag'].value === 'Yes'">
+                  <div class="d-flex amt-select">
+                    <div class="plus">
+                      <button type="button" (click)="addAmount(500)" class="btn btn-outline-success">
+                        +500
+                      </button>
+                    </div>
+                    <div class="plus">
+                      <button type="button" (click)="addAmount(1000)" class="btn btn-outline-success">
+                        +1000
+                      </button>
+                    </div>
+                    <div class="plus">
+                      <button type="button" (click)="addAmount(1500)" class="btn btn-outline-success">
+                        +1500
+                      </button>
+                    </div>
+                    <!-- <div class="vr" style="height: 70px;"></div> -->
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="formGroup.controls['Sipflag'].value === 'No'">
+                  <div class="d-flex amt-select">
+                    <div class="plus">
+                      <button type="button" (click)="addAmount(5000)" class="btn btn-outline-success">
+                        +5000
+                      </button>
+                    </div>
+                    <div class="plus">
+                      <button type="button" (click)="addAmount(10000)" class="btn btn-outline-success">
+                        +10000
+                      </button>
+                    </div>
+                    <div class="plus">
+                      <button type="button" (click)="addAmount(15000)" class="btn btn-outline-success">
+                        +15000
+                      </button>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+
+              <div class="col-md-6">
+                <div class="return-calc">
+                  <h4>
+                    Return Calculator <span>(Based on past Performance)</span>
+                  </h4>
+                  <h5>
+                    Investment of
+                    {{ this.formGroup.controls["Amount"].value }} could have
+                    been
+                  </h5>
+                  <p>
+                    &#8377; {{ calculatedValue }}
+                    <span>({{ calculatedPercentage }}%) in {{ selectedYr }} years
+                    </span>
+                  </p>
+                </div>
+
+                <div class="d-flex amt-select">
+                  <div class="plus-year">
+                    <button type="button" [disabled]="this.cartData.cagr_1_year <= 0" class="btn btn-outline-success"
+                      [ngClass]="{ active: selectedYr == 1 }" (click)="retrunCalculator(1)">
+                      1 Year
+                    </button>
+                  </div>
+                  <div class="plus-year">
+                    <button type="button" [disabled]="this.cartData.cagr_3_year <= 0" class="btn btn-outline-success"
+                      [ngClass]="{ active: selectedYr == 3 }" (click)="retrunCalculator(3)">
+                      3 Years
+                    </button>
+                  </div>
+                  <div class="plus-year">
+                    <button type="button" [disabled]="this.cartData.cagr_5_year <= 0" class="btn btn-outline-success"
+                      [ngClass]="{ active: selectedYr == 5 }" (click)="retrunCalculator(5)">
+                      5 Years
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row space-between input-margin">
+              <div class="col-md-12 sip-frequeny">
+                <label for="Plan" class="mob-fullwidth">Investment Mode</label>
+                <input class="form-check-input" type="radio" formControlName="Investment" id="rbNo" name="Investment"
+                  value="DIRECT" />
+                <label class="form-check-label" for="rbNo"> Direct </label>
+                <input class="form-check-input mobmargin distibutor" type="radio" formControlName="Investment"
+                  id="rbYes" name="Investment" value="REGULAR" />
+                <label class="form-check-label" for="rbYes"> Regular </label>
+              </div>
+              <div class="col-md-6">
+                <label for="Plan" class="mob-fullwidth">Select Plan</label>
+                <select name="custom-select" formControlName="Plan" class="custom-select mb-3 form-control">
+                  <option value="">Select Plan</option>
+                  <option *ngFor="let data of planList; let i = index" [value]="i">
+                    {{ data?.plandesc }} - {{ data?.optiondesc }}
+                  </option>
+                </select>
+                <div class="invalid-feedback"
+                  *ngIf="formGroup.controls['Plan'].touched && formGroup.controls['Plan'].errors?.['required']">
+                  Plan is required
+                </div>
+              </div>
+              <ng-container *ngIf="formGroup.controls['Sipflag'].value === 'Yes'">
+              <div class="col-md-6">
+                <div class="p-field p-col-12">
+                  <label for="icon">Start Date</label><br />
+                  <p-calendar formControlName="Sipstartdate" 
+                  [maxDate]="maxDate" 
+                  [disabledDates]="disabledDatesArray"
+                  [defaultDate]="defaultDate" 
+                  [minDate]="minDate"
+                  [showIcon]="true"
+                  inputId="icon"
+                  (onMonthChange)="disableDatePickerPrev($event)"
+                  [ngClass]="disabled ? 'disable-datepicker-prev' : ''"
+                  [ngClass]="disabledFuture ? 'disable-datepicker-next' : ''">
+                  </p-calendar>
+                </div>
+              </div>
+              </ng-container>
+            </div>
+            <div class="row space-between input-margin">
+              <ng-container *ngIf="formGroup.controls['Sipflag'].value === 'Yes'">
+                
+                <div class="col-md-6">
+                  <label for="Plan">How long do you wish to stay Invested?</label>
+                  <select name="custom-select" formControlName="Sipnoofinstallments"
+                    class="custom-select mb-3 form-control">
+                    <option value="0">Untill I stop</option>
+                    <option value="1">1 Year</option>
+                    <option value="3">3 Years</option>
+                    <option value="5">5 Years</option>
+                    <option value="10">10 Years</option>
+                    <option value="20">20 Years</option>
+
+                    <option value="custom">Enter your number</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6" *ngIf="activeCustom">
+                  <label for="Sip"> Sip no of installments</label>
+                  <input type="number" formControlName="customValue" class="form-control form-control-sm"
+                    placeholder="Enter Sip no of installments" />
+                </div>
+              </ng-container>
+
+              <div class="col-md-6" *ngIf="formGroup.controls['Plan'].value === 'dividend'">
+                <label for="Plan">Select Payout Option</label>
+                <select name="custom-select" formControlName="payout" class="custom-select mb-3 form-control">
+                  <option value="Payout">Payout</option>
+                  <option value="Reinvestment">Reinvestment</option>
+                </select>
+              </div>
+
+              <div class="col-md-6" *ngIf="
+                  formGroup.controls['Plan'].value === 'dividend' &&
+                  formGroup.controls['payout'].value === 'Payout'
+                ">
+                <label for="Plan">Select Payout Frequency</label>
+                <select name="custom-select" formControlName="payoutFrequency" class="custom-select mb-3 form-control">
+                  <option value="Monthly">Monthly</option>
+                  <option value="Quartely">Quartely</option>
+                </select>
+              </div>
+
+              <!-- <div class="col-md-6">
+                  <div class="p-field p-col-12">
+                    <label for="Sipenddate">End Date</label><br>
+                    <p-calendar formControlName="Sipenddate" [showIcon]="true"></p-calendar>
+                  </div>
+                </div> -->
+              <ng-container *ngIf="formGroup.controls['Investment'].value === 'REGULAR'">
+                <div class="col-md-6">
+                  <label for="Plan">Enter ARN Number</label>
+                  <input type="text" formControlName="arnria" class="form-control form-control-sm"
+                    placeholder="Enter Code" />
+                  <p>name: {{ agentname }}</p>
+                </div>
+                <div class="col-md-6">
+                  <label for="Plan">Enter Sub ARN Code (optional)</label>
+                  <input type="text" formControlName="Subarncode" class="form-control form-control-sm"
+                    placeholder="Enter Code" />
+                  <p>name: {{ subagentname }}</p>
+                </div>
+              </ng-container>
+              <!-- <div class="col-6">
+                <label for="Plan">IDCW reinvest</label>
+                <select name="custom-select" formControlName="IDCWreinvest" class="custom-select mb-3 form-control">
+                  <option value="">--Please Select--</option>
+                </select>
+              </div> -->
+
+              <!-- <div class="col-md-6">
+                <label for="Plan">Email Family relationship</label>
+
+                <select name="custom-select" formControlName="primaryemailrelationship"
+                  class="custom-select mb-3 form-control">
+                  <option value="SE">Self </option>
+                  <option value="SP">Spouse</option>
+                  <option value="DC">Dependent Children</option>
+                  <option value="DS">Dependent Siblings</option>
+                  <option value="DP">Dependent Parents</option>
+                  <option value="GD">Guardian</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="Plan">Mobile Family relationship</label>
+
+                <select name="custom-select" formControlName="primarymobilerelationship"
+                  class="custom-select mb-3 form-control">
+                  <option value="SE">Self </option>
+                  <option value="SP">Spouse</option>
+                  <option value="DC">Dependent Children</option>
+                  <option value="DS">Dependent Siblings</option>
+                  <option value="DP">Dependent Parents</option>
+                  <option value="GD">Guardian</option>
+                </select>
+              </div> -->
+            </div>
+
+            <div class="row space-between input-margin">
+              <div class="col-md-6 d-flex align-items-center" *ngIf="formGroup.controls['Folio']?.value == 'create'">
+                <div class="nominee">
+                  <label class="form-check-label" for="Optnominee">
+                    Nominee
+                  </label>
+                  <input formControlName="Optnominee" class="form-check-input" type="radio" name="Optnominee"
+                    value="Yes" />
+                  <label class="form-check-label" for="Optnominee"> Yes </label>
+                  <input formControlName="Optnominee" class="form-check-input" type="radio" name="Optnominee"
+                    value="No" />
+                  <label class="form-check-label" for="Optnominee"> No </label>
+                </div>
+              </div>
+              <div class="col-md-6" *ngIf="
+                  formGroup.controls['Optnominee'].value === 'Yes' &&
+                  formGroup.controls['Folio']?.value == 'create'
+                ">
+                <label for="Plan">Select Nominee</label>
+                <select name="custom-select" formControlName="Nominee" class="custom-select mb-3 form-control">
+                  <option *ngFor="let data of Nomineedetails; let i = index" [value]="i">
+                    {{
+                    data.Name_Of_Nominee +
+                    "- " +
+                    data.Nominee_Percentage +
+                    "%"
+                    }}
+                  </option>
+                  <option value="create">Add Nominee</option>
+                </select>
+                <div *ngIf="NewNomice?.length">
+                  <a href="javascript:void(0)" (click)="this.clear()">
+                    Edit Nominees</a>
+                  <ul *ngFor="let item of NewNomice; let i = index">
+                    <li class="parentNav">
+                      {{ i + 1 }}. {{ item?.name }} -{{
+                      item?.percentageAllocation
+                      }}
+                      %
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-12 mt-3">
+                
+                <div class="col-12 border-bottom" *ngIf="formGroup.controls['Investment'].value === 'REGULAR'">
+                  <div class="form-group">
+                    <input type="checkbox" id="Euinopt" formControlName="Euinopt" />
+                    <label for="Euinopt">
+                      I CONFIRM EUIN
+                      <a href="javascript:void(0)" (click)="this.showDialog('Euinopt')">
+                        <u>DECLARATION</u>
+                      </a>
+                    </label>
+                  </div>
+                </div>
+                <ng-container *ngIf="
+                    formGroup.controls['Investment'].value === 'REGULAR' &&
+                    formGroup.controls['Euinopt'].value === true
+                  ">
+                  <div class="col-md-6">
+                    <label for="Plan">Enter EUIN Code</label>
+                    <input type="text" formControlName="Euinno" class="form-control form-control-sm"
+                      placeholder="Enter Code" />
+                    <p>name: {{ EUINData }}</p>
+                  </div>
+                </ng-container>
+                
+
+                <div class="col-12 border-bottom" *ngIf="formGroup.controls['Investment'].value === 'DIRECT'">
+                  <div class="col-12 sip-frequeny">
+                    <label for="Plan" class="mob-fullwidth">Have you taken advice from RIA </label>
+                    <input class="form-check-input" type="radio" formControlName="Ria" id="rbNo" name="Ria"
+                      value="yes" />
+                    <label class="form-check-label" for="rbNo"> Yes </label>
+                    <input class="form-check-input mobmargin distibutor" type="radio" formControlName="Ria"
+                      id="rbYes" name="Ria" value="no" />
+                    <label class="form-check-label" for="rbYes"> No </label>
+                  </div>
+                  <ng-container *ngIf="
+                  formGroup.controls['Investment'].value === 'DIRECT' &&
+                  formGroup.controls['Ria'].value === 'yes'
+                ">
+                <div class="col-md-6">
+                  <!-- <label for="Plan">Enter Ria Code</label> -->
+                  <input type="text" formControlName="riaCode" class="form-control form-control-sm"
+                    placeholder="Enter Ria Code" />
+                  <p>name: {{ rianame }}</p>
+                </div>
+                <label for="Ria" class="ria-label">
+                  I have taken advice from RIA and agree to the
+                  <a href="javascript:void(0)" (click)="this.showDialog('ria')" class="ria-link">
+                    <u>Terms and Condition</u>
+                  </a>
+                </label>
+              </ng-container>
+                </div>
+              
+                <div class="col-12">
+                  <div class="form-group">
+                    <input type="checkbox" id="termsConditions" formControlName="termsConditions" />
+                    <label for="termsConditions">
+                      I have read and agreed to the terms and conditions</label>
+                  </div>
+                  <div class="invalid-feedback"
+                    *ngIf="formGroup.controls['termsConditions'].touched && formGroup.controls['termsConditions'].errors?.['required']">
+                    Terms and Conditions is required
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center" *ngIf="isMobile">
+                  <button type="button" class="btn btn-animation mt-4 bigBtn"
+                  (click)="sidebarVisible2 = true">
+                    Summary
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-1 col-md-0"></div>
+
+          <div *ngIf="!isMobile" class="col-lg-4 col-md-6 col-sm-12 mb-5">
+            <div class="card summary-card">
+              <h2>Summary</h2>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h4 class="label">Investment Type</h4>
+
+                    <h4 class="value">
+                      <strong>{{
+                        formGroup.controls["Sipflag"].value === "Yes"
+                        ? "SIP"
+                        : "Lumpsum"
+                        }}
+                      </strong>
+                    </h4>
+                  </div>
+                  <div class="col">
+                    <h4 class="label">Amount</h4>
+                    <p class="value greenText">
+                      {{ formGroup.controls["Amount"].value }}
+                    </p>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <label for="Plan" class="label">Select Folio Option</label>
+                  <select name="custom-select" formControlName="Folio" (change)="geBankdetails()"
+                    class="custom-select mb-3 form-control">
+                    <option value="">Select Folio</option>
+                    <option *ngFor="let data of folio" [value]="data">
+                      {{ data }}
+                    </option>
+                    <option value="create">Create Folio</option>
+                  </select>
+                  <div class="invalid-feedback"
+                    *ngIf="formGroup.controls['Folio'].touched && formGroup.controls['Folio'].errors?.['required']">
+                    Folio is required
+                  </div>
+                </div>
+
+                <div>
+                  <ng-container *ngIf="formGroup.controls['Sipflag'].value === 'Yes'">
+                    <p class="label mb-3">Select Payment Mode</p>
+                    <div class="option-div">
+                      <input formControlName="Sippaymode" class="form-check-input" type="radio" name="Sippaymode"
+                        value="ISIP" />
+                      <label class="form-check-label" for="Sippaymode">
+                        ISIP
+                      </label>
+                    </div>
+                    <div class="option-div">
+                      <input formControlName="Sippaymode" class="form-check-input" type="radio" name="Sippaymode"
+                        value="OTM" />
+                      <label class="form-check-label" for="Sippaymode">
+                        e-NACH
+                      </label>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngIf="formGroup.controls['Sipflag'].value === 'No'">
+                    <p class="label mb-3">Select Payment Mode</p>
+                    <div class="option-div">
+                      <input formControlName="Paymode" class="form-check-input" type="radio" name="Paymode"
+                        value="DCB" />
+                      <label class="form-check-label" for="Paymode">
+                        <img src="assets/images/internet-banking.png" />
+                        Internet Banking
+                      </label>
+                    </div>
+                    <div class="option-div" >
+                      <input formControlName="Paymode" class="form-check-input" type="radio" name="Paymode"
+                        value="UPI" [ngClass]="{'disabled-radio': formGroup.get('Amount')?.value > 100000}" 
+                        />
+                      <label class="form-check-label" for="Paymode">
+                        <img src="assets/images/upi-icon.png" /> UPI
+                      </label>
+                    </div>
+                    <ng-container *ngIf="formGroup.controls['Paymode'].value === 'UPI'">
+                      <div class="col-md-6">
+                        <label for="Plan">Enter UPI Handle</label>
+                        <input type="text" formControlName="Upiid" class="form-control form-control-sm"
+                          placeholder="Enter UPI ID" />
+                      </div>
+                    </ng-container>
+                  </ng-container>
+
+                  <ng-container *ngIf="
+                      formGroup.controls['Sipflag'].value === 'Yes' ||
+                      formGroup.controls['Paymode'].value !== 'UPI'
+                    ">
+                    <!-- <div class="option-div">
+
+                      <input formControlName="Paymode" class="form-check-input" type="radio" name="Paymode" value="OTM">
+                      <label class="form-check-label" for="Paymode">
+                        <img src="assets/images/one-time.png"> One Time Mandate
+                      </label>
+                    </div> -->
+                    <div class="mt-3">
+                      <label for="Plan" class="label">Select Bank</label>
+                      <select name="custom-select" formControlName="Umrnno" class="custom-select mb-3 form-control">
+                        <option *ngFor="let data of bankDetails" [value]="data.umrnno">
+                          {{ data.bankname + " - " + data.accountnumber }}
+                        </option>
+                      </select>
+                      <div class="invalid-feedback"
+                        *ngIf="formGroup.controls['Umrnno'].touched && formGroup.controls['Umrnno'].errors?.['required']">
+                        Bank Name is required
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button type="button" class="btn btn-animation mt-4 bigBtn" [disabled]="disabledbutton"
+                    (click)="submit()">
+                    Make a Payment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="isMobile">
+            <button type="button" class="btn btn-animation mt-3 bigBtn summary-btn" (click)="sidebarVisible2 = true">
+              <img src="assets/images/summary-icon.png" alt="" />
+            </button>
+            <p-sidebar [(visible)]="sidebarVisible2" position="right" styleClass="w-150rem">
+              <div class="card summary-card">
+                <h2>Summary</h2>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h4 class="label">Investment Type</h4>
+
+                      <h4 class="value">
+                        <strong>{{
+                          formGroup.controls["Sipflag"].value === "Yes"
+                          ? "SIP"
+                          : "Lumpsum"
+                          }}
+                        </strong>
+                      </h4>
+                    </div>
+                    <div class="col">
+                      <h4 class="label">Amount</h4>
+                      <p class="value greenText">
+                        {{ formGroup.controls["Amount"].value }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <label for="Plan" class="label">Select Folio Option</label>
+                    <select name="custom-select" formControlName="Folio" (change)="geBankdetails()"
+                      class="custom-select mb-3 form-control">
+                      <option value="">Select Folio</option>
+                      <option *ngFor="let data of folio" [value]="data">
+                        {{ data }}
+                      </option>
+                      <option value="create">Create Folio</option>
+                    </select>
+                    <div class="invalid-feedback"
+                      *ngIf="formGroup.controls['Folio'].touched && formGroup.controls['Folio'].errors?.['required']">
+                      Folio is required
+                    </div>
+                  </div>
+                  <ng-container *ngIf="
+                      formGroup.controls['Optnominee'].value === 'Yes' &&
+                      formGroup.controls['Folio']?.value == 'create'
+                    ">
+                    <label for="Plan">Select Nominee</label>
+                    <select name="custom-select" formControlName="Nominee" class="custom-select mb-3 form-control">
+                      <option *ngFor="let data of Nomineedetails; let i = index" [value]="i">
+                        {{
+                        data.Name_Of_Nominee +
+                        "- " +
+                        data.Nominee_Percentage +
+                        "%"
+                        }}
+                      </option>
+                      <option value="create">Add Nominee</option>
+                    </select>
+                  </ng-container>
+                  <div>
+                    <ng-container *ngIf="formGroup.controls['Sipflag'].value === 'Yes'">
+                      <p class="label mb-3">Select Payment Mode</p>
+                      <div class="option-div">
+                        <input formControlName="Sippaymode" class="form-check-input" type="radio" name="Sippaymode"
+                          value="ISIP" />
+                        <label class="form-check-label" for="Sippaymode">
+                          ISIP
+                        </label>
+                      </div>
+                      <div class="option-div">
+                        <input formControlName="Sippaymode" class="form-check-input" type="radio" name="Sippaymode"
+                          value="OTM" />
+                        <label class="form-check-label" for="Sippaymode">
+                          e-NACH
+                        </label>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="formGroup.controls['Sipflag'].value === 'No'">
+                      <p class="label mb-3">Select Payment Mode</p>
+                      <div class="option-div">
+                        <input formControlName="Paymode" class="form-check-input" type="radio" name="Paymode"
+                          value="DCB" />
+                        <label class="form-check-label" for="Paymode">
+                          <img src="assets/images/internet-banking.png" />
+                          Internet Banking
+                        </label>
+                      </div>
+                      <div class="option-div">
+                        <input formControlName="Paymode" class="form-check-input" type="radio" name="Paymode"
+                          value="UPI" />
+                        <label class="form-check-label" for="Paymode">
+                          <img src="assets/images/upi-icon.png" /> UPI
+                        </label>
+                      </div>
+                      <ng-container *ngIf="formGroup.controls['Paymode'].value === 'UPI'">
+                        <div class="col-md-6">
+                          <label for="Plan">Enter UPI Handle</label>
+                          <input type="text" formControlName="Upiid" class="form-control form-control-sm"
+                            placeholder="Enter UPI ID" />
+                        </div>
+                      </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="
+                        formGroup.controls['Sipflag'].value === 'Yes' ||
+                        formGroup.controls['Paymode'].value !== 'UPI'
+                      ">
+                      <!-- <div class="option-div">
+  
+                        <input formControlName="Paymode" class="form-check-input" type="radio" name="Paymode" value="OTM">
+                        <label class="form-check-label" for="Paymode">
+                          <img src="assets/images/one-time.png"> One Time Mandate
+                        </label>
+                      </div> -->
+                      <div class="mt-3">
+                        <label for="Plan" class="label">Select Bank</label>
+                        <select name="custom-select" formControlName="Umrnno" class="custom-select mb-3 form-control">
+                          <option value="">--Please Select--</option>
+                          <option *ngFor="let data of bankDetails" [value]="data.umrnno">
+                            {{ data.bankname + " - " + data.accountnumber }}
+                          </option>
+                        </select>
+                        <div class="invalid-feedback"
+                          *ngIf="formGroup.controls['Umrnno'].touched && formGroup.controls['Umrnno'].errors?.['required']">
+                          Bank Name is required
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-animation mt-4 bigBtn" (click)="submit()">
+                      Make a Payment
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </p-sidebar>
+          </ng-container>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Declaration" [modal]="true" [(visible)]="visible" [modal]="true" [style]="{ width: '700px' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+  <p *ngIf="dialogType == 'ria'">
+    I/We, have invested in the Scheme(s) of your Mutual Fund under Direct Plan.
+    I/We hereby give you my/our consent to share/provide the transactions data
+    feed/ portfolio holdings/ NAV etc. in respect of my/our investments under
+    Direct Plan of all Schemes Managed by you, Mutual Fund Distributor /
+    SEBI-Registered Investment Adviser.
+  </p>
+  <p *ngIf="dialogType == 'Euinopt'">
+    I/We hereby confirm that the EUIN box has been intentionally left blank by
+    me/us as this is an execution-only transaction without any interaction or
+    advice by the employee/relationship manager/sales person of the above
+    distributor or not withstanding the advice of in-appropriateness, if any,
+    provided by the employee/relationship manager/sales person of the
+    distributor and the distributor has not charged any advisory fees on this
+    transaction.
+  </p>
+  <p *ngIf="dialogType == 'termsConditions'">
+    I/We would like to invest in {{ cartData?.fund_name }} subject to terms of
+    the Statement of Additional Information (SAI), Scheme Information Document
+    (SID), Key Information Memorandum (KIM) and subsequent amendments thereto.
+    I/We have read, understood (before filling application form) and is/are
+    bound by the details of the SAI, SID & KIM including details relating to
+    various services included. I/We have not received nor been induced by any
+    rebate or gifts, directly or indirectly, in making this investment. I/We
+    declare that the amount invested in the Scheme is through legitimate sources
+    only and is not designed for the purpose of contravention or evasion of any
+    Act / Regulations / Rules / Notifications / Directions or any other
+    Applicable Laws enacted by the Government of India or any Statutory
+    Authority. I accept and agree to be bound by the said Terms and Conditions
+    including those excluding/ limiting the Baroda BNP Paribas Mutual Fund (BBNP
+    India) liability. I understand that the BBNP India may, at its absolute
+    discretion, discontinue any of the services completely or partially without
+    any prior notice to me. I agree BBNP India can debit from my folio for the
+    service charges as applicable from time to time. The ARN holder has
+    disclosed to me/us all the commissions (in the form of trail commission or
+    any other mode), payable to him for the different competing Schemes of
+    various Mutual Funds from amongst which the Scheme is being recommended to
+    me/us. I hereby declare that the above information is given by the
+    undersigned and particulars given by me/us are correct and complete.
+    Further, I agree that the transaction charge (if applicable) shall be
+    deducted from the subscription amount and the said charges shall be paid to
+    the distributors. I confirm that I am resident of India. I/We confirm that I
+    am/We are Non-Resident of Indian Nationality/Origin and I/We hereby confirm
+    that the funds for subscription have been remitted from abroad through
+    normal banking channels or from funds in my/our Non-Resident
+    External/Ordinary Account/FCNR Account. I/We undertake that all additional
+    purchases made under this folio will also be from funds received from abroad
+    through approved banking channels or from funds in my/our NRE/FCNR Accounts.
+    I hereby declare that the information provided in the Form is in accordance
+    with section 285BA of the Income Tax Act, 1961 read with Rules 114F to 114H
+    of the Income Tax Rules, 1962 and the information provided by me /us in the
+    Form, its supporting Annexures as well as in the documentary evidence
+    provided by me/us are, to the best of our knowledge and belief, true,
+    correct and complete. ++ I/We, have invested in the Scheme(s) of your Mutual
+    Fund under Direct Plan. I/We hereby give you my/our consent to share/provide
+    the transactions data feed/ portfolio holdings/ NAV etc. in respect of
+    my/our investments under Direct Plan of all Schemes Managed by you, to the
+    above mentioned Mutual Fund Distributor / SEBI-Registered Investment
+    Adviser. I hereby authorize the representatives of Baroda BNP Paribas Mutual
+    Fund and its Associates to contact me through any mode of communication.
+    This will override registry on DND / DNDC, as the case may be. Restriction
+    on Acceptance of Third-Party Payments for Subscription of Units BBNP Mutual
+    Fund has vide its Addendum No.56 dated November 12, 2011, has provided the
+    details pertaining to restrictions of Third Party Payments with effect from
+    November 15, 2010. Therefore, for payments through net banking and debit
+    cards, BBNP India shall endeavour to obtain the details of the bank account
+    debited from the payment gateway service provider and match the same with
+    the registered pay-in accounts. In case it is found that the payment is not
+    made from a registered bank account or from an account not belonging to the
+    first named unit holder, BBNP India /RTA shall reject the transaction with
+    due intimation to the investor. Currently, where the investor account
+    details are not made available by the payment gateway service provider, BBNP
+    India shall obtain the name of the bank making the payment for the
+    subscription. By signing this SIP enrolment form I/We understand that the
+    amount will be debited from the Bank account mentioned in One Time Bank
+    Mandate / Invest Easy - Individuals Mandate Form. I hereby authorize the
+    representatives of Baroda BNP Paribas Mutual Fund its Associates to contact
+    me through any mode of communication. This will override registry on DND /
+    DNDC , as the case may be.
+  </p>
+</p-dialog>

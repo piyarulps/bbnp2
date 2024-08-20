@@ -1,0 +1,252 @@
+<app-page-wrapper [title]="'STP'">
+<form class="theme-form theme-form-2 mega-form" [formGroup]="form" (ngSubmit)="submit()">
+
+
+    <app-form-fields [label]="'Folio'" [for]="'Folio'" [required]="true" (change)="onChangeFolioObj($event)">
+        <select name="custom-select" formControlName="Fromfolio" class="custom-select mb-3 form-control">
+            <option value="">--Please Select --</option>
+            <option *ngFor="let folio of onlyfolionos" [value]="folio">{{folio}}
+            </option>
+        </select>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['Fromfolio'].touched && form.controls['Fromfolio'].errors?.['required']">
+            Folio is required
+        </div>
+    </app-form-fields>
+
+
+
+    <app-form-fields [label]="'Switch Out Scheme'" [for]="'Switch Out Scheme'" [required]="true">
+        <select name="custom-select" formControlName="Fromschemeid" (change)="onChangeObj($event)"
+            class="custom-select mb-3 form-control">
+            <option value="">--Please Select--</option>
+            <option *ngFor="let folio of selectedfolioval" [value]="folio?.schemeid">{{folio?.desc}}
+            </option>
+        </select>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['Fromschemeid'].touched && form.controls['Fromschemeid'].errors?.['required']">
+            Scheme is required
+        </div>
+    </app-form-fields>
+
+
+    <div class="col-md-12 lable-sz px-0">
+        <div class="row mt-2">
+            <div class="form-group col-md-3 px-0"></div>
+            <div class="form-group col-md-4 ">
+                <span>Balance Units</span>: <span id="txtbalunt">{{selectedschemeval?.balanceunits}}</span>
+            </div>
+            <div class="form-group col-md-5 ">
+                <span>Current Value</span>: <span id="txtcurval">{{selectedschemeval?.currentvalue}}</span>
+            </div>
+        </div>
+        <div class="row mt-md-2">
+            <div class="form-group col-md-3 px-0"></div>
+
+            <div class="form-group col-md-4">
+                <span>NAV as on Date</span>: <span id="txtNavAsOnDateValue">{{selectedschemeval?.nav}}</span>
+            </div>
+            <div class="form-group col-md-5">
+                <span>Cost value</span>: <span id="txtminamt"> {{selectedschemeval?.costvalue}} </span><br>
+
+            </div>
+        </div>
+    </div>
+
+
+    <app-form-fields [label]="'Investment Through'" [for]="'Investment Through'" [required]="true">
+        <div class="col-md-12 lable-sz px-0">
+            <div class="row mt-2">
+                <div class="form-group col-md-2">
+                    <input formControlName="Distributor" class="form-check-input" type="radio" name="Distributor"
+                        id="Distributor1" value="REGULAR">
+                    <label class="form-check-label" for="Distributor">
+                        Distributor
+                    </label>
+                </div>
+
+
+                <div class="form-group col-md-2">
+                    <input formControlName="Distributor" class="form-check-input" type="radio" name="Distributor"
+                        id="Distributor2" value="DIRECT">
+                    <label class="form-check-label" for="Distributor">
+                        Direct
+                    </label>
+                </div>
+
+                <div class="form-group col-md-8 px-0">
+
+                </div>
+
+            </div>
+        </div>
+    </app-form-fields>
+
+
+
+
+    <app-form-fields [label]="'Category'" [for]="'Category'" [required]="true" (change)="onChangeCategoryObj($event)">
+        <select name="custom-select" formControlName="Category" class="custom-select mb-3 form-control">
+            <option value="">--Please Select--</option>
+            <option *ngFor="let Category of fundsCategory" [value]="Category">{{Category}}
+            </option>
+        </select>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['Category'].touched && form.controls['Category'].errors?.['required']">
+            Category is required
+        </div>
+    </app-form-fields>
+
+
+
+
+    <app-form-fields [label]="'Switch In Scheme Category'" [for]="'SwitchInSchemeCategory'" [required]="true"
+        (change)="onChangeSchemeINObj($event)">
+        <select name="custom-select" formControlName="SwitchInSchemeCategory" class="custom-select mb-3 form-control">
+            <option value="">--Please Select--</option>
+            <option *ngFor="let Category of selectedSwitchINValue" [value]="Category.schdesc
+                                ">{{Category.schdesc}}
+            </option>
+        </select>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['SwitchInSchemeCategory'].touched && form.controls['SwitchInSchemeCategory'].errors?.['required']">
+            Switch In Scheme is required
+        </div>
+    </app-form-fields>
+
+
+    <app-form-fields [label]="'Switch In Scheme'" [for]="'Switch In Scheme'" [required]="true" (change)="onChangeSchemeINSwitchObj($event)">
+        <select name="custom-select" formControlName="Toschemeid" class="custom-select mb-3 form-control">
+            <option value="">--Please Select--</option>
+            <option *ngFor="let Category of selectedsingleswitchINvalue" [value]="Category.schemeid">{{Category.desc}}
+            </option>
+        </select>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['Toschemeid'].touched && form.controls['Toschemeid'].errors?.['required']">
+            Switch In Scheme is required
+        </div>
+    </app-form-fields>
+
+    <app-form-fields [label]="'STP Frequency'" [for]="'STP Frequency'" [required]="true">
+        <select name="custom-select" formControlName="Frequency" (change)="onChangeFrequency($event)"
+            class="custom-select mb-3 form-control">
+            <option value="">--Please Select--</option>
+            <option *ngFor="let folio of Frequency" [value]="folio">{{folio}}
+            </option>
+        </select>
+    </app-form-fields>
+
+    <app-form-fields [label]="'Number of transfers'" [for]="'Number of transfers'">
+        <input class="form-control" type="number" placeholder="Enter Number of transfers" name="Untamtvalue"
+            formControlName="Nooftransfer">
+        <div class="invalid-feedback"
+            *ngIf="form.controls['Nooftransfer'].touched && form.controls['Nooftransfer'].errors?.['required']">
+
+            Number of transfers Unit Required
+        </div>
+        <div class="feedback" *ngIf="form.controls['Nooftransfer'].errors?.['min']">Minimum value should be
+            {{ form.controls['Frequency'].value}}</div>
+
+    </app-form-fields>
+    
+    <!-- <app-form-fields [label]="'STP Day'" [for]="'STP Day'"  (change)="onChangeSTPdateObj($event)">
+        <select name="custom-select" formControlName="Stpday" class="custom-select mb-3 form-control">
+            <option value="">--Please Select--</option>
+            <option *ngFor="let stp of STPdate" [value]="stp">{{stp}}
+            </option>
+        </select>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['Stpday'].touched && form.controls['Stpday'].errors?.['required']">
+            Stp day is required
+        </div>
+    </app-form-fields> -->
+
+    <app-form-fields [label]="'Transfer Period'" [required]="true" [for]="'Transfer Period'">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="form-group col">
+              <p-calendar placeholder="Start date" formControlName="Startdate" [minDate]="minDate" [showIcon]="true" inputId="start-icon"></p-calendar>
+            </div>
+            <div class="form-group col">
+              <p-calendar placeholder="End date" formControlName="Enddate" [minDate]="form.controls['Startdate'].value" [showIcon]="true" inputId="end-icon"></p-calendar>
+            </div>
+          </div>
+        </div>
+      </app-form-fields>
+
+
+    <app-form-fields [label]="'STP Option'" [for]="'Stp option'" 
+        (change)="onChangeFrequencyObj($event)">
+        <select name="custom-select" formControlName="Stpoption" class="custom-select mb-3 form-control">
+            <option value="">--Please Select--</option>
+            <option *ngFor="let stp of stpOption" [value]="stp">{{stp}}
+            </option>
+        </select>
+    </app-form-fields>
+    <app-form-fields [label]="'Transfer Amount per installment'" [for]="'STP Day'" [required]="true">
+        <input formControlName="Amount" class="form-control" type="number"
+            placeholder="Enter Transfer Amount per installment" name="Amount">
+
+        <p>Minimum Amount : {{ this.schemesbyCodeData?.stp_minamt}}<p>
+                <div class="invalid-feedback"
+                    *ngIf="form.controls['Amount'].touched && form.controls['Amount'].errors?.['required']">
+
+                    Transfer Amount per installment is Required
+                </div>
+
+    </app-form-fields>
+    <!--app-form-fields [label]="'Redemption Mode'" [for]="'Redemption Mode'" [required]="true">
+        <div class="col-md-12 lable-sz px-0">
+            <div class="row mt-2">
+                <div class="form-group col-md-2 px-0">
+                    <input formControlName="Untamtflg"    class="form-check-input" type="radio" name="Untamtflg" id="Untamtflg1" value="U" >
+                    <label class="form-check-label" for="Untamtflg">
+                     Unit
+                    </label>
+                </div>
+               
+    
+                <div class="form-group col-md-2 px-0">
+                    <input formControlName="Untamtflg"    class="form-check-input" type="radio" name="Untamtflg" id="Untamtflg2" value="A" >
+                    <label class="form-check-label" for="Untamtflg">
+                     Amount
+                    </label>
+                </div>
+    
+                <div class="form-group col-md-8 px-0">
+                    
+                </div>
+                
+            </div>
+          </div>  
+        </app-form-fields>
+
+        <app-form-fields [label]="'Investment Unit'" [for]="'Untamtvalue'" [required]="true">
+        <input class="form-control" type="number" placeholder="Enter Unit/Amount" name="Untamtvalue" formControlName="Untamtvalue">
+        
+        <p>Minimum Investment unit is<p>
+        <div class="invalid-feedback" *ngIf="form.controls['Untamtvalue'].touched && form.controls['Untamtvalue'].errors?.['required']">
+          
+            Investment Unit Required
+        </div>
+      
+    </app-form-fields>
+
+   
+    <app-form-fields [label]="'Payment Bank'" [for]="'Payment Bank'" [required]="true">
+        <select name="custom-select"  formControlName="selectedbank"  (change)="onChangeBankObj($event)" 
+                            class="custom-select mb-3 form-control">
+                            <option  value="">--Please Select--</option>
+                            <option *ngFor="let bank of bankdata" [value]="bank.account_number">{{bank.bank_name+'-'+ bank.account_number}}
+                            </option>
+                          </select>
+        <div class="invalid-feedback" *ngIf="form.controls['selectedbank'].touched && form.controls['selectedbank'].errors?.['required']">
+        Bank selection Required
+        </div>
+    </app-form-fields-->
+
+    <app-button [spinner]="spinnerLoader" [id]="'user_btn'" [disabled]="!form.valid">Submit</app-button>
+
+
+</form>
+</app-page-wrapper>

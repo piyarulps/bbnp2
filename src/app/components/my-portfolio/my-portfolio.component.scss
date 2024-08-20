@@ -1,0 +1,20 @@
+.filter-buttons {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    overflow: auto;
+  }
+  
+  .filter-buttons app-button {
+    margin-right: 10px; /* Adjust spacing between buttons */
+  }
+.portfolio-tab ::ng-deep .btn {
+  margin-bottom: 5px!important;
+}
+ ::ng-deep .greenBtn {
+  font-weight: normal; 
+ } 
+
+ ::ng-deep .greenBtntotal:hover {
+  color: #fff;
+ }

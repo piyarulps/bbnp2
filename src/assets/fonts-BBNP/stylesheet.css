@@ -1,0 +1,126 @@
+@font-face {
+    font-family: 'BNPPSansCondensed-Bold';
+    src: url('BNPPSansCondensed-Bold.woff2') format('woff2'),
+        url('BNPPSansCondensed-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSquare-ExtraBold';
+    src: url('BNPPSquare-ExtraBold.woff2') format('woff2'),
+        url('BNPPSquare-ExtraBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSansCondensed-ExtraBold';
+    src: url('BNPPSansCondensed-ExtraBold.woff2') format('woff2'),
+        url('BNPPSansCondensed-ExtraBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSans-Light';
+    src: url('BNPPSans-Light.woff2') format('woff2'),
+        url('BNPPSans-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSquare-Light';
+    src: url('BNPPSquare-Light.woff2') format('woff2'),
+        url('BNPPSquare-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSans-Bold';
+    src: url('BNPPSans-Bold.woff2') format('woff2'),
+        url('BNPPSans-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSans-BoldItalic';
+    src: url('BNPPSans-BoldItalic.woff2') format('woff2'),
+        url('BNPPSans-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSans';
+    src: url('BNPPSans.woff2') format('woff2'),
+        url('BNPPSans.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSans-ExtraBold';
+    src: url('BNPPSans-ExtraBold.woff2') format('woff2'),
+        url('BNPPSans-ExtraBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSansCondensed';
+    src: url('BNPPSansCondensed.woff2') format('woff2'),
+        url('BNPPSansCondensed.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSansExtraBold-Italic';
+    src: url('BNPPSansExtraBold-Italic.woff2') format('woff2'),
+        url('BNPPSansExtraBold-Italic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSans-Italic';
+    src: url('BNPPSans-Italic.woff2') format('woff2'),
+        url('BNPPSans-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSansLight-Italic';
+    src: url('BNPPSansLight-Italic.woff2') format('woff2'),
+        url('BNPPSansLight-Italic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BNPPSansCondensed-Light';
+    src: url('BNPPSansCondensed-Light.woff2') format('woff2'),
+        url('BNPPSansCondensed-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+

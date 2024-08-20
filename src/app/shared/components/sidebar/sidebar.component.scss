@@ -1,0 +1,56 @@
+::ng-deep .btn-animation.fullwidth {
+    width: 100%;
+    margin-top: 15px;
+    height: 41px;
+}
+
+::ng-deep .signOut span {
+    margin-left: 10px;
+}
+
+::ng-deep .close_icon .sidebar-links .signOut span {
+    @media screen and (min-width: 991px) {
+        display: none;
+    }
+}
+
+::ng-deep .close_icon .sidebar-links .signOut {
+    @media screen and (min-width: 991px) {
+        background: transparent;
+        border: 0px;
+        padding: 0 8px !important;
+        width: auto;
+        justify-content: start;
+    }
+}
+
+::ng-deep .close_icon .sidebar-links .signOut i {
+    @media screen and (min-width: 991px) {
+        color: var(--theme-color);
+        font-size: 28px;
+    }
+}
+
+::ng-deep .sidebar-wrapper:hover .signOut span {
+    display: inline-block;
+    color: #fff;
+}
+
+::ng-deep .sidebar-wrapper:hover .sidebar-links .signOut {
+    @media screen and (min-width: 991px) {
+        background: #D74B14;
+        border: 1px solid var(--theme-color);
+        border-radius: 5px;
+        height: 41px;
+        width: 100%;
+        justify-content: center;
+        display: flex;
+    }
+}
+
+::ng-deep .sidebar-wrapper:hover .sidebar-links .signOut i {
+    @media screen and (min-width: 991px) {
+        color: #fff;
+        font-size: 14px;
+    }
+}

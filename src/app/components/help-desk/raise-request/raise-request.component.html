@@ -1,0 +1,49 @@
+
+<div class="container-fluid">
+<div class="title-header">
+    <h5>Raise A Request</h5>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <form [formGroup]="form" (ngSubmit)="submitForm()" #requestForm="ngForm">
+      <div class="mb-3">
+        <label for="payment" class="form-label">
+          Subject <span class="text-danger">*</span>
+        </label>
+        <input class="form-control" type="text" formControlName="Topic" placeholder="Enter your Subject" required>
+        <div class="invalid-feedback"
+             *ngIf="form.controls['Topic'].touched && form.controls['Topic'].errors?.['required']">
+             Subject is required
+        </div>
+      </div>
+      
+      <div class="mb-3" *ngIf="onlyfolionos.length">
+        <label for="payment" class="form-label">
+          Folio <span class="text-danger">*</span>
+        </label>
+        <select name="custom-select" formControlName="folio" class="custom-select mb-3 form-control">
+          <option value="">--Please Select--</option>
+          <option *ngFor="let folio of onlyfolionos" [value]="folio">{{folio}}</option>
+        </select>
+      </div>
+      
+      <div class="mb-3">
+        <label for="message" class="form-label">
+          Message <span class="text-danger">*</span>
+        </label>
+        <textarea class="form-control" id="message" name="message" formControlName="message" required></textarea>
+        <div class="invalid-feedback"
+             *ngIf="form.controls['message'].touched && form.controls['message'].errors?.['required']">
+          Message is required
+        </div>
+      </div>
+      
+      <button type="submit" class="btn btn-animation mt-5" [disabled]="form.invalid">Submit</button>
+    </form>
+    
+  </div>
+</div>
+
+  
+</div>

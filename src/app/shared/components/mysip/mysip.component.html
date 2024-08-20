@@ -1,0 +1,338 @@
+<section>
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-lg-12 manage-sip">
+                <div class="title-header">
+                    <h5>Manage Systematic Plans </h5>
+                </div>
+            <!-- </div>
+            <div class="col-lg-4 col-md-6"> -->
+               <form [formGroup]="formGroup">
+                    <div class="sip-right">
+                        <div class="sip-frequeny">
+                            <input class="form-check-input mobmargin" type="radio" formControlName="sipType" id="rbYes"
+                            name="sipType" value="Active">
+                            <label class="form-check-label" for="rbYes">
+                            Active
+                            </label>
+                            <input class="form-check-input" type="radio" formControlName="sipType" id="rbNo"
+                            name="sipType" value="Cancelled">
+                            <label class="form-check-label" for="rbNo">
+                            Cancelled
+                            </label>
+                            <input class="form-check-input" type="radio" formControlName="sipType" id="rbdaily"
+                            name="sipType" value="Paused">
+                            <label class="form-check-label" for="rbNo">
+                                Paused
+                            </label>
+                        </div>
+                        <div class="selectDropdown">
+                            <select name="custom-select" formControlName="Folio" class="custom-select form-control">
+                                <option value="">All Folio </option>
+                                <option *ngFor="let folio of onlyfolionos" [value]="folio">{{folio}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+
+        <div class="card p-0" *ngIf="!isMobile">          
+
+            <p-tabView (onChange)="handleChange($event)">
+                <p-tabPanel  header="SIP">
+                    <div class="card p-0">
+                        <p-table [value]="products" dataKey="id" [tableStyle]="{ 'min-width': '50rem' }">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th class="width35">Fund Name </th>
+                                    <th class="width10">Amount </th>
+                                    <th class="width10">Frequency</th>
+                                    <th class="width20">Deduction Date</th>
+                                    <th class="width25">Remaining Tenure</th>
+                                    <th class="width25">Actions</th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td >
+                                        {{product.schdesc}} <br>
+                                        Folio: <span>  {{product.Folio}}</span>
+                                    </td>
+
+                                    <td>
+                                        ₹ {{ product.installmentamt }}
+                                    </td>
+                                    <td>
+                                        {{ product.frequency}}
+                                    </td>
+                                    <td >
+                                        {{ product.startdate | extractDay}} of every month
+                                    </td>
+                                    <td>
+                                        <p>{{ product.enddate | tenure }}  </p>
+                                    </td>
+
+                                    <td>
+                                            <p-overlayPanel #op>
+                                                <ng-template pTemplate="content">
+                                                    <p
+                                                        (click)="showDialog('Pause',product)">Pause SIP ></p>
+
+                                                    <p (click)="showDialog('Cancel',product)">
+                                                        Cancel SIP ></p>
+                                                </ng-template>
+                                            </p-overlayPanel>
+                                            <app-button (click)="op.toggle($event)" *ngIf="this.formGroup.controls['sipType'].value == 'Active'"
+                                                [class]="'btn btn-outline ml-4 mb-4'" [spinner]="false">Manage
+                                            </app-button>
+                                            <p *ngIf="this.formGroup.controls['sipType'].value !== 'Active'">{{ product.status }}  </p>
+                                    </td>
+                                </tr>
+                                
+                            </ng-template>
+                            <tr>
+                                No Data .
+                            </tr>
+                        </p-table>
+                    </div>
+                </p-tabPanel>
+                  <p-tabPanel header="STP">
+                    <div class="card p-0">
+                        <p-table [value]="products" dataKey="id" [tableStyle]="{ 'min-width': '50rem' }">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th class="width35">Fund Name </th>
+                                    <th class="width10">Amount </th>
+                                    <th class="width10">Frequency</th>
+                                    <th class="width20">Deduction Date </th>
+                                    <th class="width25">Remaining Tenure</th>
+                                    <th class="width25">Actions</th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td>
+                                        {{product.schdesc}} <br>
+                                               Folio: <span>  {{product.Folio}}</span>
+                                    </td>
+
+                                    <td >
+                                        ₹ {{ product.installmentamt }}
+                                    </td>
+                                    <td >
+                                        {{ product.frequency}}
+                                    </td>
+                                    <td >
+                                        {{ product.startdate | extractDay}} of every month
+                                    </td>
+                                    <td >
+                                        <p>{{ product.enddate | tenure }}  </p>
+                                    </td>
+                                    <td>
+                                    <app-button  
+                                        [class]="'btn btn-outline ml-4 mb-4'" (click)="showDialog('Cancel',product)" [spinner]="false">Cancel
+                                    </app-button>
+                                    </td>
+                                  
+                                </tr>
+                               
+                            </ng-template>
+                            <tr >
+                                No Data .
+                            </tr>
+                        </p-table>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel  header="SWP">
+                    <div class="card p-0">
+                        <p-table [value]="products" dataKey="id" [tableStyle]="{ 'min-width': '50rem' }">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th class="width35">Fund Name </th>
+                                    <th class="width10">Amount </th>
+                                    <th class="width10">Frequency</th>
+                                    <th class="width20">Deduction Date</th>
+                                    <th class="width25">Remaining Tenure</th>
+                                    <th class="width25">Actions</th>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td>
+                                        {{product.schdesc}} <br>
+                                              Folio:  <span>  {{product.Folio}}</span>
+                                    </td>
+
+                                    <td >
+                                        ₹ {{ product.installmentamt }}
+                                    </td>
+                                    <td>
+                                        {{ product.frequency}}
+
+                                    </td>
+                                    <td >
+                                        {{ product.startdate | extractDay}} of every month
+                                    </td>
+                                    <td>
+                                        <p>{{ product.enddate | tenure }}  </p>
+                                    </td>
+                                    <td>
+                                        <app-button  
+                                        [class]="'btn btn-outline ml-4 mb-4'" (click)="showDialog('Cancel',product)" [spinner]="false">Cancel
+                                    </app-button>
+                                    </td>
+
+                                </tr>
+                                <tr *ngIf="products.length ==0">
+                                    No Data .
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+        <div *ngIf="isMobile">
+            <p-tabView (onChange)="handleChange($event)">
+                <p-tabPanel header="SIP">
+                    <div class="mobile-card-container" *ngFor="let product of products">
+                        <div class="mobile-card">
+                            <div class="mobile-card-header">
+                                <h5> <b>{{product.schdesc}}</b> </h5>
+                                <p>Folio: {{product.Folio}}</p>
+                            </div>
+                            <div class="mobile-card-body">
+                                <p>Amount: ₹ {{ product.installmentamt }}</p>
+                                <p>Frequency: {{ product.frequency }}</p>
+                                <p>SIP Day: {{ product.startdate | extractDay }} of every month</p>
+                                <p>Tenure: {{ product.enddate | tenure }}</p>
+                            </div>
+                            <div class="mobile-card-actions">
+                                <app-button [class]="'btn btn-outline'" (click)="showDialog('Pause', product)" [spinner]="false">Pause SIP</app-button>
+                                <app-button [class]="'btn btn-outline'" (click)="showDialog('Cancel', product)" [spinner]="false">Cancel SIP</app-button>
+                           
+                           
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
+
+
+        
+                  <p-tabPanel header="STP">
+                    <div class="mobile-card-container" *ngFor="let product of products">
+                        <div class="mobile-card">
+                            <div class="mobile-card-header">
+                                <h5> <b>{{product.schdesc}}</b> </h5>
+                                <p>Folio: {{product.Folio}}</p>
+                            </div>
+                            <div class="mobile-card-body">
+                                <p>Amount: ₹ {{ product.installmentamt }}</p>
+                                <p>Frequency: {{ product.frequency }}</p>
+                                <p>STP Day: {{ product.startdate | extractDay }} of every month</p>
+                                <p>Tenure: {{ product.enddate | tenure }}</p>
+                            </div>
+                            <div class="mobile-card-actions">
+                                <app-button [class]="'btn btn-outline'" (click)="showDialog('Pause', product)" [spinner]="false">Pause SIP</app-button>
+                                <app-button [class]="'btn btn-outline'" (click)="showDialog('Cancel', product)" [spinner]="false">Cancel SIP</app-button>
+                           
+                           
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel header="SWP">
+                    <div class="mobile-card-container" *ngFor="let product of products">
+                        <div class="mobile-card">
+                            <div class="mobile-card-header">
+                                <h5> <b>{{product.schdesc}}</b> </h5>
+                                <p>Folio: {{product.Folio}}</p>
+                            </div>
+                            <div class="mobile-card-body">
+                                <p>Amount: ₹ {{ product.installmentamt }}</p>
+                                <p>Frequency: {{ product.frequency }}</p>
+                                <p>SWP Day: {{ product.startdate | extractDay }} of every month</p>
+                                <p>Tenure: {{ product.enddate | tenure }}</p>
+                            </div>
+                            <div class="mobile-card-actions">
+                                <app-button [class]="'btn btn-outline'" (click)="showDialog('Pause', product)" [spinner]="false">Pause SIP</app-button>
+                                <app-button [class]="'btn btn-outline'" (click)="showDialog('Cancel', product)" [spinner]="false">Cancel SIP</app-button>
+                           
+                           
+                            </div>
+                        </div>
+                    </div>
+                </p-tabPanel>
+        
+            </p-tabView>
+        </div>
+
+    </div>
+</section>
+<p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '300px' }">
+    <ng-template pTemplate="header">
+        <div class="inline-flex align-items-center justify-content-center gap-2">
+            <span class="font-bold white-space-nowrap">Are you sure you want to pause the SIP?</span>
+        </div>
+    </ng-template>
+    <div class="borderBox">
+        <h4>You will miss out</h4>
+        <p class="m-0">
+            {{ this.selectedProduct?.schdesc }} 
+            has shown returns of {{ fundData?.cagr_3_year}} % in last 3 years
+        </p>
+    </div>
+    <ng-template pTemplate="footer">
+        <div class=" align-items-center gap-2 pause-btn">
+            <app-button [class]="'btn btn-outline orangeOutline'"  (click)="pauseCancelSIP('PAUSE')" [spinner]="false">Pause SIP</app-button>
+            <app-button [class]="'btn btn-outline greenOutline'" (click)="visible = false " [spinner]="false">Don’t Pause</app-button>
+
+        </div>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Header" [(visible)]="CancelVisable" [modal]="true" [style]="{ width: '300px' }">
+    <ng-template pTemplate="header">
+        <div class="inline-flex align-items-center justify-content-center gap-2">
+            <span class="font-bold white-space-nowrap">Are you sure you want to Canel the {{ this.selectedTab }}??</span>
+        </div>
+    </ng-template>
+    <div class="borderBox">
+        <h4>You will miss out</h4>
+        <p class="m-0">
+            {{
+                 this.selectedProduct?.schdesc}} 
+            has shown returns of {{ fundData?.cagr_3_year}} % in last 3 years
+        </p>
+
+    </div>
+    <div class="reason-dropdown">
+        <form [formGroup]="cancelledFormGroup">
+        <span>Select Reason :</span>
+        <label for="Investment">Select Reason to cancel {{ this.selectedTab }}</label>
+        <select name="custom-select" class="custom-select form-control" formControlName="RejCode">
+            <option *ngFor="let data of selectedReson" [value]="data.RejCode">{{data.RejReason}}
+            </option>
+        </select>
+        <div class="mt-4" *ngIf="cancelledFormGroup.controls['RejCode'].value=='13'">
+            <input type="text" formControlName="cyustomValue" id="rbYes"
+            name="sipType" value="Active">
+        </div>
+       
+        </form>
+    </div>
+    <ng-template pTemplate="footer">
+        <div class=" align-items-center gap-2 pause-btn">
+            <app-button [class]="'btn btn-outline orangeOutline'" (click)="pauseCancelSIP('CANCEL')" [spinner]="false">Cancel {{ this.selectedTab}}</app-button>
+            <app-button [class]="'btn btn-outline greenOutline'" (click)="CancelVisable = false" [spinner]="false">Don’t Cancel
+            </app-button>
+
+        </div>
+    </ng-template>
+</p-dialog>

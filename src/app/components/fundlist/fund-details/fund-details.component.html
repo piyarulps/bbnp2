@@ -1,0 +1,581 @@
+<div class="p-2">
+    <div class=" d-flex justify-content-between align-items-center">
+        
+      </div>
+      
+    <div class="mb-3">
+        <div class="row">
+        <div class="col-md-2">
+        <a href="javascript:void(0)" class="back-link" (click)="goBack()"><i class="ri-arrow-left-circle-line"></i> Back</a>
+
+        </div>
+            <div class="col-md-8">
+        <h3 class="orange-title"> {{ selectedCategoryData?.fund_name}} </h3>
+
+            </div>
+            <div class="col-md-2" *ngIf="!prodCheck">
+                <app-button [class]="'btn mr-4 mb-4 greenBtn mob-fixed position-fixed floating-button'"
+                    (click)="transact()"
+                    [spinner]="false">Invest Now</app-button>
+            </div>
+        </div>
+
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+        <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarTogglerDemo02">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" (click)="navigateToSection('section1')">Overview</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="navigateToSection('section2')">Performance</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="navigateToSection('section3')">Download our product literature</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="navigateToSection('section4')">Fund Manager</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="navigateToSection('section5')">Fund Details</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <ng-container id="section1">
+
+        <div class="p-4 text-center">
+            <h2 class="sec-title"><span>Over</span> <span>View</span></h2>
+        </div>
+        <div class="col" *ngIf="!fundDetails.length" class="mb-5">
+
+            <div class="mt-3">
+                <p-skeleton height="5rem" width="72rem" styleClass="p-mb-2"></p-skeleton>
+
+            </div>
+            <div class="mt-4">
+                <p-skeleton height="5rem" width="72rem" styleClass="p-mb-2"></p-skeleton>
+
+            </div>
+        </div>
+        <div class="p-4" *ngIf="fundDetails.length">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="section2"></div>
+
+                    <ul class="overview-sec">
+                        <li>
+                            <div class="fullwidth">
+                                <!-- <label for=""> </label> -->
+                                <select name="custom-select" (change)="onChangeObj($event)"
+                                    class="custom-select mb-3 form-control">
+                                    <option *ngFor="let data of fundDetails" [value]="data.fund_code">
+                                        {{data.plan_type ==='1'? 'Regular -'+data.option_name: 'Direct-'+data.option_name  }}
+                                    </option>
+                                </select>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="">
+                                <p class="lable">DATE OF ALLOTMENT</p>
+                                <p class="val">{{selectedCategoryData?.aum_allotment_date}}</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="">
+                                <p class="lable">FUND TYPE </p>
+                                <p class="val">
+                                    {{ selectedFundType}}
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="">
+                                <p class="lable">RISK LABEL</p>
+                                <p class="val"> {{selectedCategoryData?.risk_type ==='1'? 'Low':
+                                selectedCategoryData?.risk_type ==='2'?'Low to Modarate':
+                                selectedCategoryData?.risk_type ==='3'?'Modarate':
+                                selectedCategoryData?.risk_type ==='4'?'Modarate to High':
+                                selectedCategoryData?.risk_type ==='5'?'High':
+                                selectedCategoryData?.risk_type ==='6'?'Very High':
+                                         ''
+                                         }}</p>
+                            </div>
+                        </li>
+                        <li class="bigLI">
+                            <div class="">
+                                <p class="lable">BENCHMARK</p>
+                                <p class="val">{{ selectedCategoryData?.benchmark }}</p>
+                            </div>
+                        </li>
+                        <!-- </ul> -->
+
+                        <!-- <ul class="overview-sec"> -->
+                        <li>
+                            <div class="">
+                                <p class="lable">NATURE </p>
+                                <p class="val">{{selectedCategoryData?.nature =='O'?'Open Ended':'Close Ended'}} </p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="">
+                                <p class="lable">INVESTMENT TYPE</p>
+                                <p class="val">{{ selectedCategoryData?.investment_type}} Term</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="">
+                                <p class="lable">NAV <span hover-tooltip="Net Asset Value" tooltip-position="top"> <img
+                                            src="assets/images/i-icon.png" alt=""></span></p>
+                                <h3 *ngIf="latestNavData" class="val green">
+                                    {{ latestNavData ? latestNavData : 'N.A.'}}
+                                </h3>
+                                <app-button *ngIf="!latestNavData" [class]="'btn mb-2 mt-2 greenBtn'"
+                                (click)="getNAVData()" [spinner]="false">Get Latest NAV</app-button>
+                                <h5  *ngIf="latestNavDate" class="date"> As on {{ latestNavDate | date: "dd MMMM YYYY"  }}</h5>
+
+                                <a href="javascript:void(0)" (click)="viewNav()" class="link">View Historical NAVs</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="">
+                                <p class="lable">AUM </p>
+                                <p class="val green">{{ selectedCategoryData?.aum_value}} <span>Crores</span></p>
+                                <h5 class="date">As on {{ selectedCategoryData?.aum_date| date: "dd MMMM YYYY"  }}
+                                </h5>
+                            </div>
+                        </li>
+                        <li class="bigLI">
+                            <div class="">
+                                <label for="CAGR" class="lable">CAGR <span hover-tooltip="Compounded Annual Growth Rate"
+                                        tooltip-position="top"> <img src="assets/images/i-icon.png"
+                                            alt=""></span></label>
+                                <div class="d-flex cagrValue">
+                                    <select [formControl]="direectRegular" name="custom-select"
+                                        (change)="onChangeObjCAGR($event)" class="custom-select mb-3 form-control">
+                                        <option value="cagr_5_year">Last 5 Years</option>
+                                        <option value="cagr_3_year">Last 3 Years</option>
+                                        <option value="cagr_1_year">Last 1 Years</option>
+                                        <option value="cagr_inception">Since Inceptions </option>
+                                    </select>
+                                    <p class="">{{ CAGRValue }} <span>%</span></p>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </ng-container>
+    <div>
+        <div class="greybg mt-4">
+            <div class="pt-4 pb-2 text-center">
+                <h2 class="sec-title">PERFORMANCE</h2>
+            </div>
+            <div class="col" *ngIf="!fundDetails.length" class="mb-5">
+
+                <div class="mt-3">
+                    <p-skeleton height="5rem" width="72rem" styleClass="p-mb-2"></p-skeleton>
+
+                </div>
+                <div class="mt-4">
+                    <p-skeleton height="5rem" width="72rem" styleClass="p-mb-2"></p-skeleton>
+
+                </div>
+            </div>
+            <div class="mt-4" *ngIf="fundDetails.length">
+
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"
+                        *ngIf="(selectedCategoryData?.plan_type=='1' || selectedCategoryData?.plan_type=='5')  && selectedCategoryData?.option_name ==  'Growth'"
+                        [ngClass]="seletedTab=='retrun' ? 'active' : '' " (click)="tabView('retrun')">
+                        <a class="nav-link" aria-current="page">Returns</a>
+                    </li>
+                    <li class="nav-item" [ngClass]="seletedTab=='Nav' ? 'active' : '' " (click)="tabView('Nav')">
+                        <a class="nav-link">NAV</a>
+                    </li>
+                </ul>
+                <ng-container *ngIf="seletedTab=='retrun'">
+
+                    <div class="mt-4">
+                        <h3 class="mb-4">Performance of {{ selectedCategoryData?.fund_name}} </h3>
+
+                        <div class="table-responsive return-table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>1 Year CAGR</th>
+                                        <th>3 Year CAGR</th>
+                                        <th>5 Year CAGR</th>
+                                        <th>Since Inception</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>This schemes</td>
+                                        <td>{{ selectedReturnMasterData?.scheme_1_year_cagr}}</td>
+                                        <td>{{ selectedReturnMasterData?.scheme_3_year_cagr}}</td>
+                                        <td>{{ selectedReturnMasterData?.scheme_5_year_cagr}}</td>
+                                        <td>{{ selectedReturnMasterData?.scheme_sinceinception_cagr}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ selectedCategoryData.benchmark?selectedCategoryData.benchmark:'***'}}
+                                        </td>
+                                        <td>{{ selectedReturnMasterData?.benchmark_1_year_cagr}}</td>
+                                        <td>{{ selectedReturnMasterData?.benchmark_3_year_cagr}}</td>
+                                        <td>{{ selectedReturnMasterData?.benchmark_5_year_cagr}}</td>
+                                        <td>{{ selectedReturnMasterData?.benchmark_sinceinception_cagr}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ selectedCategoryData.additional_benchmark ?selectedCategoryData.additional_benchmark:'***'}}
+                                        </td>
+                                        <td>{{ selectedReturnMasterData?.ad_benchmark_1_year_cagr}}</td>
+                                        <td>{{ selectedReturnMasterData?.ad_benchmark_3_year_cagr}}</td>
+                                        <td>{{ selectedReturnMasterData?.ad_benchmark_5_year_cagr}}</td>
+                                        <td>{{ selectedReturnMasterData?.ad_benchmark_sinceinception_cagr}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="table-responsive return-table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>VAVLUE of 10000 INVESTED IN</th>
+                                        <th>1 Year CAGR</th>
+                                        <th>3 Year CAGR</th>
+                                        <th>5 Year CAGR</th>
+                                        <th>Since Inception</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td>This schemes</td>
+                                        <td>{{ selectedReturnMasterData?.scheme_1_year_rupeevalue}}</td>
+                                        <td>{{ selectedReturnMasterData?.scheme_3_year_rupeevalue}}</td>
+                                        <td>{{ selectedReturnMasterData?.scheme_5_year_rupeevalue}}</td>
+                                        <td>{{ selectedReturnMasterData?.scheme_sinceinception_rupeevalue}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ selectedCategoryData.benchmark?selectedCategoryData.benchmark:'***'}}
+                                        </td>
+                                        <td>{{ selectedReturnMasterData?.benchmark_1_year_rupeevalue}}</td>
+                                        <td>{{ selectedReturnMasterData?.benchmark_3_year_rupeevalue}}</td>
+                                        <td>{{ selectedReturnMasterData?.benchmark_5_year_rupeevalue}}</td>
+                                        <td>{{ selectedReturnMasterData?.benchmark_sinceinception_rupeevalue}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ selectedCategoryData.additional_benchmark ?selectedCategoryData.additional_benchmark:'***'}}
+                                        </td>
+                                        <td>{{ selectedReturnMasterData?.ad_benchmark_1_year_rupeevalue}}</td>
+                                        <td>{{ selectedReturnMasterData?.ad_benchmark_3_year_rupeevalue}}</td>
+                                        <td>{{ selectedReturnMasterData?.ad_benchmark_5_year_rupeevalue}}</td>
+                                        <td>{{ selectedReturnMasterData?.ad_benchmark_sinceinception_rupeevalue}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <p>Above returns are as on February 29, 2024</p>
+                        <p>Past performance may or may not be sustained in future and should not be used as a basis of
+                            comparison with other investments. Returns do not take into account the load, if any.
+                            Returns
+                            are for growth option. Different plans shall have a different expense structure.The
+                            performance
+                            details provided above are for regular/distributor plan. </p>
+                        <p>Please refer below for fund manager details and performance of other funds managed by the
+                            Fund
+                            Manager(s)** </p>
+                        <p>Benchmark & ***Additional Benchmark</p>
+                    </div>
+                </ng-container>
+                <div id="section3"></div>
+                <ng-container *ngIf="seletedTab=='Nav'">
+                    <div class="mt-4">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Scheme Plan</th>
+                                        <th>NAV per Unit (&#8377;)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let data of navData">
+                                        <td>{{ data?.scheme_name}}</td>
+                                        <td>{{ data?.net_asset_value}}</td>
+                                    </tr>
+                                    <div class="text-center" *ngIf="navData.length===0">
+                                        <p>No record found.</p>
+                                    </div>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div>
+        <div class="p-4 text-center">
+            <h2 class="sec-title"><span>DOWNLOAD OUR</span> <span>PRODUCT LITERATURE</span></h2>
+        </div>
+        <div class="col" *ngIf="!fundDetails.length" class="mb-5">
+
+            <div class="mt-3">
+                <p-skeleton height="5rem" width="72rem" styleClass="p-mb-2"></p-skeleton>
+
+            </div>
+            <div class="mt-4">
+                <p-skeleton height="5rem" width="72rem" styleClass="p-mb-2"></p-skeleton>
+
+            </div>
+        </div>
+
+        <div *ngIf="fundDetails.length">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="section4"></div>
+
+                    <ul class="downloadSection">
+                        <li>
+                            <div>
+                                <p class="file-name">{{selectedCategoryData.fund_name}} -Product Note</p>
+                            </div>
+                            <div class="icon-sec">
+                                <a [href]="'https://www.barodabnpparibasmf.in/assets/download_documents/'+selectedCategoryData?.product_brochure"
+                                    target="_blank" class="downloadIcon">
+                                    <img src="assets/images/pdf-icon.png" alt="">
+                                    <span>Download</span></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <p class="file-name">{{selectedCategoryData.fund_name}} - Product Presentation</p>
+                            </div>
+                            <div class="icon-sec">
+                                <a [href]="'https://www.barodabnpparibasmf.in/assets/download_documents/'+selectedCategoryData?.product_note"
+                                    target="_blank" class="downloadIcon">
+                                    <img src="assets/images/pdf-icon.png" alt="">
+                                    <span>Download</span></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+    <!-- <div id="section9" *ngIf="fundDetails.length">
+        <div class="p-4" style="text-align: center;">
+            <h2>VIDEO LIBRARY</h2>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 g-4 " style="padding: 1rem;">
+            <div class="col">
+                <div class="card">
+                    <iframe width="460" height="295" src="https://www.youtube.com/embed/rl7Afv44iLw?si=ab7akaCUzwl1kCh8"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <iframe width="460" height="295" src="https://www.youtube.com/embed/rl7Afv44iLw?si=ab7akaCUzwl1kCh8"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+
+        </div>
+    </div> -->
+    <div>
+        <div class="p-4 text-center">
+            <h2 class="sec-title">FUND MANAGER </h2>
+        </div>
+        <div class="col" *ngIf="!fundDetails.length" class="mb-5">
+
+            <div class="mt-3">
+                <p-skeleton height="5rem" width="72rem" styleClass="p-mb-2"></p-skeleton>
+
+            </div>
+            <div class="mt-4">
+                <p-skeleton height="5rem" width="72rem" styleClass="p-mb-2"></p-skeleton>
+
+            </div>
+        </div>
+        <div>
+            <!-- <owl-carousel-o [options]="customOptions">
+                    <div *ngFor="let data of selectedManager; let i=index">
+                        <ng-template carouselSlide>
+
+                        <div class="card member-wrapper">
+                                <img [src]="'https://www.barodabnpparibasmf.in/assets/images/management-team/'+data?.manager_pic"
+                                    class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h4 class="card-title member-name">{{ data?.manager_name}} </h4>
+                                    <h5 class="card-title designation">{{ data?.manager_designation}}</h5>
+                                    <p class="card-text" [ngClass]="active==i? '':'manager-desc'"
+                                        [innerHTML]="data?.manager_description"></p> <a
+                                        [ngClass]="active==i? 'hide-see':''" (click)="active =i">See more</a>
+                                </div>
+                        </div>
+                    </ng-template>
+
+                    </div>
+            </owl-carousel-o> -->
+            <owl-carousel-o [options]="customOptions">
+                <ng-container *ngFor="let data of selectedManager; let i = index">
+                  <ng-template carouselSlide>
+                    <div class="manager-card">
+                        <img [src]="'https://www.barodabnpparibasmf.in/assets/images/management-team/'+data?.manager_pic"
+                        class="card-img-top manager-img" alt="...">
+                        <div class="card-body">
+                            <h4 class="card-title member-name">{{ data?.manager_name}} </h4>
+                            <h5 class="card-title designation">{{ data?.manager_designation}}</h5>
+                            <p class="card-text" [ngClass]="active==i? '':'manager-desc'"
+                                [innerHTML]="data?.manager_description"></p> <a
+                                [ngClass]="active==i? 'hide-see':''" (click)="active =i" class="moreBtn">See more</a>
+                        </div>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </owl-carousel-o>
+
+        </div>
+    </div>
+    <div class="greybg mt-5">
+
+        <div class="pt-4 pb-4 text-center">
+            <h2 class="sec-title">FUND DETAILS </h2>
+        </div>
+        <div class="col" *ngIf="!fundDetails.length" class="mb-5">
+
+            <div class="mt-3">
+                <p-skeleton height="5rem" width="72rem" styleClass="p-mb-2"></p-skeleton>
+
+            </div>
+            <div class="mt-4">
+                <p-skeleton height="5rem" width="72rem" styleClass="p-mb-2"></p-skeleton>
+
+            </div>
+        </div>
+        <div id="section5" *ngIf="fundDetails.length">
+
+            <div class="">
+                <!-- <h3>Investment Objective </h3><br>
+            <div style="margin: 1rem;">
+                <p>{{ selectedCategoryData?.investment_objective}}.</p>
+            </div> -->
+
+
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading-One">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse-One" aria-expanded="true" aria-controls="collapse-One">
+                                Investment Objective
+                            </button>
+                        </h2>
+                        <div id="collapse-One" class="accordion-collapse collapse show" aria-labelledby="heading-One"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                {{ selectedCategoryData?.investment_objective}}.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                LOAD STRUCTURE
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                {{ selectedCategoryData?.load_structure}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                SYSTEMATIC INVESTMENT PLAN ( SIP)
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                {{ selectedCategoryData?.sip}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                SYSTEMATIC TRANSFER PLAN ( STP)
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                {{ selectedCategoryData?.stp}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFOUR">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseFOUR" aria-expanded="false" aria-controls="collapseFOUR">
+                                SYSTEMATIC WITHDRAWAL PLAN ( SWP)
+                            </button>
+                        </h2>
+                        <div id="collapseFOUR" class="accordion-collapse collapse" aria-labelledby="headingFOUR"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                {{ selectedCategoryData?.swp}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFIVE">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseFIVE" aria-expanded="false" aria-controls="collapseFIVE">
+                                REDEMPTION
+                            </button>
+                        </h2>
+                        <div id="collapseFIVE" class="accordion-collapse collapse" aria-labelledby="headingFIVE"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                {{ selectedCategoryData?.redemption}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

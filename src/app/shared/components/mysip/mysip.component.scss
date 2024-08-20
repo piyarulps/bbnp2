@@ -1,0 +1,244 @@
+.title-header h5:after, .title-header .h5:after {
+    display: none;
+   }
+::ng-deep .p-highlight .p-tabview-nav-link {
+    color: var(--theme-color);
+    border-color: var(--theme-color);
+    border-width: 0 0 3px 0;
+}
+
+::ng-deep .p-tabview-nav-link {
+    color: #595B61;
+    padding: 6px 12px;
+}
+ 
+::ng-deep .p-tabview .p-tabview-panels {
+    padding: 15px 0;
+}
+::ng-deep table tr th, ::ng-deep table tr td {
+    background: transparent;
+    border-bottom: 1px solid #e0e0e0;
+}
+::ng-deep table tr{
+    th {
+        color: #000;
+        text-align: center;
+        &:first-child {
+            padding-left: 0;
+            text-align: left;
+            
+        }
+        &:last-child {
+            text-align: center;
+            padding-right: 0;
+        }
+    }
+    td {
+        color: #4A4A4A;
+        text-align: center;
+        &:first-child {
+            padding-left: 0;
+            font-size: 13px;      
+            text-align: left;     
+        }
+        &:last-child {
+            text-align: center;
+            padding-right: 0;
+        }
+    }
+}
+
+::ng-deep td:first-child {
+    text-align: left;
+    .p-element {
+        font-weight: 500;
+
+        span {
+            font-weight: normal;
+            margin-top: 15px;
+        }
+    }
+}
+
+::ng-deep .p-overlaypanel-content {
+    padding: 0;
+    p {
+        color: #000;
+        cursor: pointer;
+        border-bottom: 1px solid #E0E0E0;
+        margin: 0;
+        padding: 10px 16px;
+
+        &:hover {
+            color: var(--theme-color);
+        }
+    }
+}
+::ng-deep .p-dialog {
+    border-radius: 12px;
+    box-shadow: 2px 4px 4px rgb(0 0 0 / 25%);
+}
+::ng-deep .p-dialog-header {
+    color: #000;
+    line-height: normal;
+    font-size: 14px;
+    font-weight: 500;
+}
+::ng-deep .borderBox {
+    border: 1px solid #D74B14;
+    border-radius: 17px;
+    padding: 10px;
+    text-align: center;
+
+    h4 {
+        color: #000;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+    p {
+        color: #000;
+        font-size: 12px;
+    }
+}
+
+::ng-deep .pause-btn {
+    display: flex;
+    justify-content: space-between;
+
+    .btn-outline {
+        height: 38px;
+        padding: 5px 10px;
+        min-width: 110px;
+
+        &.orangeOutline {
+            border: 1px solid var(--theme-color);
+            color: var(--theme-color);
+
+            &:hover {
+                background: var(--theme-color);
+                color: #fff;
+            }
+        }
+    }
+}
+.reason-dropdown {
+    margin-top: 15px;
+    span {
+        color: #979797;
+        font-size: 13px;
+        display: block;
+    }
+    label {
+        color: #000;
+        font-size: 13px;
+    }
+    select {
+        color: #000;
+        font-size: 13px;
+        font-weight: bold;
+        border: 0;
+        border-bottom: 1px solid #979797;
+        border-radius: 0px;
+        appearance: auto;
+        padding: 0;
+    }
+}
+
+::ng-deep .p-dialog-header-close {
+    position: absolute;
+    top: 0;
+    right: -1px;
+
+}
+
+.manage-sip {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.sip-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.sip-right .form-check-input {
+    margin-top: 1px;
+    margin-right: 4px;
+}
+.sip-right .form-check-label {
+    margin-right: 15px;
+}
+select {
+    appearance: auto;
+    
+    &.form-control {
+        padding: 8px 5px;
+        border-radius: 4px;
+    }
+}
+
+.mobile-card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 12px 0;
+}
+
+.mobile-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+}
+
+.mobile-card-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.mobile-card-body {
+    padding: 8px 0;
+}
+
+.mobile-card-actions {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+    margin-top: 8px;
+}
+
+.mobile-card-actions .btn {
+    width: 48%;
+}
+
+@media (min-width: 768px) {
+    .mobile-card-container {
+        display: none;
+    }
+}
+
+
+.selectDropdown {
+    display:flex; 
+    width: 200px;
+}
+.width35 {
+    width: 35%;
+}
+.width25 {
+    width: 25%;
+}
+.width20 {
+    width: 20%;
+}
+.width10 {
+    width: 11%;
+}

@@ -1,0 +1,246 @@
+<section class="log-in-section section-b-space">
+  <!-- <div class="whiteBox"> -->
+  <div class="container w-100 whiteBox">
+    <div class="row">
+      <div class="col-xl-7 col-lg-7 log-in-box">
+
+
+        <owl-carousel-o [options]="customOptions">
+          <ng-container *ngFor="let item of bannerData; let i = index">
+
+            <ng-template carouselSlide>
+              <div class="col-12">
+                <div class="col-12">
+                  <img [src]="item.imageUrl">
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+        </owl-carousel-o>
+
+
+
+
+      </div>
+
+      <div class="col-xl-5 col-lg-5">
+
+        <div class="log-in-box">
+          <div class="logo">
+            <img src="assets/images/logo/logo.jpg" alt="">
+          </div>
+          <div class="log-in-title">
+            <h3>Register</h3>
+
+            <div class="alert alert-danger login-alert" role="alert" *ngIf="error">
+              <i class="ri-error-warning-line"></i> {{ error }}
+            </div>
+
+            <div class="alert alert-danger login-alert" role="alert" *ngIf="errormsg">
+              <i class="ri-error-warning-line"></i> {{errormsg}}
+            </div>
+            <div class="alert alert-warning login-alert" role="alert" *ngIf="alert">
+              <i class="ri-error-warning-line"></i> {{alert}}
+            </div>
+            <div class="alert alert-danger login-alert" role="alert" *ngIf="teamsboxChecked">
+              <i class="ri-error-warning-line"></i> Please checked the checkbox ! check box is required
+            </div>
+
+          </div>
+
+
+          <div class="input-box">
+            <form class="row g-4" [formGroup]="form" (ngSubmit)="submit();">
+              <ng-container *ngIf="!this.otpSections">
+
+                <div class="col-sm-6">
+                  <div class="form-floating theme-form-floating log-in-form">
+                    <input type="text" class="form-control" id="PAN" formControlName="PAN" maxlength="10" />
+                    <label for="PAN">Enter your PAN</label>
+                    <div *ngIf="form.controls['PAN'].touched && form.controls['PAN'].errors?.['required']"
+                      class="invalid-feedback">
+                      PAN is required
+                    </div>
+                    <div *ngIf="form.controls['PAN'].hasError('minlength')" class="invalid-feedback">
+                      PAN is invalid
+                    </div>
+                    <div *ngIf="form.controls['PAN'].hasError('pattern')" class="invalid-feedback">
+                      Invalid Pan Pattern
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+                <div class="col-sm-6">
+                  <div class="form-floating theme-form-floating log-in-form">
+                    <input type="text" class="form-control" id="name" formControlName="Name" />
+                    <label for="Name">Enter your name</label>
+                    <div *ngIf="form.controls['Name'].touched && form.controls['Name'].errors?.['required']"
+                      class="invalid-feedback">
+                      Name is required
+                    </div>
+                    <div *ngIf="form.controls['Name'].hasError('pattern')" class="invalid-feedback">
+                      Invalid Name
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+                <div class="col-sm-6">
+                  <div class="form-floating theme-form-floating log-in-form">
+                    <input type="email" class="form-control" id="Email" formControlName="Email" />
+                    <label for="Email">Enter your email</label>
+                    <div *ngIf="form.controls['Email'].touched && form.controls['Email'].errors?.['required']"
+                      class="invalid-feedback">
+                      Email is required
+                    </div>
+                    <div *ngIf="form.controls['Email'].errors?.['pattern']" class="invalid-feedback">
+                      Invalid Email Entered
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+                <div class="col-sm-6 phone-selection">
+                  <div class="form-floating theme-form-floating log-in-form mobile-input">
+
+                    <!-- Country Code Select -->
+                      
+                        <div class="country">
+                          <div class="flag-box">
+                            <div class="in iti-flag"></div>
+                          </div>
+                          <span class="dial-code">+91</span>
+                        </div>
+                     
+
+                    <!-- Mobile Number Input -->
+                    <input type="tel" class="form-control" formControlName="Mobile" name="Mobile"
+                      placeholder="Mobile Number" maxlength="10">
+
+                    <!-- Error Messages -->
+                    <div class="invalid-feedback"
+                      *ngIf="form.controls['Mobile'].touched && form.controls['Mobile'].errors?.['required']"
+                      autocomplete="off">
+                      Mobile number is required.
+                    </div>
+                    <div class="invalid-feedback"
+                      *ngIf="form.controls['Mobile'].touched && form.controls['Mobile'].errors?.['pattern']">
+                      Invalid mobile number format. Please enter a valid mobile number.
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <input type="checkbox" id="mobile-check" formControlName="mobilecheckbox">
+                <label for="mobile-check">
+                  I hereby, declare that the above mobile number mentioned above belongs to
+                  
+
+                  <select #mySelect (change)="onChange()">
+                    <ng-container *ngFor="let item of relationshipdataArr; let i = index">
+                      <option value="{{item.Family_code}}">{{item.Family_description}}</option>
+                      </ng-container>
+                  </select></label>
+                </div>
+
+                <div class="invalid-feedback"
+                  *ngIf="form.controls['mobilecheckbox'].touched  && form.controls['mobilecheckbox'].errors?.['required']"
+                  autocomplete="off">
+                  Please tick the checkbox
+                </div>
+
+                <div class="form-group mt-0">
+                  <input type="checkbox" id="email-check" formControlName="emailcheckbox">
+                <label for="email-check">
+                  I hereby, declare that the above email ID mentioned above belongs to
+                  <select #emailSelect (change)="onChangeemail()" aria-label="Default select example" name="custom-select" formControlName="EmailDeclaration"
+                   >
+                   <ng-container *ngFor="let item of relationshipdataArr; let i = index">
+                    <option value="{{item.Family_code}}">{{item.Family_description}}</option>
+                    </ng-container>
+                   </select></label>
+
+                </div>
+
+                <div class="invalid-feedback"
+                  *ngIf="form.controls['emailcheckbox'].touched  && form.controls['emailcheckbox'].errors?.['required']"
+                  autocomplete="off">
+                  Please tick the checkbox
+                </div>
+
+                <div class="col-12">
+                  <app-button *ngIf="!prodCheck" [disabled]="!form.valid" [class]="'btn btn-theme btn-lg w-100 justify-content-center'"
+                    [id]="'register_btn'">
+                    Register
+                  </app-button>
+                  <app-button *ngIf="prodCheck"  [disabled]="true" [class]="'btn btn-theme btn-lg w-100 justify-content-center'"> Registration not allowed at the moment</app-button>
+                  <div class="sign-up-box">
+                    <h4>{{ 'already_have_account' | translate }}</h4>
+                    <a [routerLink]="['/auth/login']">{{ 'log_in' | translate }}</a>
+                  </div>
+                </div>
+
+              </ng-container>
+            </form>
+
+            <form class="row g-4" [formGroup]="Otpform" (ngSubmit)="validateNewPanOTP();" *ngIf="this.otpSections">
+              <div class="col-12">
+                <div class="form-floating theme-form-floating log-in-form">
+                  <input type="text" class="form-control" id="OTP1" formControlName="OTP1" maxlength="6" placeholder=""
+                    aria-label="Enter your Email OTP" />
+                  <label for="OTP1">Enter your Email OTP</label>
+
+
+                  <div *ngIf="Otpform.controls['OTP1'].touched && Otpform.controls['OTP1'].errors?.['required']"
+                    class="invalid-feedback" role="alert">
+                    Please enter the OTP.
+                  </div>
+                  <div *ngIf="Otpform.controls['OTP1'].touched && Otpform.controls['OTP1'].errors?.['invalidOTP']"
+                    class="invalid-feedback" role="alert">
+                    Invalid OTP. Please check and try again.
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="form-floating theme-form-floating log-in-form">
+                <input type="text" class="form-control" id="OTP2" formControlName="OTP2" maxlength="6" placeholder=" "
+                  aria-label="Enter your Mobile OTP">
+                <label for="OTP2">Enter your Mobile OTP</label>
+                <p *ngIf="displayTimer">{{ display }}</p>
+                <button *ngIf="resendOtp" (click)="reSendOtps()">Resend Both OTPs</button>
+                <div *ngIf="Otpform.controls['OTP2'].touched && Otpform.controls['OTP2'].errors?.['required']"
+                  class="invalid-feedback" role="alert">
+                  Mobile OTP is required.
+                </div>
+                <div *ngIf="Otpform.controls['OTP2'].touched && Otpform.controls['OTP2'].errors?.['invalidOTP2']"
+                  class="invalid-feedback" role="alert">
+                  Invalid Mobile OTP. Please check and try again.
+                </div>
+              </div>
+              <div class="col-12">
+                <app-button [disabled]="!Otpform.valid" [class]="'btn btn-theme w-100 justify-content-center'"
+                  [id]="'login_btn'">
+                  Verify OTP
+                </app-button>
+                <div class="sign-up-box">
+                  <h4>If you already have an account <a [routerLink]="['/auth/login']">Please Login</a></h4>
+
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+</section>

@@ -1,0 +1,33 @@
+::ng-deep .title-header h5:after, .title-header .h5:after {
+    display: none;
+} 
+
+::ng-deep .col-xl-10 {
+    @media screen and (min-width: 1280px) {   
+        width: 90%;
+    }
+}
+::ng-deep.p-calendar {
+    width: 100%!important;
+}
+::ng-deep.p-calendar .p-inputtext {
+     width: 50% !important;
+     border-radius: 0;
+     position: relative;
+     margin-bottom: 10px;
+}
+
+::ng-deep .p-datepicker table td > span {
+    display: inline-flex !important;
+  }
+
+::ng-deep.p-calendar {
+    align-items: start;
+    display: flex;
+  }
+  ::ng-deep .p-datepicker-trigger {
+    background-color: #F9F9F9;
+      color: #444;
+      border: 0;
+      height: 43px;
+  }

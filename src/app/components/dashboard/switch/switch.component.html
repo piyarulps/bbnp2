@@ -1,0 +1,318 @@
+<app-page-wrapper [title]="'Switch'" class="full-width">
+<form class="theme-form theme-form-2 mega-form" [formGroup]="form" (ngSubmit)="submit()">
+   
+   
+    <app-form-fields [label]="'Folio'" [for]="'Folio'" [required]="true" (change)="onChangeFolioObj($event)">
+        <div [ngClass]="{ 'position-relative spinning' : isLoading }">
+            <ng-content></ng-content>
+          </div>
+        <select name="custom-select"   formControlName="Folio" 
+                            class="custom-select mb-3 form-control">
+                            <option  value="">--Please Select--</option>
+                            <option *ngFor="let folio of onlyfolionos" [value]="folio">{{folio}}
+                            </option>
+                          </select>
+        <div class="invalid-feedback" *ngIf="form.controls['Folio'].touched && form.controls['Folio'].errors?.['required']">
+          Folio is required
+        </div>
+    </app-form-fields>
+
+
+
+    <app-form-fields [label]="'Swtich Out Scheme'" [for]="'Swtich Out Scheme'" [required]="true">
+        <select name="custom-select"   formControlName="Fromschemeid"  (change)="onChangeObj($event)"
+                            class="custom-select mb-3 form-control">
+                            <option value="">--Please Select--</option>
+                            <option *ngFor="let folio of selectedfolioval" [value]="folio?.schemeid">{{folio?.desc}}
+                            </option>
+                          </select>
+        <div class="invalid-feedback" *ngIf="form.controls['Fromschemeid'].touched && form.controls['Fromschemeid'].errors?.['required']">
+          Scheme is required
+        </div>
+    </app-form-fields>
+   
+    
+    <div class="col-md-12 lable-sz ">
+        <div class="row mt-2">
+            <div class="form-group col-md-3 "></div>
+            <div class="form-group col-md-4 ">
+                <span>Balance Units</span>: <span id="txtbalunt">{{selectedschemeval?.balanceunits}}</span>
+            </div>
+            <div class="form-group col-md-5 ">
+                <span>Current Value</span>: <span id="txtcurval">{{selectedschemeval?.currentvalue}}</span>
+            </div>
+        </div>
+        <div class="row mt-md-2">
+            <div class="form-group col-md-3 "></div>
+
+            <div class="form-group col-md-4 ">
+                <span>NAV as on Date</span>: <span id="txtNavAsOnDateValue">{{selectedschemeval?.nav}}</span>
+            </div>
+            <div class="form-group col-md-5 ">
+                <!-- <span>Switch Amount</span>: <span id="txtminamt">  {{this.schemesbyCodeData?.switch_minamt}} </span><br> -->
+                <span>Cost value</span>: <span id="txtminamt"> {{selectedschemeval?.costvalue}} </span><br>
+
+              
+            </div>
+        </div>
+    </div>
+      
+
+    <app-form-fields [label]="'Investment Through'" [for]="'Investment Through'" [required]="true">
+        <div class="col-md-12 lable-sz ">
+            <div class="row mt-2">
+                <div class="form-group col-md-2 ">
+                    <input formControlName="DistributorDirect"    class="form-check-input" type="radio" name="DistributorDirect" id="DistributorDirect1" value="REGULAR">
+                    <label class="form-check-label" for="DistributorDirect">
+                    Distributor
+                    </label>
+                </div>
+               
+    
+                <div class="form-group col-md-2 ">
+                    <input formControlName="DistributorDirect"    class="form-check-input" type="radio" name="DistributorDirect" id="DistributorDirect2" value="DIRECT">
+                    <label class="form-check-label" for="DistributorDirect">
+                   Direct
+                    </label>
+                </div>
+    
+                <div class="form-group col-md-8 ">
+                    
+                </div>
+                
+            </div>
+          </div>  
+        </app-form-fields>
+
+        <ng-container *ngIf="form.controls['DistributorDirect'].value ==='REGULAR'">
+            <app-form-fields [label]="'ARN Code '" [for]="'ARN Code'">
+               <input formControlName="AgentCode" class="form-control" type="text"
+                    placeholder="Enter ARN Code" name="ARN Code">
+                <p>ARN name : {{agentname}}<p>       
+            </app-form-fields>
+        
+            <app-form-fields [label]="'Sub ARN Code '" [for]="' SubARN Code'">
+                <input formControlName="Subbrokerarn" class="form-control" type="text"
+                    placeholder="Enter Sub ARN Code" name="Sub ARN Code">
+                <p> Sub ARN name :  {{subagentname}}<p>       
+            </app-form-fields>
+            
+            
+            <app-form-fields [label]="'Sub Broker Code '" [for]="' Sub Broker Code'">
+                <input formControlName="SubbrokerCode" class="form-control" type="text"
+                    placeholder="Enter Broker Code" name="Broker Code">
+                   
+            </app-form-fields>
+        </ng-container>
+        
+
+
+        <app-form-fields [label]="'Category'" [for]="'Category'" [required]="true" (change)="onChangeCategoryObj($event)">
+            <select name="custom-select"   formControlName="Category" 
+                                class="custom-select mb-3 form-control">
+                                <option  value="">--Please Select--</option>
+                                <option *ngFor="let Category of fundsCategory" [value]="Category">{{Category}}
+                                </option>
+                              </select>
+            <div class="invalid-feedback" *ngIf="form.controls['Category'].touched && form.controls['Category'].errors?.['required']">
+              Category is required
+            </div>
+        </app-form-fields>
+
+
+
+
+        <app-form-fields [label]="'Switch In Scheme Category'" [for]="'SwitchInSchemeCategory'" [required]="true" (change)="onChangeSchemeINObj($event)">
+            <select name="custom-select"   formControlName="SwitchInSchemeCategory" 
+                                class="custom-select mb-3 form-control">
+                                <option  value="">--Please Select--</option>
+                                <option *ngFor="let Category of selectedSwitchINValue" [value]="Category.schdesc
+                                ">{{Category.schdesc}}
+                                </option>
+                              </select>
+            <div class="invalid-feedback" *ngIf="form.controls['SwitchInSchemeCategory'].touched && form.controls['SwitchInSchemeCategory'].errors?.['required']">
+                Switch In Scheme Category is required
+            </div>
+        </app-form-fields>
+
+  
+        <app-form-fields [label]="'Switch In Scheme'" [for]="'Switch In Scheme'" [required]="true" (change)="onChangeSchemeINSwitchObj($event)">
+            <select name="custom-select"   formControlName="Toschemeid" 
+                                class="custom-select mb-3 form-control">
+                                <option  value="">--Please Select--</option>
+                                <option *ngFor="let Category of selectedsingleswitchINvalue" [value]="Category.schemeid">{{Category.desc}}
+                                </option>
+                              </select>
+            <div class="invalid-feedback" *ngIf="form.controls['Category'].touched && form.controls['Category'].errors?.['required']">
+                Switch In Scheme is required
+            </div>
+        </app-form-fields>
+
+
+
+
+
+
+    <app-form-fields [label]="'EUIN Declarations '" [for]="'EUIN Declarations'" [required]="true">
+        <div class="col-md-12 lable-sz ">
+            <div class="row mt-2">
+                <div class="form-group customCheck col-md-2 ">
+                    <input type="checkbox" id="Euinopt" formControlName="Euinflag">
+                     <label for="Plan"> {{ form.controls['Euinflag'].value?'Yes':'No' }}</label>
+
+                    <i class="ri-information-line" data-placement="left" title="I hereby confirm that the EUIN box has been intentionally left blank by me/us as this is an execution-only transaction without any interaction or advice by any personnel of the above distributor or notwithstanding the advice of in-appropriateness,if any, Provided by any personnel of the distributor and the distributor has not charged any advisory fees on this transaction."></i>
+                </div>
+                <div class="form-group col-md-2 ">
+                </div>
+                <div class="form-group col-md-8 ">
+                </div>
+                
+            </div>
+          </div>  
+        </app-form-fields>
+
+
+
+        <app-form-fields [label]="'Switch Type'" [for]="'Switch Type'" [required]="true">
+            <div class="col-md-12 lable-sz ">
+                <div class="row mt-2">
+                    <div class="form-group col-md-2 ">
+                        <input formControlName="Partialfull" class="form-check-input" type="radio" name="Partialfull" id="Partialfull1" value="P">
+                        <label class="form-check-label" for="Partialfull">
+                         Partial
+                        </label>
+                    </div>
+                   
+        
+                    <div class="form-group col-md-2 ">
+                        <input formControlName="Partialfull" class="form-check-input" type="radio" name="Partialfull" id="Partialfull2" value="F">
+                        <label class="form-check-label" for="Partialfull">
+                         Full
+                        </label>
+                    </div>
+        
+                    <div class="form-group col-md-8 ">
+                        
+                    </div>
+                    
+                </div>
+              </div>  
+            </app-form-fields>
+            <app-form-fields [label]="'Switch Mode'" [for]="'Switch Mode'" [required]="true">
+                <div class="col-md-12 lable-sz ">
+                    <div class="row mt-2">
+                        <div class="form-group col-md-2 ">
+                            <input formControlName="mode" class="form-check-input" type="radio" name="mode" id="mode1" value="Units">
+                            <label class="form-check-label" for="mode">
+                             Units
+                            </label>
+                        </div>
+                        <div class="form-group col-md-2 ">
+                            <input formControlName="mode" class="form-check-input" type="radio" name="mode" id="mode2" value="Amount">
+                            <label class="form-check-label" for="mode">
+                             Amount
+                            </label>
+                        </div>
+                        <div class="form-group col-md-8 ">
+                        </div>
+                    </div>
+                  </div>  
+                </app-form-fields>
+
+
+                <app-form-fields [label]="'Switch value '" [for]="'Switch value '">
+                    <input formControlName="Untamtvalue" class="form-control" type="text"
+                        [placeholder]="form.controls['mode'].value" name="Switch value">
+                        <div *ngIf="minimumAMount">
+                            <p>Minimum Switch value is: {{ this.schemesbyCodeData?.stp_minamt}}   <p>
+                
+                        </div>
+                        <div class="invalid-feedback" *ngIf="form.controls['Untamtvalue'].touched && form.controls['Untamtvalue'].errors?.['required']">
+                        Switch value is required
+                    </div>    
+                </app-form-fields>
+
+
+
+                <app-form-fields [label]="'Ria '" [for]="'Ria'">
+                    <div class="row mt-2">
+                        <div class="form-group col-md-2 ">
+                            <input formControlName="Riadisclaimerflag" class="form-check-input" type="radio" name="Riadisclaimerflag" id="mode1" value="Yes">
+                            <label class="form-check-label" for="mode">
+                             Yes
+                            </label>
+                        </div>
+                        <div class="form-group col-md-2 ">
+                            <input formControlName="Riadisclaimerflag" class="form-check-input" type="radio" name="Riadisclaimerflag" id="mode2" value="No">
+                            <label class="form-check-label" for="mode">
+                             No
+                            </label>
+                        </div>
+                        <div class="form-group col-md-8 ">
+                        </div>
+                    </div>
+                    <div class="form-group mt-3" *ngIf="form.controls['Riadisclaimerflag'].value=='Yes'">
+                        <input type="text" formControlName="Riacode" class="form-control form-control-sm"
+                          placeholder="Enter Code"> <br>
+                        <p>name: {{ rianame}}</p>
+                      </div>
+                </app-form-fields>
+
+               
+
+                 
+    <!--app-form-fields [label]="'Redemption Mode'" [for]="'Redemption Mode'" [required]="true">
+        <div class="col-md-12 lable-sz ">
+            <div class="row mt-2">
+                <div class="form-group col-md-2 ">
+                    <input formControlName="Untamtflg"    class="form-check-input" type="radio" name="Untamtflg" id="Untamtflg1" value="U" >
+                    <label class="form-check-label" for="Untamtflg">
+                     Unit
+                    </label>
+                </div>
+               
+    
+                <div class="form-group col-md-2 ">
+                    <input formControlName="Untamtflg"    class="form-check-input" type="radio" name="Untamtflg" id="Untamtflg2" value="A" >
+                    <label class="form-check-label" for="Untamtflg">
+                     Amount
+                    </label>
+                </div>
+    
+                <div class="form-group col-md-8 ">
+                    
+                </div>
+                
+            </div>
+          </div>  
+        </app-form-fields>
+
+        <app-form-fields [label]="'Investment Unit'" [for]="'Untamtvalue'" [required]="true">
+        <input class="form-control" type="number" placeholder="Enter Unit/Amount" name="Untamtvalue" formControlName="Untamtvalue">
+        
+        <p>Minimum Investment unit is<p>
+        <div class="invalid-feedback" *ngIf="form.controls['Untamtvalue'].touched && form.controls['Untamtvalue'].errors?.['required']">
+          
+            Investment Unit Required
+        </div>
+      
+    </app-form-fields>
+
+   
+    <app-form-fields [label]="'Payment Bank'" [for]="'Payment Bank'" [required]="true">
+        <select name="custom-select"  formControlName="selectedbank"  (change)="onChangeBankObj($event)" 
+                            class="custom-select mb-3 form-control">
+                            <option  value="">--Please Select--</option>
+                            <option *ngFor="let bank of bankdata" [value]="bank.account_number">{{bank.bank_name+'-'+ bank.account_number}}
+                            </option>
+                          </select>
+        <div class="invalid-feedback" *ngIf="form.controls['selectedbank'].touched && form.controls['selectedbank'].errors?.['required']">
+        Bank selection Required
+        </div>
+    </app-form-fields-->
+
+    <app-button [id]="'user_btn'">Submit</app-button>
+   
+     
+</form>
+</app-page-wrapper>

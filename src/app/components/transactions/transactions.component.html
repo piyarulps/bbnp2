@@ -1,0 +1,190 @@
+<app-loader *ngIf="!loadingStatus"></app-loader>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="shadowBox">
+        <div class="row transact-top">
+          <div class="col-md-5">
+            <div class="title-header">
+            <h5>Transaction History</h5>
+          </div>
+          </div>
+          <div class="col-md-5">
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="mr-3">
+                <label for="fromDate" class="mr-2">From Date</label>
+                <p-calendar id="fromDate" [(ngModel)]="fromDate" (onSelect)="onDateSelect()" dateFormat="dd/mm/yy"  [maxDate]="maxDate"></p-calendar>
+              </div>
+          
+              <div class="margin-check">
+                <label for="toDate" class="mr-2">ToDate</label>
+                <p-calendar id="toDate" [(ngModel)]="toDate" (onSelect)="onDateSelect()" dateFormat="dd/mm/yy" [minDate]="fromDate" [maxDate]="maxDate"></p-calendar>
+              </div>
+            </div>
+          </div>
+          
+
+          <div class="col-md-2">
+            <label for="Date">Folio</label>
+            <select name="custom-select" (change)="onChangeFolioObj($event)" [(ngModel)]="selectedFolio"
+              class="custom-select mb-3 form-control">
+              <option value=0>All folio</option>
+              <option *ngFor="let data of folio" [value]="data">{{data}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-buttons">
+          <app-button *ngIf="transactionData.length" class="text-center" [class]="(selectedActiveCategory=='All')?'btn btn-animation':'btn btn-outline'" [spinner]="false"
+            (click)="categorySection('All')">
+            All
+          </app-button>
+          <ng-container *ngFor="let data of filterData">
+            <app-button [class]="(data == selectedActiveCategory)?'btn btn-animation buttonsize':'btn btn-outline buttonsize'"
+              [spinner]="false" (click)="categorySection(data)">
+              {{data}}
+            </app-button>
+          </ng-container>
+        </div>
+
+        <div class="transact-main" *ngFor="let data of transactionData; let i=index">
+          <div class="transact-box">
+              <div class="top-sec">
+                <ul class="ref-sec">
+                  <li>
+                    <p>Folio: {{ data?.folio}}</p>
+                  </li>
+                  <li>
+                    <p>Reference No. : {{ data?.ihno}}</p>
+                  </li>
+                 
+                  <li>           
+                    <p> {{ data?.brokname ? 'Broker : '+ data?.brokname :"Direct"}}</p>
+                  </li>
+                  <li>
+                    <p>Initiated Date:{{ data?.txninitiateddt}}</p>
+                  </li>
+                  </ul>
+                <ul>
+                  <li>
+                    <p>{{ data?.schdesc}}</p>
+                  </li>
+                  <li>
+                    <span class="typefund">{{ data?.trdesc}}</span>
+                  </li>
+                  <li>
+                    <div class="btnDiv pStatic">
+                      <div [ngSwitch]="data?.txnstatus">
+                        <div *ngSwitchCase="'P'">Pending</div>
+                        <div *ngSwitchCase="'Y'">Completed</div>
+                        <div *ngSwitchCase="'Z'">Rejected</div>
+                        <div *ngSwitchDefault>Unknown</div>
+                      </div>
+                     
+                  </div>
+                  </li>
+                 
+                </ul>
+              </div>
+              <div class="bottom-sec">
+                <ul>
+                  <li><img src="assets/images/arrow-down.png" alt=""></li>
+                  <li>
+                    <p class="label">Amount</p>
+                    <p class="value">₹ {{ data?.Amount}}</p>
+                  </li>
+                  <li>
+                    <p class="label">NAV Date</p>
+                    <p class="value">{{ data?.navdate}}</p>
+                  </li>
+                  <li>
+                    <p class="label">NAV</p>
+                    <p class="value">{{ data?.nav}}</p>
+                  </li>
+                  <li>
+                    <p class="label">Units</p>
+                    <p class="value">{{ data?.unt}}</p>
+                  </li>
+                  <li></li>
+                  <!-- <li>
+                    <button class="btn btn-animation transct-btn" (click)="repeatTransactions(data.Amount,data)">Repeat Transaction</button>
+                  </li> -->
+                </ul>
+              </div>
+          </div>
+
+        </div>
+        <div *ngIf="!transactionData.length" class="text-center">
+          No record.. 
+        </div>
+        <div  *ngIf="transactionData.length" class="card flex justify-content-center">
+          <p-paginator 
+              (onPageChange)="onPageChange($event)" 
+              [first]="first" 
+              [rows]="rows" 
+              [totalRecords]="120" 
+              [rowsPerPageOptions]="[10, 20, 30]" />
+      </div>
+
+      </div>
+    </div>
+    
+    <!-- <div class="col-2">
+        <select name="custom-select" class="custom-select mb-3 form-control">
+          <option value="">All Asset Classes</option>
+          <option value='Equity'>Equity</option>
+          <option value='Hybrid'>Hybrid</option>
+          <option value='Debt'>Debt</option>
+          <option value='International Fund Of Fund'>International Fund Of Fund</option>
+          <option value='ETF'>ETF</option>
+          <option value='Index'>Index</option>
+        </select>
+    </div> -->
+   
+  </div>
+  
+
+</div>
+<!-- 
+<div class="card">
+  <p-table [value]="transactionData" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5, 10, 20]">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:25%">Name</th>
+        <th style="width:25%">Amount</th>
+        <th style="width:25%">NAV Date</th>
+        <th style="width:25%">NAV</th>
+        <th style="width:25%">Units</th>
+        <th style="width:25%">Type</th>
+        <th style="width:25%">Status</th>
+
+        <th style="width:25%">Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-transaction>
+      <tr>
+        <td>{{ transaction.schdesc}}</td>
+        <td>₹ {{ transaction.Amount}}</td>
+        <td>{{ transaction.navdate}}</td>
+        <td>₹{{ transaction.nav}}</td>
+        <td>{{ transaction.Unt}}</td>
+        <td>{{ transaction.trdesc}}</td>
+        <td> <span [ngClass]="transaction.SIPstatus ?'percent':'percent-red'">{{ transaction.SIPstatus}} </span> <br>
+          <span [ngClass]="transaction.Status ?'percent':'percent-red'">{{ transaction.Status}} </span></td>
+        <td>
+          <app-button [class]="'btn btn-animation mb-2'" [spinner]="false" (click)="repeatTransactions(transaction.Amount)">Repeat Transaction</app-button>
+        </td>
+      </tr>
+     
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+      <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+    </ng-template>
+  </p-table>
+</div> -->

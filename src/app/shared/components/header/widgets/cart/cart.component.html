@@ -1,0 +1,86 @@
+<div class="onhover-dropdown">
+    <div class="notification-box" >
+        <div>
+            <i class="shopping-cart-line"></i>
+        </div>
+        <span *ngIf="cartData"    class="badge rounded-pill badge-theme" >
+             {{cartData?cartData.length:''}}
+        </span>
+    </div>
+  
+
+
+   
+    <ul class="notification-dropdown onhover-show-div" [class.active]="cartHide">
+        <li>
+            <i class="ri-shopping-cart-line"></i>
+            <h6 class="f-18 mb-0">Cart</h6>
+        </li>
+        <ng-container *ngFor="let data of cartData,let i = index ">
+        <li class="product-box-contain">
+            <div class="drop-cart">
+                <div class="drop-contain">
+                    <a href="javascript:void(0)">
+                        <h5>{{data?.fund_name}}
+                        
+                        <!-- -{{data?.fund_type ==='1'? 'Equity':
+                            data?.fund_type ==='2'?'Hybrid':
+                            data?.fund_type ==='3'?'Debt':
+                            data?.fund_type ==='4'?'International Fund Of Fund':
+                            data?.fund_type ==='5'?'ETF':
+                            data?.fund_type ==='6'?'Index':
+                                     'All Funds'
+                                     }}-- {{data?.option_name}} -->
+                                     </h5>
+                        
+                    </a>
+                    <div class="amount-delete">
+                        <div class="amount">
+                            <h6>Min Amount: Rs NO karvy API</h6>
+                        </div>
+                        <div class="header-button-group">
+                            <app-button [class]="'delete-button close_button'" (click)="removeCart(i,data)" [id]="'cart_item_delete_btn'+1" [spinner]="false">
+                                <i class="ri-delete-bin-line"></i>
+                            </app-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        </ng-container>
+
+        <li>
+            <div class="button-group">
+                <button [disabled]="!cartData.length" class="btn btn-sm cart-button btn btn-outline" (click)="cartToggle(false)">
+                    View Cart
+                </button>
+                <button  [disabled]="!cartData.length" class="btn btn-sm cart-button btn-animation" (click)="cartToggle(false)">
+                    Checkout
+                </button>
+            </div>
+        </li>
+    </ul>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>

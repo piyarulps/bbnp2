@@ -1,0 +1,129 @@
+<ng-container *ngIf="this.modalData.flag=='Y'">
+
+  <div class="modal-header">
+    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+    <h4 class="modal-title" id="modal-basic-title">Success </h4>
+  
+  </div>
+  
+  <div class="modal-body">
+    <h3 class="congrats-title">Congratulations <img src="assets/images/congratulation-img.png" alt=""></h3>
+    <h5 class="success-msg"> You have successfully completed your transaction</h5>
+    <h5>Fund Name: {{ fundname}}</h5>
+    <div class="row congrat-detail">
+      <div class="col">
+        <h4>Amount</h4>
+        <p>{{amount}}</p>
+      </div>
+      <div class="col">
+        <h4>Date and Time</h4>
+        <p>{{today | date: "dd MMMM YYYY"  }}</p>
+      </div>
+      <div class="col">
+        <h4>Reference No</h4>
+        <p>{{modalData?.refno ? modalData?.refno :'NA' }}</p>
+      </div>
+      <div class="col">
+        <h4>Investment Type</h4>
+        <p>{{ type }} </p><br>
+        
+        <p *ngIf="modalData.type =='SIP'"> Start Date {{modalData?.startendDate.SIP_StartDate  }}</p>
+      </div>
+      <div class="col">
+        <h4>Folio</h4>
+        <p>{{ modalData?.folio ? modalData?.folio : folio}}</p>
+      </div>
+  
+    </div>
+  
+    <div class="congrat-disclaimer">
+      <p>
+        Please follow the below steps to complete your online registration of your ISIP by registering the Unique
+        Registration Number (URN) with your bank.
+      </p>
+      <ul>
+        <li>
+          1. Login to your Bank website now</li>
+        <li>2. Select the Bill Pay or Biller Registration section
+        <li>3. Add/Select Baroda BNP
+        India Mutual Fund from the Biller list in the drop down</li>
+      <li>4. Enter the URN as provided above. (The URN has to be
+        entered in the same format as appearing above).
+        </li>
+      </ul>
+        <p>
+                Note: While registering URN on Bank website. You can select Auto
+        Pay option (if provided by your Bank) for your convenience to avoid authorisation for every SIP debit.
+      </p>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="this.modalData.flag=='N'">
+
+  <div class="modal-header modal-header-fail">
+    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+    <h4 class="modal-title" id="modal-basic-title">Failure </h4>
+  
+  </div>
+  
+  <div class="modal-body">
+    <h3 class="congrats-title"> <img width="100px"  height="30px" src="assets/images/failed.jpg" alt=""></h3>
+    <h5 class="success-msg">Your transaction failed</h5>
+    <h5>Fund Name: {{ fundname}}</h5>
+    <div class="row congrat-detail">
+      <div class="col">
+        <h4>Amount</h4>
+        <p>{{amount}}</p>
+      </div>
+      <div class="col">
+        <h4>Date and Time</h4>
+        <p>{{today | date: "dd MMMM YYYY"  }}</p>
+      </div>
+      <div class="col">
+        <h4>Reference No</h4>
+        <p>NA</p>
+      </div>
+      <div class="col">
+        <h4>Investment Type</h4>
+        <p>{{type }} </p>
+      </div>
+      <div class="col">
+        <h4>Folio</h4>
+        <p>{{ folio  !=='create'?folio:''}}</p>
+      </div>
+  
+    </div>
+  
+    <div class="congrat-disclaimer">
+      <p>
+        Please follow the below steps to complete your online registration of your ISIP by registering the Unique
+        Registration Number (URN) with your bank.
+      </p>
+      <ul>
+        <li>
+          1. Login to your Bank website now</li>
+        <li>2. Select the Bill Pay or Biller Registration section
+        <li>3. Add/Select Baroda BNP
+        India Mutual Fund from the Biller list in the drop down</li>
+      <li>4. Enter the URN as provided above. (The URN has to be
+        entered in the same format as appearing above).
+        </li>
+      </ul>
+        <p>
+                Note: While registering URN on Bank website. You can select Auto
+        Pay option (if provided by your Bank) for your convenience to avoid authorisation for every SIP debit.
+      </p>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!this.modalData.flag">
+
+  <div class="modal-header modal-header-warn">
+    <!-- <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button> -->
+    <h4 class="modal-title" id="modal-basic-title">Please wait </h4>
+  
+  </div>
+  <div class="modal-body">
+    <h5>Your data is being submitted to the server...</h5>
+  </div>
+</ng-container>

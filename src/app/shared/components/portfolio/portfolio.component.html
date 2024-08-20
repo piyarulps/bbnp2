@@ -1,0 +1,674 @@
+<app-loader *ngIf="!loadingStatus"></app-loader>
+
+<div class="col-sm-12">
+  <div class="container fullWidth" *ngIf="portfolioData">
+    <div class="row">
+      <div class="col-md-12 current-sec">
+        <div class="card">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <!-- First Section -->
+              <div class="col-md-4">
+
+                <div class="top-section">
+                  <div class="wallet-info wallet-amount">
+
+                    <ul>
+                      <li class="current-value">
+                        <h4>Current Value </h4>
+                        <p class="value"> {{ portfolioData?.TotalCurrentValue?.totalcurrentvalue | indianCurrency }}
+                          <span
+                            [ngClass]="portfolioData?.TotalCurrentValue?.['totalabsolutereturn%']>0?'percent':'percent-red'">
+                            <img
+                              [src]="portfolioData?.TotalCurrentValue?.['totalabsolutereturn%']>0?'assets/images/green-uparrow.png':'assets/images/down-arrow.png'"
+                              alt="">
+                            {{ portfolioData?.TotalCurrentValue?.['totalabsolutereturn%'] }}%</span>
+                        </p>
+                        <p>as of {{ FolioDetails?.currentdate | date: "dd MMMM" }}</p>
+                      </li>
+                      <li>
+                        <h4>Investment Amount</h4>
+                        <p> {{ portfolioData?.TotalCurrentValue?.totalcostvalue | indianCurrency }} </p>
+                      </li>
+                      <li>
+                        <h4>Absolute Returns</h4>
+                        <p> {{ portfolioData?.TotalCurrentValue?.totalabsolutereturn | indianCurrency }}
+
+                          <span
+                            [ngClass]="portfolioData?.TotalCurrentValue?.['totalabsolutereturn%']>0?'percent-day':'percent-day-red'">
+                            <img
+                              [src]="portfolioData?.TotalCurrentValue?.['totalabsolutereturn%']>0?'assets/images/green-uparrow.png':'assets/images/down-arrow.png'"
+                              alt="">
+                            {{ portfolioData?.TotalCurrentValue?.['totalabsolutereturn%'] }}%</span>
+                        </p>
+                      </li>
+
+                      <li *ngIf="portfolioData?.TotalCurrentValue?.xirr">
+                        <h4>XIRR</h4>
+                        <p> {{ portfolioData?.TotalCurrentValue?.xirr }}%</p>
+                      </li>
+                      <li>
+                        <h4>1 day Returns </h4>
+                        <p> {{ portfolioData?.TotalCurrentValue?.total1dayreturn }}
+                          <span
+                            [ngClass]="portfolioData?.TotalCurrentValue?.['totalabsolutereturn%']>0?'percent-day':'percent-day-red'">
+                            <img
+                              [src]="portfolioData?.TotalCurrentValue?.['totalabsolutereturn%']>0?'assets/images/green-uparrow.png':'assets/images/down-arrow.png'"
+                              alt="">
+                            {{ portfolioData?.TotalCurrentValue?.['total1dayreturn%'] }} %</span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+
+
+
+
+
+              </div>
+              <div class="col-md-3">
+                <!-- Buttons Section -->
+                <div class="row justify-content-center mt-4 btn-sec">
+                  <!-- Added mt-4 for margin-top -->
+                  <div class="col-md-10 text-center">
+                    <app-button [class]="'btn mr-4 mb-4 greenBtn mob-fixed'"
+                      (click)="route.navigateByUrl('/lumpsum-investment')" [spinner]="false">Invest Now</app-button>
+                    <!-- Added mb-4 for margin-bottom -->
+                    <app-button [class]="'btn btn-outline ml-4 mb-4'" (click)="route.navigateByUrl('/sip-investment')"
+                      [spinner]="false">Start an SIP</app-button>
+                    <!-- Added mb-4 for margin-bottom -->
+                  </div>
+                </div>
+
+
+              </div>
+              <!-- Second Section -->
+              <div class="col-md-5" *ngIf="!isMobile">
+                <div class="notifications-container">
+                  <!-- <h5>Notifications</h5> -->
+                  <!-- <div class="notification-list" infiniteScroll [infiniteScrollDistance]="2"
+                                [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false"
+                                style="height: 150px; overflow-y: scroll;"> -->
+                  <div class="notification-list">
+                    <div *ngFor="let item of NotificationDetails | slice:0:4;" class="notification-item"
+                      [ngClass]="item.flag=='New' ? 'new-notification' : '' ">
+                      <div class="card-body" routerLink="/dashboard/notifications">
+                        <div class="noti-top">
+                          <h5 class="card-title"><span class="new-tag" *ngIf="item.flag=='New'">New</span>
+                            {{ item.title }}
+                          </h5>
+                          <span class="icons-sec">
+                            <a href="javascript:void(0)"><i class="ri-star-fill"></i></a>
+                          </span>
+                        </div>
+                        <p class="card-text">{{ item.description }}</p>
+
+                        <div class="notiBtm">
+                          <a target="_blank" *ngIf="item.link" [href]="item.link" class="link-btn">Explore</a>
+                          <!-- <p class="card-subtext"><i _ngcontent-serverapp-c2222541157="" class="ri-time-line" style=" margin: 0 6px 0 0;"></i>{{ item.datetime }}</p> -->
+                        </div>
+
+                      </div>
+
+
+                    </div>
+                    <!-- <div *ngIf="NotificationDetails.length > 2" class="notification-msg">
+                                    {{ notiMsg ? notiMsg : 'Please wait..' }}</div> -->
+                    <div *ngIf="!NotificationDetails.length" class="notification-msg text-center m-4">
+                      No record found</div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-5" *ngIf="isMobile">
+                <div class="notifications-container">
+                  <!-- Original View -->
+                  <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                          Notifications
+                        </button>
+                      </h2>
+                      <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="notification-list">
+                          <div *ngFor="let item of NotificationDetails" class="notification-item"
+                            [ngClass]="item.flag=='New' ? 'new-notification' : '' ">
+                            <div class="card-body">
+                              <div class="noti-top">
+                                <h5 class="card-title"><span class="new-tag" *ngIf="item.flag=='New'">New</span>
+                                  {{ item.title }}
+                                </h5>
+                                <span class="icons-sec">
+                                  <a href="javascript:void(0)"><i class="ri-star-fill"></i></a>
+                                </span>
+                              </div>
+                              <p class="card-text">{{ item.description }}</p>
+
+                              <div class="notiBtm">
+                                <a target="_blank" *ngIf="item.link" [href]="item.link" class="link-btn">Explore</a>
+                                <!-- <p class="card-subtext"><i _ngcontent-serverapp-c2222541157="" class="ri-time-line gap" ></i>{{ item.datetime }}</p> -->
+                              </div>
+
+                            </div>
+
+
+                          </div>
+                          <!-- <div *ngIf="NotificationDetails.length > 2" class="notification-msg">
+                                    {{ notiMsg ? notiMsg : 'Please wait..' }}</div> -->
+                          <div *ngIf="!NotificationDetails.length" class="notification-msg text-center m-4">
+                            No record found</div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container fullWidth" *ngIf=" !portfolioData">
+  <div class="row">
+    <div class="col-md-12 current-sec">
+      <div class="card">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-4">
+
+              <div class="wallet-info wallet-amount">
+
+                <div class="new-funds">
+                  <h2 class="mb-3">New to mutual Funds? </h2>
+                  <h5>Start investing in a plan as low as Rs 100</h5>
+                </div>
+
+
+
+              </div>
+            </div>
+
+
+            <div class="col-md-3">
+              <!-- Buttons Section -->
+              <div class="row justify-content-center mt-4 btn-sec">
+                <div class="col-md-10 text-center">
+                  <app-button [class]="'btn mr-4 mb-4 greenBtn mob-fixed'"
+                    (click)="route.navigateByUrl('/lumpsum-investment')" [spinner]="false">Invest Now</app-button>
+                  <app-button [class]="'btn btn-outline'" (click)="route.navigateByUrl('/sip-investment')"
+                    [spinner]="false">Start an SIP</app-button>
+                </div>
+              </div>
+            </div>
+            <!-- Second Section -->
+            <div class="col-md-5" *ngIf="!isMobile">
+              <div class="notifications-container">
+                <!-- <h5>Notifications</h5> -->
+                <div class="notification-list">
+                  <div *ngFor="let item of NotificationDetails" class="notification-item"
+                    [ngClass]="item.flag=='New' ? 'new-notification' : '' ">
+                    <div class="card-body">
+                      <div class="noti-top">
+                        <h5 class="card-title"><span class="new-tag" *ngIf="item.flag=='New'">New</span>
+                          {{ item.title }}
+                        </h5>
+                        <span class="icons-sec">
+                          <a href="#"><i class="ri-star-fill"></i></a>
+                          <a href="#"><i class="ri-delete-bin-6-line"></i></a>
+                        </span>
+                      </div>
+                      <p class="card-text">{{ item.description }}</p>
+
+                      <div class="notiBtm">
+                        <a href="#" class="link-btn">Explore</a>
+                        <!-- <p class="card-subtext"> <i _ngcontent-serverapp-c2222541157="" class="ri-time-line" style=" margin: 0 6px 0 0;"></i> {{ item.datetime }}</p> -->
+                      </div>
+
+                    </div>
+
+
+                  </div>
+                  <!-- <div *ngIf="NotificationDetails.length > 2" class="notification-msg">
+                                  {{ notiMsg ? notiMsg : 'Please wait..' }}</div> -->
+                  <div *ngIf="!NotificationDetails.length" class="notification-msg text-center m-4">
+                    No record found</div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-5" *ngIf="isMobile">
+              <div class="notifications-container">
+                <!-- Original View -->
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Notifications
+                      </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                      data-bs-parent="#accordionFlushExample">
+                      <div class="notification-list">
+                        <div *ngFor="let item of NotificationDetails" class="notification-item"
+                          [ngClass]="item.flag=='New' ? 'new-notification' : '' ">
+                          <div class="card-body">
+                            <div class="noti-top">
+                              <h5 class="card-title"><span class="new-tag" *ngIf="item.flag=='New'">New</span>
+                                {{ item.title }}
+                              </h5>
+                              <span class="icons-sec">
+                                <a href="#"><i class="ri-star-fill"></i></a>
+                                <a href="#"><i class="ri-delete-bin-6-line"></i></a>
+                              </span>
+                            </div>
+                            <p class="card-text">{{ item.description }}</p>
+
+                            <div class="notiBtm">
+                              <a href="#" class="link-btn">Explore</a>
+                              <!-- <p class="card-subtext"> <i _ngcontent-serverapp-c2222541157="" class="ri-time-line" style=" margin: 0 6px 0 0;"></i> {{ item.datetime }}</p> -->
+                            </div>
+
+                          </div>
+
+
+                        </div>
+                        <!-- <div *ngIf="NotificationDetails.length > 2" class="notification-msg">
+                                  {{ notiMsg ? notiMsg : 'Please wait..' }}</div> -->
+                        <div *ngIf="!NotificationDetails.length" class="notification-msg text-center m-4">
+                          No record found</div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<section *ngIf="!portfolioData" class="funds-div">
+  <!-- All funds,quity ,debt cards-->
+  <!-- <app-page-wrapper [gridClass]="'col-sm-12'" [title]="''"> -->
+
+  <div class="container fullWidth">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="row fundBoxes">
+            <div class="col-md-3">
+              <div class="card purpleBox">
+                <div class="card-image-wrapper">
+                  <img src="assets/images/dashboardicons/equity_funds.png" alt="...">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Equity Funds</h5>
+                  <p class="card-text">Equity funds, also known as stock funds, are mutual funds that
+                    primarily invest in
+                    stocks or equities. These funds pool money from investors to buy shares of
+                    publicly traded companies.
+                  </p>
+                  <a href="javascript:void(0)" (click)="exploreFund('Equity')" class="btn btn-primary">Explore</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card pinkBox">
+                <div class="card-image-wrapper">
+                  <img src="assets/images/dashboardicons/debt.png" alt="...">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Debt Funds</h5>
+                  <p class="card-text">Debt funds, also known as stock funds, are mutual funds that
+                    primarily invest in
+                    stocks or equities. These funds pool money from investors to buy shares of
+                    publicly traded companies.
+                  </p>
+                  <a href="javascript:void(0)" (click)="exploreFund('Debt')" class="btn btn-primary">Explore</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card greenBox">
+                <div class="card-image-wrapper">
+                  <img src="assets/images/dashboardicons/hybrid.png" alt="...">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Hybrid Funds</h5>
+                  <p class="card-text">Hybrid funds, also known as stock funds, are mutual funds that
+                    primarily invest in
+                    stocks or equities. These funds pool money from investors to buy shares of
+                    publicly traded companies.
+                  </p>
+                  <a href="javascript:void(0)" (click)="exploreFund('Hybrid')" class="btn btn-primary">Explore</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card orangeBox">
+                <div class="card-image-wrapper">
+                  <img src="assets/images/dashboardicons/allfunds.png" alt="...">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">All Funds</h5>
+                  <p class="card-text">All funds, also known as stock funds, are mutual funds that
+                    primarily invest in
+                    stocks or equities. These funds pool money from investors to buy shares of
+                    publicly traded companies.
+                  </p>
+                  <a routerLink="/sip-investment" class="btn btn-primary">Explore</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- </app-page-wrapper> -->
+
+
+</section>
+
+
+<div class="container-fluid fullWidth">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="pos-product-screen">
+            <div class="title-header">
+              <div class="d-flex align-items-center">
+                <h5>My Investment</h5>
+              </div>
+            </div>
+            <ng-container *ngIf="portfolio.length">
+              <div class="row">
+                <div class="col-12">
+                  <div class="filter-buttons">
+                    <app-button [class]="(selectedActiveCategory =='all' )?'btn btn-animation':'btn btn-outline'"
+                      [spinner]="false" (click)="categorySection('all')">
+                      All
+                    </app-button>
+                    <ng-container *ngFor="let data of categoryDetails">
+
+                      <app-button
+                        [class]="(data.category == selectedActiveCategory)?'btn btn-animation':'btn btn-outline'"
+                        [spinner]="false" (click)="categorySection(data.category)">
+                        {{data.category}}
+                      </app-button>
+
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="col-5"></div>
+              </div>
+              <!-- <owl-carousel-o [options]="customOptions">
+                  <ng-container *ngFor="let item of portfolio; let i = index">
+                    <ng-template carouselSlide>
+                      <article class="fund-container" *ngIf="item.balanceunits > 0">
+                        <header class="fund-header">
+                          <p class="fund-subtitle">{{item.desc}}</p>
+                        </header>
+                        <section class="fund-info">
+                          <div class="fund-details">
+                            <span class="fund-type"> {{item.category }} </span>  </div>
+                          <div class="nav-details">
+                            <div class="fund-metrics fundData borderR">
+                              <div class="metric">
+                                <span class="metric-title" >NAV
+                                  <i class="ri-information-line" data-placement="left" title="Net Asset value"></i>
+  
+                                </span>
+                            
+  
+                                <span class="metric-value green-text">{{ item.nav?item.nav:'NA'}}</span>
+                                <h6>{{ item.navdate | date: "dd MMMM YYYY" }}</h6>
+                                <span></span>
+                              </div>
+                              <div class="metric">
+                                <div class="cagr">
+                                    <div class="absolute-sec">
+                                        <span class="metric-title"> Absolute return</span>
+                                        <h6>{{ item?.absolutereturn ?item?.absolutereturn : "NA"}}</h6>
+                                    </div>
+                                    <div class="absolute-sec">
+                                        <span class="metric-title"> Absolute Return % </span>
+                                        
+                                        <h6>{{ item?.['absolutereturn%'] ? item?.['absolutereturn%']:'NA'}} </h6>
+                                    </div>
+                                </div>                            
+                              </div>
+                                                         
+                            </div>
+                          
+                            <div class="fund-additional fundData">
+                              <div class="additional-info aum-value">
+                                <span class="info-title">Current Value</span>
+                                
+                                <span class="info-value green-text">{{ item?.currentvalue}}
+                                </span>
+                                <h6>{{ item.currentdate | date: "dd MMMM YYYY" }}</h6>
+  
+                                
+                              </div>                            
+                              <div class="metric">
+                                <span class="metric-title">Units</span>
+                              <span class="metric-value">{{ item.balanceunits }} </span>
+                              </div>
+                            </div>
+                          </div>
+  
+                          <div class="min-max">
+                            <p class="mb-0">
+                             
+                            </p>
+  
+                           
+                          </div>
+                          
+                        </section>
+                        <footer class="fund-footer">
+                          <div class="investment-options footer-sp">
+                            <div class="folioTitle"><h5>Folio Number</h5></div> <div class="folioNo">{{ item?.folio}}</div>
+                             <a href="javascript:void(0)"  (click)="viewDetails(item)" class="link"></a>
+                          </div>
+                          
+  
+                        </footer>
+                      </article>
+                    </ng-template>
+                  </ng-container>
+                </owl-carousel-o> -->
+              <p-table [value]="portfolio" [paginator]="true" [rows]="5" sortMode="single"
+                [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[5, 10, 20,50,100]" sortField="cagr_1_year" [sortOrder]="-1">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th class="width32" pSortableColumn="desc">Fund Name<p-sortIcon field="desc"></p-sortIcon></th>
+                    <th class="width18 bg_green" pSortableColumn="currentvalue">Current Value<p-sortIcon
+                        field="currentvalue"></p-sortIcon></th>
+                    <th class="width18 bg_green" pSortableColumn="absolutereturn">Absolute return<p-sortIcon
+                        field="absolutereturn"></p-sortIcon></th>
+                    <th class="width20 bg_green" pSortableColumn="absolutereturn%">Absolute return % <p-sortIcon
+                        field="absolutereturn%"></p-sortIcon></th>
+                    <th class="width10">Units</th>
+                    <th class="width10">Nav </th>
+                    <th class="width10">Folio </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-fundTabledata let-rowIndex="rowIndex">
+                  <tr>
+                    <!-- <td class="bg_green">{{ fundTabledata.desc }}</td> -->
+                    <td>{{fundTabledata.desc}} <br> <span class="fundType"><img src="assets/images/ribbon-icon.png"
+                          alt=""> {{fundTabledata.category }}</span></td>
+                    <td class="bg_green">{{ fundTabledata.currentvalue }}</td>
+                    <td class="bg_green">{{ fundTabledata.absolutereturn }}</td>
+                    <td class="bg_green">{{ fundTabledata['absolutereturn%'] }}</td>
+                    <td class="">{{ fundTabledata.balanceunits }}</td>
+                    <td class="">{{ fundTabledata.nav }}</td>
+                    <td class="">{{ fundTabledata.folio }}</td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="paginatorleft">
+                  <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                </ng-template>
+                <ng-template pTemplate="paginatorright">
+                  <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+                </ng-template>
+              </p-table>
+
+
+
+            </ng-container>
+            <ng-container *ngIf="!portfolio.length">
+              <h3>No data.</h3>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<section *ngIf=" portfolioData">
+  <div class="container fullWidth">
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <!-- Pie Chart Section -->
+          <div class="col-md-6 pieChart">
+            <ng-container *ngIf="!removepiechart">
+              <app-page-wrapper>
+                <div id="chart">
+                  <apx-chart [series]="chartOptions.series" [colors]="chartOptions.colors" [chart]="chartOptions.chart"
+                    [labels]="chartOptions.labels" [responsive]="chartOptions.responsive"></apx-chart>
+                </div>
+              </app-page-wrapper>
+              <div class="xirr">
+                <div class="row">
+                  <div> XIRR {{ this.foliodatas?.TotalCurrentValue?.xirr}} %</div>
+                  <!-- <div class="col">
+                                      <div>SIP</div>
+                                      <div>₹ 82,435.45</div>
+                                  </div> -->
+
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="removepiechart">
+              <img src="assets/images/noinvestment.jpg" class="img-fluid emptywall" alt="empty-wallet">
+            </ng-container>
+
+          </div>
+
+          <div class="col-md-1"></div>
+          <!-- Insights Section -->
+          <div class="col-md-5">
+            <div class="insight-bg">
+              <h4>Insights</h4>
+              <div class="insights-container">
+                <div *ngFor="let item of inSightDetails" class="insights-item">
+                  <div class="card-body" *ngIf="item.display">
+                    <h5 class="card-title"> <b>{{ item.title }} </b></h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    <a (click)="exploreFund(item.category)">{{item.url}}</a>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+
+  <div class="container-fluid fullWidth" *ngIf=" portfolioData ">
+    <div class="row" *ngIf="!prodCheck">
+      <div class="col-12">
+        <div class="mt-4">
+          <div class="card-body">
+            <div class="pos-product-screen">
+              <div class="title-header pb-0">
+                <div class="d-flex align-items-center">
+                  <h5>Recent Transactions</h5>
+                </div>
+              </div>
+
+              <owl-carousel-o [options]="customOptions">
+
+                <ng-container *ngFor="let item of transactionDataAll; let i = index">
+                  <ng-template carouselSlide>
+                    <div class="card mt-0 sipCard">
+
+                      <div class="card-body">
+                        <div class="step-sec">
+                          <div class="btnDiv">
+                            <!-- <button class="btn-outline">{{item?.txnstatus}}</button> -->
+                            <div [ngSwitch]="item?.txnstatus">
+                              <div *ngSwitchCase="'P'" class="btn-outline pending">Pending</div>
+                              <div *ngSwitchCase="'Y'" class="btn-outline completed">Completed</div>
+                              <div *ngSwitchCase="'Z'" class="btn-outline rejected">Rejected</div>
+                              <div *ngSwitchDefault>Unknown</div>
+                            </div>
+                            <button class="btn-outline">{{item?.trdesc}}</button>
+                          </div>
+                          <div class="header color-green">Transaction Date</div>
+                          <div class="subheader">{{item?.txninitiateddt}}</div>
+                        </div>
+                        <h4 class="fundName">{{item?.schdesc}}</h4>
+                        <div class="sip-amt">
+
+                          <img [src]=" item.trdesc == 'Redemption' ? 'assets/images/arrow-up.png'
+                                                                : item.trdesc == 'Switch' ? 'assets/images/arrow-switch.png'
+                                                                : 'assets/images/arrow-down.png'" alt=""
+                            class="downArrow">
+                          <div>
+                            <h3 class="sip-title"> Amount </h3>
+                            <p class="sip-value">{{item?.Amount}} </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </owl-carousel-o>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-mysip></app-mysip>

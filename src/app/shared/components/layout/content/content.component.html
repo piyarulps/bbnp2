@@ -1,0 +1,19 @@
+<div class="page-wrapper compact-wrapper" id="pageWrapper">
+  
+  <div class="page-header" [class.close_icon]="navServices.collapseSidebar">
+    <app-header></app-header>
+  </div>
+  <div class="page-body-wrapper">
+    <div class="sidebar-wrapper" [class.close_icon]="navServices.collapseSidebar">
+      <app-sidebar ></app-sidebar>
+     
+    </div>
+    <div class="page-body">
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </div>
+  </div>
+  <div class="overlay" ngClass="{{ navServices.collapseSidebar ? 'is-active ' : '' }}" (click)="closeSidebar()">
+
+  </div>
+</div>

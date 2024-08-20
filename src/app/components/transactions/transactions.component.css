@@ -1,0 +1,224 @@
+::ng-deep.p-calendar .p-inputtext {
+  width: 100% !important;
+}
+
+
+.buttonsize {
+  font-size: 12px !important;
+}
+
+.percent-red {
+  background: #ead4d5;
+  border-radius: 50px;
+  color: #c02a42;
+  padding: 6px 15px;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.percent {
+  background: #e0f0dd;
+  border-radius: 50px;
+  color: #67d3bc;
+  padding: 6px 15px;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.form-control {
+  border-radius: 4px;
+  margin-bottom: 0;
+  /* appearance: auto; */
+  padding: 8px 8px;
+  height: 38px;
+  font-size: 14px;
+}
+
+select.form-control {
+  background-image: url('/assets/images/dropdown-arrow.png');
+  background-repeat: no-repeat;
+  background-position: center right 10px;
+}
+
+::ng-deep .p-calendar {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+::ng-deep .p-inputtext {
+  border-radius: 4px;
+  border: 1px solid #D0D5DD;
+  height: 38px;
+}
+.title-header {
+  padding-bottom: 10px;
+}
+.transact-top {
+  align-items: start;
+  row-gap: 10px;
+}
+
+.filter-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 20px 0;
+  row-gap: 15px;
+  border-top: 1px solid #E6E6E6;
+
+
+}
+
+.filter-buttons app-button {
+  margin-right: 10px;
+  /* Adjust spacing between buttons */
+}
+
+.filter-buttons ::ng-deep .btn {
+  border: 1px solid #DDDDDD;
+  color: #A5A6A9;
+  background: #fff;
+  line-height: normal;
+
+
+}
+
+.filter-buttons ::ng-deep .btn.btn-animation {
+  color: #fff;
+  box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+  background: #3E8A61;
+  border: 1px solid #3E8A61;
+}
+
+.shadowBox {
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  margin-bottom: 50px;
+}
+
+.transact-box {
+  border-radius: 10px;
+  box-shadow: 0 0px 4px rgba(0, 0, 0, 0.10);
+  padding: 20px;
+  margin: 15px 0;
+  display: block;
+}
+
+
+.btnDiv {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-flex;
+  gap: 5px;
+
+  .btn-outline {
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    color: #A5A6A9;
+    font-size: 11px;
+    padding: 5px;
+    font-weight: normal;
+    font-family: 'BNPPSans-Light';
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+.pStatic{
+  position: static;
+}
+.transact-box {
+  ul {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 15px;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}
+.bottom-sec {
+  border-top: 1px solid #E6E6E6;
+  padding-top: 25px;
+ 
+}
+.label {
+  color: #000;
+  font-size: 12px;
+  font-family: 'BNPPSans-Light';
+  margin-bottom: 8px!important;
+}
+.value {
+  font-size: 18px;
+}
+.ref-sec {
+  p {
+    color: #000;
+    font-size: 12px;
+    font-family: 'BNPPSans-Light';
+  }
+}
+
+.typefund {
+  background: #E4FEF1;
+  border-radius: 4px;
+  color: #3E8A61; 
+  padding: 6px 10px;
+  line-height: normal;
+  font-family: 'BNPPSans-Light';
+}
+
+.btn.transct-btn {
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 480px) {
+  .bottom-sec ul {
+    row-gap: 20px;
+    column-gap: 0;
+  }
+  .bottom-sec ul li{
+    width: 47%;
+
+    &:last-child {
+      width: 100%;
+    }
+  }
+}
+
+::ng-deep.p-calendar {
+  width: 100%!important;
+}
+::ng-deep.p-calendar .p-inputtext {
+   width: 50% !important;
+   border-radius: 0;
+   position: relative;
+   margin-bottom: 10px;
+}
+
+::ng-deep .p-datepicker table td > span {
+  display: inline-flex !important;
+}
+
+::ng-deep.p-calendar {
+  align-items: start;
+  display: flex;
+}
+::ng-deep .p-datepicker-trigger {
+  background-color: #F9F9F9;
+    color: #444;
+    border: 0;
+    height: 43px;
+}
+.margin-check {
+  margin-left: 7px !important;
+}

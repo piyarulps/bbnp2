@@ -1,0 +1,164 @@
+<section>
+<h3>BNPP Fund List</h3>
+    <div class="container-fluid">
+      <div class="row g-sm-4 g-3">
+        <div class="col-1 widget-card-box">
+          <a href="javascript:void(0)" class="widget-card card">
+            <div>All</div>
+          </a>
+        </div>
+
+        <div class="col-1 widget-card-box">
+          <a href="javascript:void(0)" class="widget-card card">
+            <div>Equity</div>
+          </a>
+        </div>
+
+        <div class="col-1 widget-card-box">
+          <a href="javascript:void(0)" class="widget-card card">
+            <div>Debt</div>
+          </a>
+        </div>
+
+        <div class="col-1 widget-card-box">
+          <a href="javascript:void(0)" class="widget-card card">
+            <div>Gold</div>
+          </a>
+        </div>
+
+        <div class="col-1 widget-card-box">
+          <a href="javascript:void(0)" class="widget-card card">
+            <div>Liquid</div>
+          </a>
+        </div>
+
+        <div class="col-2 widget-card-box">
+          <a href="javascript:void(0)" class="widget-card card">
+            <div>Combo Pack</div>
+          </a>
+        </div>
+
+        <div class="col-2 widget-card-box">
+          <a href="javascript:void(0)" class="widget-card card">
+            <div>My Schemes</div>
+          </a>
+        </div>
+
+        <div class="col-2 widget-card-box">
+          <a href="javascript:void(0)" class="widget-card card">
+            <div>My WishList</div>
+          </a>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+<section>
+    <div class="container">
+        <div
+           class="row row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-sm-2 row-cols-1 g-lg-5 g-4 layout-selection-sec ratio_square">
+           <div *ngFor="let fund of funds;">
+            <div *ngFor="let scheme of fund.schemes;">
+              <article class="fund-container">
+                <header class="fund-header">
+                  <h5 class="fund-title">{{ef.data.fundname}}</h5>
+                  <p class="fund-subtitle">{{fund.schdesc}}</p>
+                  <div class="fund-icons">
+                    <!--
+                    <img src="{{iconUrl1}}" alt="Icon description" class="fund-icon" />
+                    <img src="{{iconUrl2}}" alt="Icon description" class="fund-icon" />
+                    -->
+                  </div>
+                </header>
+                <section class="fund-info">
+                  <div class="fund-details">
+                    <span class="fund-type">{{fund.category}}</span>
+                    <span class="risk-level">{{fund.risktype==='null'? 'NA' : fund.risktype}}</span>
+                  </div>
+                  <div class="fund-metrics">
+                    <div class="metric">
+                      <span class="metric-title">NAV</span>
+                      <span class="metric-value">₹13,201,456</span>
+                    </div>
+                    <div class="metric">
+                      <span class="metric-title">XIRR</span>
+                      <span class="metric-value">24.79%</span>
+                    </div>
+                  </div>
+                  <!-- <img src="{{dividerUrl}}" alt="" class="divider" /> -->
+                  <div class="fund-additional">
+                    <div class="additional-info">
+                      <span class="info-title">Fund Size</span>
+                      <span class="info-value">₹13,201,456</span>
+                    </div>
+                    <div class="additional-info">
+                      <span class="info-title">Fund Age</span>
+                      <span class="info-value">5Y 10M</span>
+                    </div>
+                  </div>
+                  <span class="info-title">Min SIP: {{scheme.sip_minamt}} &nbsp;</span><span class="info-title">| Min Lumpsum: <b>NF</b></span>
+                </section>
+                <footer class="fund-footer">
+                  <div class="investment-options">
+                    <button class="option-btn">Invest More</button>
+                    <button class="option-btn option-btn--highlight">Start an SIP</button>
+                  </div>
+                </footer>
+              </article>
+              </div>
+           </div>
+        </div>
+
+        <!--
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
+          <div class="col">
+            <div class="card">
+              <div class="card-image-wrapper">
+                <img src="https://laravel.pixelstrap.net/fastkart-v2/storage/93/Strawberry_1.png" class="card-img-top img-fluid" alt="...">
+              </div>
+      
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Since the epidemic compelled us to hide behind our computers, most corporate processes
+                  have been digitalized in the last year. Despite how long it takes, the recruitment process doesn't have to
+                  eat up all of your work weeks. Is this the answer? One platform for staffing..</p>
+                <a  [routerLink]="'/blog/202'" class="link">Learn More <i class="fa-solid fa-arrow-right ml-2"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <div class="card-image-wrapper">
+                <img src="https://laravel.pixelstrap.net/fastkart-v2/storage/93/Strawberry_1.png" class="card-img-top img-fluid" alt="...">
+              </div>
+      
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Since the epidemic compelled us to hide behind our computers, most corporate processes
+                  have been digitalized in the last year. Despite how long it takes, the recruitment process doesn't have to
+                  eat up all of your work weeks. Is this the answer? One platform for staffing..</p>
+                <a  [routerLink]="'/blog/202'" class="link">Learn More <i class="fa-solid fa-arrow-right ml-2"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <div class="card-image-wrapper">
+                <img src="https://laravel.pixelstrap.net/fastkart-v2/storage/93/Strawberry_1.png" class="card-img-top img-fluid" alt="...">
+              </div>
+      
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Since the epidemic compelled us to hide behind our computers, most corporate processes
+                  have been digitalized in the last year. Despite how long it takes, the recruitment process doesn't have to
+                  eat up all of your work weeks. Is this the answer? One platform for staffing..</p>
+                <a  [routerLink]="'/blog/202'" class="link">Learn More <i class="fa-solid fa-arrow-right ml-2"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    -->
+    </div>
+</section>

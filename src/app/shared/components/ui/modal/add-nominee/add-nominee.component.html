@@ -1,0 +1,110 @@
+<div class="modal-header">
+  <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+  <h4 class="modal-title" id="modal-basic-title">Add new Nominee</h4>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="form" (ngSubmit)="submit();">
+    <div *ngIf="remainingPercentage < 0" class="alert alert-danger">
+      The total percentage allocation exceeds 100%. Please adjust the allocations.
+    </div>
+
+    <div formArrayName="nominees">
+      <div *ngFor="let nominee of nomineesForms.controls; let i=index" [formGroupName]="i">
+        <h4>Nominee {{i + 1 }}</h4>
+        <div class="col-12 mt-4">
+          <div class="form-floating theme-form-floating log-in-form">
+            <input type="text" class="form-control" formControlName="name" placeholder="Enter Nominee name" aria-label="Enter Nominee name" />
+            <label for="Otp">Nominee name</label>
+            <div *ngIf="nomineesForms.at(i).get('name').touched && nomineesForms.at(i).get('name').errors?.['required']"
+                 class="invalid-feedback" role="alert">
+              Name is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mt-4">
+          <label for="Plan">Your relationship with nominee</label>
+          <div [ngClass]="{ 'position-relative spinning' : isLoading }">
+            <ng-content></ng-content>
+          </div>
+        
+          <!-- Spinner element -->
+          <!-- <div *ngIf="isLoading" class="loader-14" role="status">
+          </div> -->
+          
+          <!-- Select element -->
+          <select  name="custom-select" formControlName="relation" class="custom-select form-control">
+            <ng-container *ngFor="let item of relationshipdataArr; let i = index">
+              <option value="{{item.relation}}">{{item.relation}}</option>
+            </ng-container>
+          </select>
+        
+        </div>
+        <div class="col-12 mt-4">
+          <p-calendar formControlName="DOB" [showIcon]="true" inputId="icon" (onSelect)="onDateChange($event, i)"></p-calendar>
+          <div *ngIf="nomineesForms.at(i).get('DOB').touched && nomineesForms.at(i).get('DOB').errors?.['required']"
+               class="invalid-feedback" role="alert">
+            Date of birth is required.
+          </div>
+        </div>
+
+        <div class="col-12 mt-4">
+          <div class="form-floating theme-form-floating log-in-form">
+            <input type="number" class="form-control" formControlName="percentageAllocation" placeholder="Enter Allocation Percentage" aria-label="Enter Allocation Percentage" (input)="updateRemainingPercentage()" />
+            <label for="Otp">Allocation Percentage</label>
+            <div *ngIf="nomineesForms.at(i).get('percentageAllocation').touched && nomineesForms.at(i).get('percentageAllocation').errors?.['required']"
+                 class="invalid-feedback" role="alert">
+              Percentage allocation is required.
+            </div>
+            <div *ngIf="nomineesForms.at(i).get('percentageAllocation').errors?.['max']"
+                 class="invalid-feedback" role="alert">
+              Allocation cannot exceed 100%.
+            </div>
+            <div *ngIf="nomineesForms.at(i).get('percentageAllocation').errors?.['min']"
+                 class="invalid-feedback" role="alert">
+              Allocation cannot be less than 0%.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <p>Remaining Allocation: {{ remainingPercentage }}%</p>
+        </div>
+
+        <div class="col-12 mt-4" *ngIf="nomineesForms.at(i).get('Nominee_IsMinor').value =='Yes'">
+          <div class="form-floating theme-form-floating log-in-form">
+            <input type="text" class="form-control" formControlName="nomineeGuardian" placeholder="Enter Guardian name" aria-label="Enter Guardian name" />
+            <label for="Otp">Guardian name</label>
+            <div *ngIf="nomineesForms.at(i).get('nomineeGuardian').touched && nomineesForms.at(i).get('nomineeGuardian').errors?.['required']"
+                 class="invalid-feedback" role="alert">
+              Guardian name is required.
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-12 mt-4" *ngIf="nomineesForms.at(i).get('Nominee_IsMinor').value =='Yes'">
+          <div class="form-floating theme-form-floating log-in-form">
+            <input type="text" class="form-control" formControlName="nomineeGuardianPan" placeholder="Enter Guardian name" aria-label="Enter Guardian name" />
+            <label for="Otp">Guardian PAN Number</label>
+            <div *ngIf="nomineesForms.at(i).get('nomineeGuardianPan').touched && nomineesForms.at(i).get('nomineeGuardianPan').errors?.['required']"
+                 class="invalid-feedback" role="alert">
+              Guardian PAN Number is required.
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-danger" (click)="removeNomineeForm(i)" *ngIf="i > 0">Remove Nominee</button>
+      </div>
+    </div>
+
+    <div class="col-12 mt-4">
+      <button type="button" class="btn btn-primary" (click)="addNomineeForm()" [disabled]="!canAddNominee()" *ngIf="remainingPercentage > 0">Add New Nominee</button>
+    </div>
+
+    <div class="col-12 mt-4">
+      <app-button [disabled]="!form.valid || remainingPercentage < 0" [class]="'btn btn-theme w-100 justify-content-center'" [id]="'login_btn'">
+        Submit
+      </app-button>
+    </div>
+  </form>
+</div>

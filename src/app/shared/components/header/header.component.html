@@ -1,0 +1,51 @@
+<div class="header-wrapper m-0" [class.skeleton-header]="navServices.sidebarLoading">
+    <div class="header-logo-wrapper p-0">
+        <div class="toggle-sidebar" checked="checked">
+            <i (click)="sidebarToggle()" class="ri-menu-line status_toggle middle sidebar-toggle"></i>
+            <a [routerLink]="['/dashboard']"
+               >
+                <img src='/assets/images/logo/logo.jpg' class="img-fluid" alt="header-logo">
+            </a>
+            <ng-template #siteTitle> 
+                <a [routerLink]="['/dashboard']">
+                    
+                </a> 
+            </ng-template>
+        </div>
+    </div>
+    <!-- <app-search></app-search> -->
+     <h2 *ngIf="!isMobile"> Welcome to Your Wealth Management Portal</h2>
+        <img class="img-style" src="assets/images/Welcome.png" alt="">
+    <div class="nav-right right-header p-0">
+        <div class="header-btns d-none d-lg-flex">
+          
+            
+        </div>
+        <ul class="nav-menus"> 
+            <!-- <li>
+                <span class="header-search" (click)="clickHeaderOnMobile()">
+                    <i class="ri-search-line"></i>
+                </span>
+            </li>  -->
+            <li *ngIf="url">
+                <a href="{{url}}" target="_blank" ngbTooltip="Store">
+                    <i class="ri-global-line"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" class="header-fullscreen" (click)="toggleFullScreen()">
+                    <i class="ri-fullscreen-line" *ngIf="!navServices.fullScreen"></i>
+                    <i class="ri-fullscreen-exit-line" *ngIf="navServices.fullScreen"></i>
+                </a>
+            </li>
+           
+             <!-- <li>
+                <app-header-cart></app-header-cart>
+            </li> -->
+            <li>
+                <app-notification></app-notification>
+            </li>
+            <app-profile></app-profile>
+        </ul>
+    </div>
+</div>

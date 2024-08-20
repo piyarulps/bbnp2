@@ -1,0 +1,77 @@
+.fund-container {
+    border-radius: 10px;
+    border: 1px solid rgba(221, 221, 221, 1);
+    background-color: #f2fbf9;
+    display: flex;
+    flex-direction: column;
+    max-width: 342px;
+    padding-bottom: 21px;
+  }
+  .fund-header {
+    border-radius: 10px 10px 0 0;
+    background-color: #3e8a61;
+    padding: 13px 19px;
+    color: #fff;
+  }
+  .fund-title, .fund-subtitle {
+    font-family: Inter, sans-serif;
+    margin: 0;
+  }
+  .fund-subtitle {
+    margin-top: 11px;
+  }
+  .fund-icons {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .fund-icon {
+    width: 24px;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+  .fund-info {
+    padding: 0 17px;
+  }
+  .fund-details, .fund-metrics, .fund-additional {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    margin-top: 17px;
+  }
+  .metric, .additional-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .metric-title, .info-title {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .metric-value, .info-value {
+    margin-top: 16px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #3e8a61;
+  }
+  .divider {
+    width: 100%;
+    margin: 20px 0;
+  }
+  .fund-footer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 21px;
+  }
+  .option-btn {
+    border: 1px solid #3e8a61;
+    background-color: #fff;
+    color: #3e8a61;
+    font-family: Inter, sans-serif;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .option-btn--highlight {
+    background-color: #3e8a61;
+    color: #fff;
+  }

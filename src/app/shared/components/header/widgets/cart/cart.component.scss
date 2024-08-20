@@ -1,0 +1,68 @@
+.cart-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.onhover-div {
+    /* Styles for the cart content */
+}
+
+/* Add any additional styling for the cart content */
+
+.notification-dropdown {
+    list-style: none;
+    padding: 0;
+}
+
+.product-box-contain {
+    margin-bottom: 10px;
+}
+
+.drop-contain {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.amount-delete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.amount-delete h6 {
+    margin: 0; /* Remove default margin */
+}
+
+.delete-button {
+    padding: 5px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+}
+
+.delete-button i {
+    font-size: 16px;
+    color: #999;
+}
+
+.delete-button:hover {
+    background-color: #e0e0e0;
+}
+
+.button-group {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-button {
+    margin-right: 0;
+    width: 48%;
+}
+

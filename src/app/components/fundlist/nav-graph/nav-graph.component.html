@@ -1,0 +1,53 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<app-loader *ngIf="!loadingStatus"></app-loader>
+<div class="container-fluid">
+    <div class="title-header mt-3">
+        <h5>Nav Graph <img src="assets/images/nav-graph.png" alt="" class="width30"> </h5>
+    </div>
+    <div class="shadowBox">
+        <form [formGroup]="formGroup">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <label for="">Select category</label>
+                    <select name="custom-select" formControlName="type" (change)="onChangeObj($event)"
+                        class="custom-select form-control">
+                        <option value="">Select category</option>
+                        <option *ngFor="let data of fundsCategory" [value]="data">{{data  }} </option>
+                    </select>
+                </div>
+                <div class="col-md-9">
+                    <label for="">Select Scheme category</label>
+                    <select name="custom-select" formControlName="category" (change)="onCatagoryChangeObj($event)"
+                        class="custom-select form-control">
+                        <option value="">Select Scheme category</option>
+                        <option *ngFor="let data of selectedFundsData" [value]="data.scheme">{{data.schdesc  }}
+                        </option>
+                    </select>
+
+                </div>
+                <div class="col-md-3">
+                    <label for="frequency">Select Frequency: </label>
+                    <select id="frequency" rolName="Frequency" (change)="onFrequencyChange($event)" class="form-control">
+                      <option *ngFor="let frequency of frequencies" [value]="frequency">{{ frequency }}</option>
+                    </select>
+                  </div>
+                <div class="col-md-9">
+               <label for="">Select Scheme</label>
+                    <select name="custom-select" formControlName="selectschemes" (change)="onChartChangeObj($event)"
+                        class="custom-select form-control">
+                        <option value="">Select Scheme</option>
+                        <option *ngFor="let data of selectedCatFundsData; let i=index" [value]="i">{{data.desc  }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <div id="chart" *ngIf="cahrtdata">
+            <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+                [dataLabels]="chartOptions.dataLabels" [grid]="chartOptions.grid" [stroke]="chartOptions.stroke"
+                [title]="chartOptions.title">
+            </apx-chart>
+        </div>
+    </div>
+</div>

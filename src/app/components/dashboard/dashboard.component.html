@@ -1,0 +1,962 @@
+<app-loader *ngIf="!loadingStatus"></app-loader>
+
+<div class="col-sm-12">
+
+  <div class="container fullWidth" *ngIf="portfolioData">
+    <div class="row">
+      <div class="col-md-12 current-sec">
+        <div class="card">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <!-- First Section -->
+              <div class="col-md-4">
+
+                <div class="top-section">
+                  <div class="wallet-info wallet-amount">
+                    <!-- <div class="wallet-icon"></div> -->
+                    <!-- <div class="info">
+                      <div class="info-item">
+                        <div class="label current-value">Current Value:</div> 
+                        <div class="value"> ₹{{ portfolioData?.TotalCurrentValue?.totalcurrentvalue }}</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="label">As of:</div>
+                        <div class="value">{{ portfolioData?.FolioDetails[0]?.currentdate | date: "dd MMMM" }}
+                        </div>
+                      </div>
+                      <div class="info-item">
+                        <div class="label">Investment Amount:</div>
+                        <div class="value">{{ portfolioData?.TotalCurrentValue?.totalcostvalue }}</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="label">Returns:</div>
+                        <div class="value">{{ portfolioData?.TotalCurrentValue?.totalabsolutereturn }}</div>
+                      </div>
+                      <div class="info-item">
+                        <div class="label">Return Percentage:</div>
+                        <div class="value green-bg">
+                          {{ portfolioData?.TotalCurrentValue?.['totalabsolutereturn%'] }}% <i
+                            class="fas fa-arrow-up"></i>
+                        </div>
+                      </div>
+                    </div> -->
+
+
+                    <ul>
+                      <li class="current-value">
+                        <h4>Current Value </h4>
+                        <p class="value"> {{ portfolioData?.TotalCurrentValue?.totalcurrentvalue | indianCurrency}}
+                          <span
+                            [ngClass]="portfolioData?.TotalCurrentValue?.['totalabsolutereturn%']>0?'percent':'percent-red'">
+                            <img
+                              [src]="portfolioData?.TotalCurrentValue?.['totalabsolutereturn%']>0?'assets/images/green-uparrow.png':'assets/images/down-arrow.png'"
+                              alt="">
+                            {{ portfolioData?.TotalCurrentValue?.['totalabsolutereturn%'] }}%</span>
+                        </p>
+                        <p class="date-format">as of {{ FolioDetails?.currentdate | date: "dd MMMM" }}</p>
+                      </li>
+                      <li>
+                        <h4>Investment Amount</h4>
+                        <p> {{ portfolioData?.TotalCurrentValue?.totalcostvalue | indianCurrency}} </p>
+                      </li>
+                      <li>
+                        <h4>Absolute Returns</h4>
+                        <p> {{ portfolioData?.TotalCurrentValue?.totalabsolutereturn | indianCurrency}}
+                          <span
+                          [ngClass]="portfolioData?.TotalCurrentValue?.['totalabsolutereturn%']>0?'percent-day':'percent-day-red'">
+                          <img
+                            [src]="portfolioData?.TotalCurrentValue?.['totalabsolutereturn%']>0?'assets/images/green-uparrow.png':'assets/images/down-arrow.png'"
+                            alt="">
+                          {{ portfolioData?.TotalCurrentValue?.['totalabsolutereturn%'] }}%</span>
+                        </p>
+                      </li>
+                      <li *ngIf="portfolioData?.TotalCurrentValue?.xirr">
+                        <h4>XIRR</h4>
+                        <p>  {{ portfolioData?.TotalCurrentValue?.xirr  }}%</p>
+                      </li>
+                      <li>
+                        <h4>1 day Returns </h4>
+                        <p>  {{ portfolioData?.TotalCurrentValue?.total1dayreturn  }} 
+                          <span [ngClass]="portfolioData?.TotalCurrentValue?.['total1dayreturn%']>0?'percent-day':'percent-day-red'"> 
+                            <img
+                            [src]="portfolioData?.TotalCurrentValue?.['total1dayreturn%']>0?'assets/images/green-uparrow.png':'assets/images/down-arrow.png'"
+                            alt="">
+                                 {{ portfolioData?.TotalCurrentValue?.['total1dayreturn%']  }} %</span></p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+
+
+
+
+
+              </div>
+              <div class="col-md-3">
+                <!-- Buttons Section -->
+                <div class="row justify-content-center mt-4 btn-sec">
+                  <!-- Added mt-4 for margin-top -->
+                  <div class="col-md-10 text-center">
+                    <app-button [class]="'btn mr-4 mb-4 greenBtn mob-fixed'"
+                      (click)="route.navigateByUrl('/lumpsum-investment')" [spinner]="false">Invest Now</app-button>
+                    <!-- Added mb-4 for margin-bottom -->
+                    <app-button [class]="'btn btn-outline ml-4 mb-4'" (click)="route.navigateByUrl('/sip-investment')"
+                      [spinner]="false">Start an SIP</app-button>
+                    <!-- Added mb-4 for margin-bottom -->
+                  </div>
+                </div>
+
+
+              </div>
+              <!-- Second Section -->
+              <div class="col-md-5" *ngIf="!isMobile">
+                <div class="notifications-container">
+                  <!-- <h5>Notifications</h5> -->
+                  <!-- <div class="notification-list" infiniteScroll [infiniteScrollDistance]="2"
+                  [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false"
+                  style="height: 150px; overflow-y: scroll;"> -->
+                  <div class="notification-list">
+                    <div *ngFor="let item of NotificationDetails | slice:0:4; let i=index" class="notification-item"
+                    [ngClass]="item.flag=='New' ? 'new-notification' : '' ">
+                 <div class="card-body" routerLink="/dashboard/notifications">
+                   <div class="noti-top">
+                     <h5 class="card-title">
+                       <span class="new-tag" *ngIf="item.flag=='New'">New</span>
+                       {{ item.title }}
+                     </h5>
+                     <span class="icons-sec">
+                       <a href="javascript:void(0)"><i class="ri-star-fill"></i></a>
+                     </span>
+                   </div>
+                   <p class="card-text">{{ item.description }}</p>
+               
+                   <div class="notiBtm">
+                     <a target="_blank" *ngIf="item.link" [href]="item.link" class="link-btn">Explore</a>
+                     <!-- <p class="card-subtext"><i _ngcontent-serverapp-c2222541157="" class="ri-time-line" style=" margin: 0 6px 0 0;"></i>{{ item.datetime }}</p> -->
+                   </div>
+                 </div>
+               </div>
+               
+                    <!-- <div *ngIf="NotificationDetails.length > 2" class="notification-msg">
+                      {{ notiMsg ? notiMsg : 'Please wait..' }}</div> -->
+                    <div *ngIf="!NotificationDetails.length" class="notification-msg text-center m-4">
+                      No record found</div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-5"  *ngIf="isMobile">
+                <div class="notifications-container">
+                  <!-- Original View -->
+                  <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                          Notifications
+                        </button>
+                      </h2>
+                      <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="notification-list">
+                    <div *ngFor="let item of NotificationDetails" class="notification-item"
+                      [ngClass]="item.flag=='New' ? 'new-notification' : '' ">
+                      <div class="card-body">
+                        <div class="noti-top">
+                          <h5 class="card-title"><span class="new-tag" *ngIf="item.flag=='New'">New</span>
+                            {{ item.title }}
+                          </h5>
+                          <span class="icons-sec">
+                            <a href="javascript:void(0)"><i class="ri-star-fill"></i></a>
+                          </span>
+                        </div>
+                        <p class="card-text">{{ item.description }}</p>
+
+                        <div class="notiBtm">
+                          <a target="_blank" *ngIf="item.link" [href]="item.link" class="link-btn">Explore</a>
+                          <!-- <p class="card-subtext"><i _ngcontent-serverapp-c2222541157="" class="ri-time-line gap" ></i>{{ item.datetime }}</p> -->
+                        </div>
+
+                      </div>
+
+
+                    </div>
+                    <!-- <div *ngIf="NotificationDetails.length > 2" class="notification-msg">
+                      {{ notiMsg ? notiMsg : 'Please wait..' }}</div> -->
+                    <div *ngIf="!NotificationDetails.length" class="notification-msg text-center m-4">
+                      No record found</div>
+                  </div>
+                      
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--   New user top sections-->
+  <div class="container fullWidth" *ngIf="!portfolioData">
+    <div class="row">
+      <div class="col-md-12 current-sec">
+        <div class="card">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-4">
+
+                <div class="wallet-info wallet-amount">
+
+                  <div class="new-funds">
+                    <h2 class="mb-3">New to mutual Funds? </h2>
+                    <h5>Start investing in a plan as low as Rs 100</h5>
+                  </div>
+
+
+
+                </div>
+              </div>
+
+
+              <div class="col-md-3">
+                <!-- Buttons Section -->
+                <div class="row justify-content-center mt-4 btn-sec">
+                  <div class="col-md-10 text-center">
+                    <app-button [class]="'btn greenBtn mb-4 mob-fixed'" (click)="route.navigateByUrl('/lumpsum-investment')"
+                      [spinner]="false">Invest Now</app-button>
+                    <app-button [class]="'btn btn-outline'" (click)="route.navigateByUrl('/sip-investment')"
+                      [spinner]="false">Start an SIP</app-button>
+                  </div>
+                </div>
+              </div>
+              <!-- Second Section -->
+              <div class="col-md-5" *ngIf="!isMobile">
+                <div class="notifications-container">
+                  <!-- <h5>Notifications</h5> -->
+                  <div class="notification-list">
+                    <div *ngFor="let item of NotificationDetails" class="notification-item"
+                      [ngClass]="item.flag=='New' ? 'new-notification' : '' ">
+                      <div class="card-body">
+                        <div class="noti-top">
+                          <h5 class="card-title"><span class="new-tag" *ngIf="item.flag=='New'">New</span>
+                            {{ item.title }}
+                          </h5>
+                          <span class="icons-sec">
+                            <a href="javascript:void(0)"><i class="ri-star-fill"></i></a>
+                          </span>
+                        </div>
+                        <p class="card-text">{{ item.description }}</p>
+
+                        <div class="notiBtm">
+                          <a target="_blank" *ngIf="item.link" [href]="item.link" class="link-btn">Explore</a>
+                          <!-- <p class="card-subtext"><i _ngcontent-serverapp-c2222541157="" class="ri-time-line gap" ></i>{{ item.datetime }}</p> -->
+                        </div>
+
+                      </div>
+
+
+                    </div>
+                    <!-- <div *ngIf="NotificationDetails.length > 2" class="notification-msg">
+                      {{ notiMsg ? notiMsg : 'Please wait..' }}</div> -->
+                    <div *ngIf="!NotificationDetails.length" class="notification-msg text-center m-4">
+                      No record found</div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-5"  *ngIf="isMobile">
+                <div class="notifications-container">
+                  <!-- Original View -->
+                  <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                          Notifications
+                        </button>
+                      </h2>
+                      <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="notification-list">
+                    <div *ngFor="let item of NotificationDetails" class="notification-item"
+                      [ngClass]="item.flag=='New' ? 'new-notification' : '' ">
+                      <div class="card-body">
+                        <div class="noti-top">
+                          <h5 class="card-title"><span class="new-tag" *ngIf="item.flag=='New'">New</span>
+                            {{ item.title }}
+                          </h5>
+                          <span class="icons-sec">
+                            <a href="javascript:void(0)"><i class="ri-star-fill"></i></a>
+                          </span>
+                        </div>
+                        <p class="card-text">{{ item.description }}</p>
+
+                        <div class="notiBtm">
+                          <a target="_blank" *ngIf="item.link" [href]="item.link" class="link-btn">Explore</a>
+                          <!-- <p class="card-subtext"><i _ngcontent-serverapp-c2222541157="" class="ri-time-line gap" ></i>{{ item.datetime  }}</p> -->
+                        </div>
+
+                      </div>
+
+
+                    </div>
+                    <!-- <div *ngIf="NotificationDetails.length > 2" class="notification-msg">
+                      {{ notiMsg ? notiMsg : 'Please wait..' }}</div> -->
+                    <div *ngIf="!NotificationDetails.length" class="notification-msg text-center m-4">
+                      No record found</div>
+                  </div>
+                      
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div> <!-- Top section closes here-->
+<section *ngIf="!portfolioData" class="funds-div">
+  <!-- All funds,quity ,debt cards-->
+  <!-- <app-page-wrapper [gridClass]="'col-sm-12'" [title]="''"> -->
+
+  <div class="container fullWidth">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="row fundBoxes">
+            <div class="col-md-3">
+              <div class="card purpleBox">
+                <div class="card-image-wrapper">
+                  <img src="assets/images/dashboardicons/equity_funds.png" alt="...">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Equity Funds</h5>
+                  <p class="card-text">Equity funds, also known as stock funds, are mutual funds that primarily invest
+                    in
+                    stocks or equities. These funds pool money from investors to buy shares of publicly traded
+                    companies.
+                  </p>
+                  <a href="javascript:void(0)" (click)="exploreFund('Equity')"  class="btn btn-primary">Explore</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card pinkBox">
+                <div class="card-image-wrapper">
+                  <img src="assets/images/dashboardicons/debt.png" alt="...">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Debt Funds</h5>
+                  <p class="card-text">Debt funds, also known as stock funds, are mutual funds that primarily invest in
+                    stocks or equities. These funds pool money from investors to buy shares of publicly traded
+                    companies.
+                  </p>
+                  <a href="javascript:void(0)" (click)="exploreFund('Debt')"  class="btn btn-primary">Explore</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card greenBox">
+                <div class="card-image-wrapper">
+                  <img src="assets/images/dashboardicons/hybrid.png" alt="...">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Hybrid Funds</h5>
+                  <p class="card-text">Hybrid funds, also known as stock funds, are mutual funds that primarily invest
+                    in
+                    stocks or equities. These funds pool money from investors to buy shares of publicly traded
+                    companies.
+                  </p>
+                  <a href="javascript:void(0)" (click)="exploreFund('Hybrid')"  class="btn btn-primary">Explore</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card orangeBox">
+                <div class="card-image-wrapper">
+                  <img src="assets/images/dashboardicons/allfunds.png" alt="...">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">All Funds</h5>
+                  <p class="card-text">All funds, also known as stock funds, are mutual funds that primarily invest in
+                    stocks or equities. These funds pool money from investors to buy shares of publicly traded
+                    companies.
+                  </p>
+                  <a routerLink="/sip-investment"  class="btn btn-primary">Explore</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- </app-page-wrapper> -->
+
+
+</section>
+
+
+
+<!-- Chart section for existing user start-->
+
+<section *ngIf="portfolioData">
+  <div class="container fullWidth">
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <!-- Pie Chart Section -->
+          <div class="col-md-6 pieChart">
+            <h4>Current Allocation</h4>
+            <ng-container *ngIf="!removepiechart">
+
+            <app-page-wrapper>
+              <div id="chart" >
+                <apx-chart [series]="chartOptions.series" [colors]="chartOptions.colors" [chart]="chartOptions.chart"
+                  [labels]="chartOptions.labels" [responsive]="chartOptions.responsive"></apx-chart>
+              </div>
+            </app-page-wrapper>
+            <div class="xirr" *ngIf="portfolioData?.TotalCurrentValue?.xirr">
+              <div class="row">
+              <div> XIRR {{ portfolioData?.TotalCurrentValue?.xirr}} %</div>
+                  <!-- <div class="col">
+                      <div>SIP</div>
+                      <div>₹ 82,435.45</div>
+                  </div> -->
+
+          </div>
+       
+        </div>
+        </ng-container>
+        <ng-container *ngIf="removepiechart">
+          <img src="assets/images/noinvestment.png" class="img-fluid emptywall" alt="empty-wallet">
+        </ng-container> 
+     
+        
+          </div>
+          <div class="col-md-1"></div>
+          <!-- Insights Section -->
+          <div class="col-md-5">
+            <div class="insight-bg">
+              <h4>Insights</h4>
+              <div class="insights-container">
+                <div *ngFor="let item of inSightDetails" class="insights-item">
+                  <div *ngIf="item.display" class="card-body">
+                    <h5 class="card-title"><b>{{ item.title }}</b></h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    <a (click)="exploreFund(item.category)">{{ item.url }}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Chart section for existing user end-->
+
+<!-- NAV link section start-->
+<section class="navlinkSection">
+
+  <div class="container fullWidth">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-2">
+            <a [href]="prodCheck ? 'javascript:void(0)':'/my-portfolio?mysip=true'" class="nav-link">
+              <!-- <a href="/my-portfolio?mysip=true" class="nav-link">  for production -->
+              <div class="widget-icon orange-color">
+                <img src="assets/images/dashboardicons/nav1.png" class="img-fluid" alt="empty-wallet">
+                <p>My SIP</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-2">
+            <a [href]="prodCheck ? 'javascript:void(0)':'/dashboard/switch'" class="nav-link">
+              <!-- <a routerLink="/dashboard/switch" class="nav-link"> -->
+              <div class="widget-icon darkblue-color">
+                <img src="assets/images/dashboardicons/nav2.png" class="img-fluid" alt="empty-wallet">
+                <p>Switch</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-2">
+            <a [href]="prodCheck ? 'javascript:void(0)':'/dashboard/redeem'"   class="nav-link">
+              <!-- <a routerLink="/dashboard/redeem" class="nav-link"> -->
+              <div class="widget-icon blue-color">
+                <img src="assets/images/dashboardicons/nav3.png" class="img-fluid" alt="empty-wallet">
+                <p>Redeem</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-2">
+            <a [href]="prodCheck ? 'javascript:void(0)':'/dashboard/SWP'" class="nav-link">
+              <!-- <a routerLink="/dashboard/SWP" class="nav-link"> -->
+              <div class="widget-icon darkPurple">
+                <img src="assets/images/dashboardicons/nav4.png" class="img-fluid" alt="empty-wallet">
+                <p>SWP</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-2">
+            <a [href]="prodCheck ? 'javascript:void(0)':'/dashboard/STP'"  class="nav-link">
+              <!-- <a routerLink="/dashboard/STP" class="nav-link"> -->
+              <div class="widget-icon purple-color">
+                <img src="assets/images/dashboardicons/nav5.png" class="img-fluid" alt="empty-wallet">
+                <p>STP</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-2">
+            <a [href]="prodCheck ? 'javascript:void(0)':'/dashboard/nav-graph'"  class="nav-link">
+              <!-- <a routerLink="/sip-investment/nav-graph" class="nav-link"> -->
+              <div class="widget-icon orange-color">
+                <img src="assets/images/dashboardicons/nav6.png" class="img-fluid" alt="empty-wallet">
+                <p>Nav Details</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</section>
+<!-- NAV link section end-->
+
+<!-- Funds might interest you-->
+<div class="container-fluid fullWidth">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="pos-product-screen">
+            <div class="title-header">
+              <div class="d-flex align-items-center">
+                <h5>Top Performing Funds</h5>
+              </div>
+            </div>
+            <ng-container *ngIf="fundsCategory.length">
+              
+              <!-- <div class="row">
+                <div class="col-12">
+                  <div class="filter-buttons">
+                    <ng-container *ngFor="let data of fundsCategory">
+                      <app-button [class]="(data == selectedActiveCategory)?'btn btn-animation':'btn btn-outline'"
+                        [spinner]="false" (click)="categorySection(data)">
+                        {{  data ==='1'? 'Equity':
+                            data ==='2'?'Hybrid':
+                            data ==='3'?'Debt':
+                            data ==='4'?'International Fund Of Fund':
+                            data ==='5'?'ETF':
+                            data ==='6'?'Index':
+                               'All Funds'
+                               }}
+                      </app-button>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="col-5"></div>
+              </div> -->
+              <owl-carousel-o [options]="customOptions">
+                <ng-container *ngFor="let item of fundTabledatas; let i = index">
+                  <ng-template carouselSlide>
+                    <article class="fund-container">
+                      <header class="fund-header">
+                        <p class="fund-subtitle">{{item.fund_name}} -
+                          {{item.plan_type ==='1'? 'Regular - ' +item.option_name:'Direct - ' +item.option_name}}</p>
+                        <!-- <img src="assets/images/cart-white-icon.png" (click)="addToCart(item,i)" alt=""> -->
+                        <!-- <i  class="ri-shopping-cart-line" (click)="addToCart(item,i)"></i> -->
+
+                      </header>
+                      <section class="fund-info">
+                        <div class="fund-details">
+                          <span class="fund-type"> {{item.fund_type_name}} </span>
+                          <img class="risk-img" [src]="'assets/images/riskometer/'+item.risk_type+'.png'" alt=""> 
+                        </div>
+                        <div class="nav-details">
+                          <div class="fund-metrics fundData borderR">
+                            <div class="metric">
+                              <span class="metric-title">NAV
+                                <i class="ri-information-line" 
+                                  data-placement="left" title="Net Asset value"></i>
+
+                              </span>
+                              <app-button *ngIf="!item?.showButton" [class]="'btn mb-2 mt-2 greenBtn'"
+                                (click)="getNAV(item.fund_code, i)" [spinner]="false">Get Latest NAV</app-button>
+
+                              <span class="metric-value green-text"
+                                *ngIf="item?.showButton">{{ (item?.nav)?item?.nav:'NA'}}</span>
+                              <span></span>
+
+                              <span class=" "
+                                *ngIf="item?.showButton">{{ item.navDate | date: "dd MMMM YYYY" }}</span>
+                              <span></span>
+                            </div>
+                            <div class="metric">
+                              <div class="cagr">
+                                <span class="metric-title">CAGR </span>
+                                <div class="additional-info">
+                                  <select class="form-control" (change)="onChangeObjCAGR($event,i,item)">
+                                    <option [value]="item.cagr_1_year">Last 1 Year</option>
+                                    <option [value]="item.cagr_3_year">Last 3 Year</option>
+                                    <option [value]="item.cagr_5_year">Last 5 Year</option>
+                                    <option [value]="item.cagr_inception">Since Inception</option>
+
+                                  </select>
+                                </div>
+                              </div>
+                              <span class="metric-value">{{ item.selectedCAGR?item.selectedCAGR:item.cagr_1_year}}
+                                %</span>
+                            </div>
+
+                          </div>
+
+                          <div class="fund-additional fundData">
+                            <div class="additional-info aum-value">
+                              <span class="info-title">AUM</span>
+                              <i class="ri-information-line"
+                                data-placement="left" [title]="'(As on ' + item?.aum_date+')'"></i>
+
+                              <span class="info-value green-text">{{ item?.aum_value}}
+                                Cr <br>
+                              </span>
+
+
+                            </div>
+                            <div class="metric">
+                              <span class="metric-title">Nature</span>
+                              <span class="metric-value">{{ item.nature =='O'?'Open':'CLose'}} Ended</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="min-max">
+                          <p class="mb-0">
+
+                          </p>
+
+
+                        </div>
+                      </section>
+                      <footer class="fund-footer">
+                        <div class="investment-options footer-sp"> 
+                          <app-button *ngIf="prodCheck" [class]="'btn btn-animation'"[disabled]="true">Quick Invest not allowed</app-button>
+                          <app-button *ngIf="!prodCheck"  [class]="'btn btn-animation'" (click)="transact(item,i)" [spinner]="false">
+                            Quick Invest
+                          </app-button> 
+                          <a href="javascript:void(0)" (click)="viewDetails(item)" class="link">view details</a>
+                          <!-- Added mb-4 for margin-bottom -->
+                        </div>
+                      </footer>
+                    </article>
+                  </ng-template>
+                </ng-container>
+              </owl-carousel-o>
+            </ng-container>
+            <ng-container *ngIf="!fundsCategory.length">
+              <h3>No data.</h3>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Funds might interest  you ends-->
+
+
+<!-- MY SIP  only for existing users-->
+<section>
+
+  <div class="container-fluid fullWidth" *ngIf="MySIPData">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="pos-product-screen mySip">
+              <div class="title-header">
+                <div class="d-flex align-items-center">
+                  <h5 class="p-0">My SIP</h5>
+                </div>
+              </div>
+              <ng-container *ngIf="!MySIPData.length">
+                <h3>No data.</h3>
+              </ng-container>
+              <owl-carousel-o [options]="customOptions">
+
+                <ng-container *ngFor="let item of MySIPData; let i = index">
+                  <ng-template carouselSlide>
+                    <div class="card sipCard">
+
+                      <div class="card-body">
+                        <!-- <div class="sip-top">
+                          <h5 class="sip-title">
+                            <span class="bgText">Frequency {{ item?.frequency}} Status {{ item?.status}}</span>
+                          </h5> -->
+                        <!-- <i class="ri-heart-fill"></i> -->
+                        <!-- </div> -->
+                        <p class="sip-text">{{ item?.schdesc}} </p>
+                        <p class="sip-subtext folio-number">Folio:{{item?.Folio}} <span class="statusItem">{{ item?.status}}</span></p>
+
+                        <div class="sip-amt">
+                          <img src="assets/images/arrow-down.png" alt="" class="downArrow">
+                          <div>
+                            <h3 class="sip-title"> Amount </h3>
+                            <p class="sip-value">{{item?.installmentamt}} </p>
+                          </div>
+                          <h5 class="sip-title marginL-auto">
+                            <span class="bgText">Frequency {{ item?.frequency}} </span>
+                          </h5>
+                        </div>
+                        <!-- <app-button [class]="'btn btn-animation'" (click)="repeatTransactions(item?.installmentamt)" [spinner]="false">
+                          Repeat Transaction
+                        </app-button> -->
+                      </div>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </owl-carousel-o>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</section>
+
+<!-- Calculator start-->
+<section>
+  <div class="container fullWidth">
+
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-7 financial-planner">
+
+            <div class="title-header">
+              <h5 class="">My SIP Financial Planner</h5>
+            </div>
+
+            <form [formGroup]="sliderForm">
+              <!-- <div class="range">
+                <input #rangeInput type="range" min="0" max="50" formControlName="rangeControl" /> 
+              </div> -->
+              <ul>
+                <li>
+                  <div class="row">
+                    <div class="col-8">
+                      <label for="investment" class="form-label">Monthly Investment Amount</label>
+                    </div>
+                    <div class="col-4">
+                      <div class="investment-amount">
+                        <input type="number"
+                  formControlName="rangeValue" id="myRangef" [min]="minValue" [max]="maxValue" (change)="applyControlrange($event, 'rangeValue')" />
+                  
+                      </div>
+                    </div>
+                  </div>
+                  <div class="range">
+                    <input class="rangeValue" type="range"
+                      formControlName="rangeValue" id="myRange" [min]="minValue" [max]="maxValue" step="500"
+                      (change)="applyControl($event, 'rangeValue')" />
+                  </div>
+                  <div class="min-max">
+                    <p>&#8377; 5,000</p>
+                    <p>&#8377; 5,00,000</p>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="row">
+                    <div class="col-8">
+                      <label for="timePeriodRange" class="form-label">Time Period (Years)</label>
+                    </div>
+                    <div class="col-4">
+                      <div class="investment-amount">
+                        <input type="number"
+                        formControlName="TimePerid" id="TimePerids" [min]="minTimePeriod" [max]="maxTimePeriod" (change)="applyControlrange($event, 'TimePerid')" />
+      
+                      </div>
+                    </div>
+                  </div>
+                  <div class="range">
+                    <input class="TimePerid" type="range" [max]="maxTimePeriod"
+                      formControlName="TimePerid" id="TimePeriod" [min]="minTimePeriod" step="1"
+                      (change)="applyControl($event, 'TimePerid')" />
+                  </div>
+                  <!-- <input type="range" class="form-range TimePerid rangeSlider range__slider" id="timePeriodRange" min="1" max="30" step="1"
+                  style="width: 100%;" #TimePerid formControlName="TimePerid"
+                  (change)="applyControl($event, 'TimePeriod')" /> -->
+
+                  <div class="min-max">
+                    <p>1 Year </p>
+                    <p>30 Years</p>
+                  </div>
+
+                </li>
+
+                <li>
+                  <div class="row">
+                    <div class="col-8">
+                      <label for="returnRateRange" class="form-label">Expected Rate Of Return (p.a)</label>
+                    </div>
+                    <div class="col-4">
+                      <div class="investment-amount">
+                        <input type="number"
+                        formControlName="ExpectedReturn" id="ExpectedReturns" [min]="minExpectedReturn" [max]="maxExpectedReturn" (change)="applyControlrange($event, 'ExpectedReturn')" />
+                       
+                      </div>
+                    </div>
+                  </div>
+                  <div class="range">
+                    <input class="ExpectedReturn" type="range"  [max]="maxExpectedReturn"
+                      formControlName="ExpectedReturn" id="ExpectedReturn" [min]="minExpectedReturn" step="0.5"
+                      (change)="applyControl($event, 'ExpectedReturn')" />
+                  </div>
+                  <!-- <input type="range" class="form-range rangeSlider ExpectedReturn range__slider" id="returnRateRange" min="1" max="30" step="0.5"
+                  style="width: 100%;" #ExpectedReturn formControlName="ExpectedReturn"
+                  (change)="applyControl($event, 'ExpectedReturnRate')" /> -->
+
+                  <div class="min-max">
+                    <p>1%</p>
+                    <p>30%</p>
+                  </div>
+
+                </li>                
+              </ul>
+            </form>
+
+          </div>
+
+          <div class="col-md-5">
+
+            <div id="chartcal">
+              <apx-chart [series]="chartcalOptions.series" [chart]="chartcalOptions.chart"
+                [colors]="chartcalOptions.colors" [labels]="chartcalOptions.labels"
+                [responsive]="chartcalOptions.responsive"></apx-chart>
+            </div>
+            <p class="total-amt"><span class="form-label">Total Amount</span> <br> {{ TotalAmount  | indianCurrency }}</p>
+          </div>
+          <!-- <div class="col-md-2 d-inlineFlex">
+            
+          </div> -->
+        </div>
+        <div class="disclaimer">
+          <p><strong>Disclaimer:</strong>  Please note that the SIP calculations provided by the calculator are approximate.</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Calculator ends-->
+
+
+
+<section>
+  <!-- Blogs Section -->
+  <div class="container fullWidth">
+    <div class="row">
+      <div class="col">
+        <div class="card overflow-auto">
+          <div class="card-body whiteNowrap">
+            <div class="title-header">
+              <h5 class="">Blogs</h5>
+            </div>
+            <div class="row flex-nowrap">
+              <ng-container *ngFor="let item of blogsdata">
+                <div class="col">
+                  <div class="card blog-card">
+                    <h5 class="blog-category ">{{ item.category }}</h5>
+
+                    <div class="card-body">
+                      <h5 class="blog-title">{{ item.title }}</h5>
+                      <p class="blog-text">{{ item.description }}</p>
+                      <img [src]="item.imageUrl" class="card-img-top blog-cardImg" alt="...">
+                      <!-- <a href="#" class="btn btn-primary">Learn More <i class="fa-solid fa-arrow-right ml-2"></i></a> -->
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- Email Subscription Box -->
+
+<div class="container fullWidth">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card subscribe-sec">
+        <div class="card-body row">
+          <div class="col-md-5">
+            <h2 class="">Stay updated with our thoughtful insights.</h2>
+
+            <p>Continue your journey with us
+              <span class="socialIcon">
+                <a target="_blank" href="https://www.facebook.com/barodabnpparibasmf"><i class="ri-facebook-circle-fill"></i></a>
+                <a target="_blank" href="https://www.instagram.com/barodabnpparibasmf"><i class="ri-instagram-fill"></i></a>
+              </span>
+            </p>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-6">
+            <form [formGroup]="SubscribeForm">
+              <div class="form-group m-5">
+
+                <!-- <label for="email" class="">Email address</label> -->
+                <input formControlName="Subscribe" type="email" class="form-control form-control-sm" id="email"
+                  aria-describedby="emailHelp" placeholder="Enter your email">
+                <button type="submit" class="btn btn-primary btn-block" (click)="submitSubs()">Subscribe</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,162 @@
+<div class="container contact-sec">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card contact-card">
+          <div class="card-body text-center">
+            <div class="icon-circle mb-4">
+              <img src="assets/images/contact/Get-A-Call.png" alt="WhatsApp">
+            </div>
+            <h4 class="card-title">Raise A Request</h4>
+            <p class="card-text orangeText mb-4">Raise A Request </p>
+            <p class="card-text noteText ">If you have any questions, concerns, or comments, please don't hesitate to get in touch.</p>
+            <a href="javascript:void(0)" class="btn btn-primary orange-button" (click)="raiseRequest()">Raise A Request</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card contact-card">
+          <div class="card-body text-center">
+            <div class="icon-circle mb-3">
+              <img src="assets/images/contact/Call-Us.png" alt="Call Us">
+            </div>
+            <h4 class="card-title">CALL US</h4>
+            <p class="card-text"><a href="tel:1800-2670-189" class="orangeText">1800-2670-189</a> (toll free)</p>
+            <p class="card-text noteText pt-4 mt-2">from 9.00 am to 7.00 pm <br> (Monday to Saturday)</p>
+            <a href="tel:1800-2670-189"  class="btn btn-primary orange-button">CALL US</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card contact-card">
+          <div class="card-body text-center">
+            <div class="icon-circle mb-3">
+              <img src="assets/images/contact/mail.png" alt="Mail Us">
+            </div>
+            <h4 class="card-title">MAIL US FOR ANY QUERY</h4>
+            <p class=""><a href="mailto:cs.barodabnppmf@kfintech.com" class="orangeText">{{email}}</a></p>
+            <p class="card-text noteText pt-4 mt-2">You can email us your query, complaint, or feedback. We would love to hear from you.</p>
+            <a href="mailto:cs.barodabnppmf@kfintech.com"  class="btn btn-primary orange-button">MAIL US</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container-fluid">
+  <div class="title-header">
+    <h5>Help Desk</h5>
+  </div>
+  <div>
+    <div class="mb-3 shadowBox">
+      <h4 class="mb-3">FAQs</h4>
+      <form [formGroup]="searchForm">
+        <div class="form-row">
+          <div class="col-md-6">
+            <input type="text" class="form-control" formControlName="searchQuery" placeholder="Search">
+          </div>
+          <div class="col-6">
+          </div>
+        </div>
+      </form>
+    
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item" *ngFor="let data of filteredFAQ; let i = index">
+        <h2 class="accordion-header" [id]="'heading-' + i">
+          <button class="accordion-button" type="button" (click)="toggleAccordion(i)" [attr.data-bs-toggle]="'collapse'"
+            [attr.data-bs-target]="'#collapse-' + i" [attr.aria-expanded]="activeIndex === i ? 'true' : 'false'"
+            aria-controls="collapse-One">
+            {{ data.title }}
+          </button>
+        </h2>
+        <div [id]="'collapse-' + i" class="accordion-collapse collapse" [class.show]="activeIndex === i"
+          [attr.aria-labelledby]="'heading-' + i" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <p>{{ data.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a routerLink="/helpdesk/view-faq" class="link-btn">VIEW All FAQS</a>
+    <!-- <div class="mt-3 bgGrey">
+      <div class="looking-for">
+        <h4>Still could not find what you are looking for?</h4>
+
+        <p (click)="raiseRequest()"><img src="assets/images/raise-request-icon.png" alt=""> Raise A Request</p>
+        <span class="or-line">Or</span>
+        <p><img src="assets/images/touch-with.png" alt="">Chat With Us</p>
+        <span class="or-line">Or</span>
+        <p><img src="assets/images/callback.png" alt="">Request A Callback</p>
+        
+    </div>
+
+
+     <h4>Still could not find what you are looking for?</h4> -->
+
+      <!-- <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title" (click)="raiseRequest()">Raise A Request</h5>
+          <p class="card-text">Chat With Us.</p>
+          <p class="card-text">Request A Callback.</p>
+        </div>
+      </div> 
+    </div> 
+
+  </div>
+
+     <div class="shadowBox mt-4">
+      <h4 class="mt-3">Get In Touch</h4>
+
+      <div class="row get-touch">
+        <div class="col-md-4">
+          <h5 class="card-title">Call us</h5>
+          <p class="card-text">18602660111 , 18602660111 (Toll Free)</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="card-title">Mail us</h5>
+          <p class="card-text">{{'customer_care@BarodaBaroda.com'}}</p>
+        </div>
+        <div class="col-md-4">
+          <h5 class="card-title">Chat with us</h5>
+          <p class="card-text"><img src="assets/images/touch-with.png" alt=""></p>
+        </div>
+
+      </div>
+    </div> -->
+  </div>
+</div>
+
+  
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12 mt-4">
+            <div class="title ">
+                <h2 class="heading text-left smallTitle">FEEL FREE <span> TO CONNECT</span></h2>
+            </div>
+            <div class="row free-connect">
+                <div class="col-md-5">
+                    <h4>REGISTERED OFFICE</h4>
+                    <p>Baroda BNP Paribas Asset Management India Pvt. Ltd. <br> 201(A) 2nd Floor, A wing, Crescenzo, <br> C-38 & 39, G Block, 
+                        <br>
+                        Bandra-Kurla Complex, <br> Mumbai, Maharashtra, India - 400 051 
+                        <br>
+                        Tel no: <a href="tel:02269209600" class="orangeText"> 022 69209600 </a>
+                        <br>
+                        Email: <a href="mailto:service@barodabnpparibasmf.in" class="orangeText">{{ email1}} </a>
+                        <br><br>
+                        CIN : U65991MH2003PTC142972</p>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+                    <p>If you are not satisfied with the resolution you may have received, write to the Investor Relations Officer.</p>
+                    <h4 class="mb-0">MR. VIVEK KUDAL</h4>
+                    <p>Investor Relations Officer</p>
+
+                    <p>Email: <a href="mailto:service@barodabnpparibasmf.in" class="orangeText"> {{email1}}</a> <br> 
+                        To know more on the modes for submitting a complaint or a grievance, 
+                       <a href="javascript:void(0)" (click)="raiseRequest()" class="orangeText"> Click Here.</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

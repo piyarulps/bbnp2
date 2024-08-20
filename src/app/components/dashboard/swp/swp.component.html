@@ -1,0 +1,139 @@
+<app-page-wrapper [title]="'SWP'">
+
+<form class="theme-form theme-form-2 mega-form" [formGroup]="form" (ngSubmit)="submit()">
+
+
+    <app-form-fields [label]="'Folio'" [for]="'Folio'" [required]="true" (change)="onChangeFolioObj($event)">
+        <select name="custom-select" formControlName="Folio" class="custom-select mb-3 form-control">
+            <option value="">--Please Select--</option>
+            <option *ngFor="let folio of onlyfolionos" [value]="folio">{{folio}}
+            </option>
+        </select>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['Folio'].touched && form.controls['Folio'].errors?.['required']">
+            Folio is required
+        </div>
+    </app-form-fields>
+
+
+
+    <app-form-fields [label]="'Switch'" [for]="'Switch'" [required]="true">
+        <select name="custom-select" formControlName="Schemeid" (change)="onChangeObj($event)"
+            class="custom-select mb-3 form-control">
+            <option value="">--Please Select--</option>
+            <option *ngFor="let folio of selectedfolioval" [value]="folio?.schemeid">{{folio?.desc}}
+            </option>
+        </select>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['Schemeid'].touched && form.controls['Schemeid'].errors?.['required']">
+            Scheme is required
+        </div>
+    </app-form-fields>
+
+
+    <div class="col-md-12 lable-sz px-0 mb-2">
+        <div class="row mt-2"> 
+            <div class="form-group col-md-3 px-0"></div>
+            <div class="form-group col-md-4 ">
+                <span>Balance Units</span>: <span id="txtbalunt">{{selectedschemeval?.balanceunits}}</span>
+            </div>
+            <div class="form-group col-md-5 ">
+                <span>Current Value</span>: <span id="txtcurval">{{selectedschemeval?.currentvalue}}</span>
+            </div>
+        </div>
+        <div class="row mt-md-2">
+            <div class="form-group col-md-3 "></div>
+
+            <div class="form-group col-md-4 ">
+                <span>NAV as on Date</span>: <span id="txtNavAsOnDateValue">{{selectedschemeval?.nav}}</span>
+            </div>
+            <div class="form-group col-md-5 ">
+                <span>Cost value</span>: <span id="txtminamt"> {{selectedschemeval?.costvalue}} </span><br>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <app-form-fields [label]="'Withdrawal Option'" [for]="'Withdrawal Option'" [required]="true" (change)="onChangeCategoryObj($event)">
+        <select name="custom-select" formControlName="Withdrawaltype" class="custom-select mb-3 form-control">
+            <option value="Fixed">Fixed</option>
+            <option value="Appreciation">Appreciation</option>
+        </select>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['Withdrawaltype'].touched && form.controls['Withdrawaltype'].errors?.['required']">
+            Withdrawal Option is required
+        </div>
+    </app-form-fields>
+
+    <app-form-fields [label]="'Number of Withdrawal'" [for]="'Number of Withdrawal'">
+        <input class="form-control" type="number" placeholder="Enter Number of Withdrawal" name="Untamtvalue"
+            formControlName="Noofwithdrawals">
+        <!-- <div class="invalid-feedback"
+            *ngIf="form.controls['Noofwithdrawals'].touched && form.controls['Noofwithdrawals'].errors?.['required']">
+
+            Number of Withdrawal Unit Required
+        </div>
+        <div class="feedback" *ngIf="form.controls['Noofwithdrawals'].errors?.['min']">Minimum value should be
+            {{ form.controls['Withdrawaltype'].value}}</div> -->
+
+    </app-form-fields>
+
+    <app-form-fields [label]="'SWP Frequency'" [for]="'SWP Frequency'" [required]="true">
+        <select name="custom-select" formControlName="Freq" (change)="onChangeFrequency($event)"
+            class="custom-select mb-3 form-control">
+            <option value="">--Select SWP Frequency--</option>
+            <option *ngFor="let data of Frequency" [value]="data">{{data}}
+            </option>
+        </select>
+    </app-form-fields>
+
+
+    
+    <app-form-fields [label]="'Transaction Date'" [for]="'Transaction Date'" [required]="true">
+
+        <div class="col-md-12">
+            <div class="row">
+              <div class="form-group col">
+                <p-calendar placeholder="Transaction date" formControlName="Trdate" [minDate]="minDate" [showIcon]="true" inputId="start-icon"></p-calendar>
+              </div>
+                    <div class="invalid-feedback"
+                    *ngIf="form.controls['Trdate'].touched && form.controls['Trdate'].errors?.['required']">
+                    Transaction date is required
+                </div>
+
+              <div class="form-group col">
+                <p-calendar placeholder="End date" formControlName="Enddate" [minDate]="form.controls['Trdate'].value" [showIcon]="true" inputId="end-icon"></p-calendar>
+              </div>
+              <div class="invalid-feedback"
+                    *ngIf="form.controls['Enddate'].touched && form.controls['Enddate'].errors?.['required']">
+                    End Date is required
+        </div>
+
+            </div>
+          </div>
+
+    </app-form-fields>
+
+
+
+
+
+    <app-form-fields [label]="'Amount '" [for]="'STP Day'" [required]="true">
+        <input formControlName="Amount" class="form-control" type="number" [min]="this.schemesbyCodeData?.swp_minamt"
+            placeholder="Enter Amount" name="Amount">
+
+        <p>Minimum Amount : {{schemesbyCodeData?.swp_minamt}}<p>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['Amount'].touched && form.controls['Amount'].errors?.['required']">
+
+             Amount is Required
+        </div>
+
+    </app-form-fields>
+    <app-button [id]="'user_btn'">Submit</app-button>
+
+
+</form>
+</app-page-wrapper>

@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/scss/app.scss";
+@import "assets/fonts-BBNP/stylesheet.css";
+@import "primeng/resources/primeng.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+
+.spinning {
+    padding-right: 40px;
+    &::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      right: 10px;
+      top: 0;
+      position: absolute;
+      border: 2px solid white;
+      border-right: 3px solid #27ae60;
+      animation: rotate360 0.5s infinite linear;
+    }
+  }
+  
+  @keyframes rotate360 {
+    100% {
+      transform: rotate(360deg);
+    }
+  }

@@ -1,0 +1,86 @@
+.notifications-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .notification-item {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .notification-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .noti-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card-title {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: 600;
+  }
+  
+  .new-tag {
+    background: #ff4757;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    margin-right: 10px;
+  }
+  
+  .icons-sec {
+    font-size: 1.5em;
+    color: #ffd700;
+  }
+  
+  .card-text {
+    margin: 10px 0;
+    font-size: 1em;
+    color: #555;
+  }
+  
+  .notiBtm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+
+  
+  .card-subtext {
+    font-size: 14px;
+    color: #888;
+  }
+  
+  .notification-msg {
+    font-size: 1em;
+    color: #555;
+  }
+  .notification-item {
+    background-color: #1aa48812;
+    border-left: 2px solid var(--theme-color);
+}
+
+.gap{
+  margin: 0 6px 0 0;
+}

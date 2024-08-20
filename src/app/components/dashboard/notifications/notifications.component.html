@@ -1,0 +1,32 @@
+<div class="title-header mt-3">
+  <h5>Notifications  </h5>
+</div>
+
+<div class="notifications-container">
+  <div class="notification-list">
+    <div *ngFor="let item of NotificationDetails" class="notification-item"
+      [ngClass]="item.flag=='New' ? 'new-notification' : ''">
+      <div class="card-body">
+        <div class="noti-top">
+          <h5 class="card-title">
+            <span class="new-tag" *ngIf="item.flag=='New'">New</span>
+            {{ item.title }}
+          </h5>
+          <span class="icons-sec">
+            <a href="javascript:void(0)">
+              <i class="ri-star-fill"></i>
+            </a>
+          </span>
+        </div>
+        <p class="card-text">{{ item.description }}</p>
+        <div class="notiBtm">
+          <a target="_blank" *ngIf="item.link" [href]="item.link" class="link-btn">Explore</a>
+          <!-- <p class="card-subtext"><i _ngcontent-serverapp-c2222541157="" class="ri-time-line gap" ></i>{{ item.datetime }}</p> -->
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!NotificationDetails.length" class="notification-msg text-center m-4">
+      No record found
+    </div>
+  </div>
+</div>

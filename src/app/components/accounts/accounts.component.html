@@ -1,0 +1,615 @@
+
+<app-loader *ngIf="loadingStatus"></app-loader>
+
+<div class="container-fluid">
+  <div class="title-header mt-3">
+    <h5>MY PROFILE</h5>  
+    <p class="invalid-feedback" *ngIf="verifyKYC=='No' && decodedKYCStatus">{{ decodedKYCStatus }}. Please try after sometime.</p>
+  </div>
+  <div>
+    <div class="card complete-card">
+      <div class="card-body check">
+        <div class="">
+
+          <p class="card-text" >{{ kycstatus }}</p>
+          <h6>{{ kycLargeDescription }}</h6>
+        
+          <!-- // localStorage.setItem('kycstatusButton','Modify KYC');
+          // localStorage.setItem('kycLargeDescription','Begin your investment journey and start growing your money.');
+          // localStorage.setItem('kycstatus','Your KYC is validated');
+          // localStorage.setItem('verifyKYC','Yes'); -->
+
+          <!-- <p class="card-text" *ngIf="KYCVerify=='No'">Be investment ready. Complete your KYC.</p>
+          <p class="card-text" *ngIf="KYCVerify=='Yes'">{{ decodedKYCStatus }}.</p>
+          <h6 *ngIf="KYCVerify=='No' || decodedKYCStatus =='KYC REJECTED'">
+            You are just 2 steps away from completing your KYC. Complete you KYC and start growing your money.
+          </h6>
+          <h6 *ngIf="KYCVerify=='Yes' && decodedKYCStatus !=='KYC REJECTED'">
+            Begin your investment journey and start growing your money.
+          </h6> -->
+        </div>
+        <div class="item2">
+          <button type="button" class="btn btn-animation mt-3 bigBtn" (click)="kycSubmit()">{{ kycstatusButton }}</button>
+        </div>
+
+        <!-- <div class="item2">
+          <button type="button" *ngIf="KYCVerify=='No' || decodedKYCStatus =='KYC REJECTED' " class="btn btn-animation mt-3 bigBtn"
+            (click)="kycSubmit()">{{ KYCVerify=='No'?'Click here to complete your KYC':'Re-KYC'}}</button>
+          <button type="button" *ngIf="KYCVerify=='Yes' && decodedKYCStatus !=='KYC REJECTED' " class="btn btn-animation mt-3 bigBtn">{{ decodedKYCStatus }}</button>
+        </div> -->
+
+      </div>
+    </div>
+
+    <div *ngIf="showform">
+      <h5 class="small-heading">Investor Services</h5>
+      <div class="row investor-services">
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <div class="card" [ngClass]="selectedtabs=='Demographic' ? 'active' : ''"
+            (click)="tabSelection('Demographic')">
+            <div class="card-body check ">
+              <img class="crd-img" src="assets/images/menu/details.png" alt="">
+              <h5 class="card-title item2 p-2">Demographic Details</h5>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <div class="card" [ngClass]="selectedtabs=='FATCA' ? 'active' : ''" (click)="tabSelection('FATCA')">
+            <div class="card-body check">
+              <img class="crd-img" src="assets/images/menu/fatcaa.png" alt="">
+              <h5 class="card-title item2 p-2">FATCA details</h5>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <div class="card" [ngClass]="selectedtabs=='Communications' ? 'active' : ''"
+            (click)="tabSelection('Communications')">
+            <div class="card-body check">
+              <img class="crd-img" src="assets/images/menu/Communcation.png" alt="">
+              <h5 class="card-title item2 p-2">Communications details</h5>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <div class="card" [ngClass]="selectedtabs=='Nominee' ? 'active' : ''" (click)="tabSelection('Nominee')">
+            <div class="card-body check">
+              <img class="crd-img" src="assets/images/menu/Nominee.png" alt="">
+              <h5 class="card-title item2 p-2">Nominee details</h5>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <div class="card" [ngClass]="selectedtabs=='Bank' ? 'active' : ''" (click)="tabSelection('Bank')">
+            <div class="card-body check">
+              <img class="crd-img" src="assets/images/menu/bank.png" alt="">
+              <h5 class="card-title item2 p-2">Bank details</h5>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6">
+          <div class="card" [ngClass]="selectedtabs=='Folio' ? 'active' : ''" (click)="tabSelection('Folio')">
+            <div class="card-body check">
+              <img class="crd-img" src="assets/images/menu/folio.png" alt="">
+              <h5 class="card-title item2 p-2">Folio details</h5>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showform" class="shadowBox">
+
+      <div class="" *ngIf="selectedtabs=='Demographic'">
+        <div class=" ">
+          <form [formGroup]="formGroup">
+            <div class="row mt-4">
+              <div class="col-md-4">
+                <label for="Plan">Pan</label>
+                <input type="text" formControlName="Pan" class="form-control form-control-sm" placeholder="Enter Pan">
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">Investor Name</label>
+                <input type="text" formControlName="name" class="form-control form-control-sm" placeholder="Enter Investor Name">
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">Gender</label>
+                <input type="text" formControlName="gender" class="form-control form-control-sm" placeholder="Enter gender">
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">Date Of Birth</label><br>
+                <p-calendar formControlName="date" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">Place of Birth</label>
+                <input type="text" formControlName="PlaceofBirth" class="form-control form-control-sm"
+                  placeholder="Enter Place">
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">Country of Birth</label>
+                <input type="text" formControlName="CountryofBirth" class="form-control form-control-sm"
+                  placeholder="Enter Place">
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">Occupation</label>
+                <input type="text" formControlName="Occupation" class="form-control form-control-sm"
+                  placeholder="Enter Occupation">
+              </div>
+            </div>
+            <div class="sub-btn">
+              <app-button [class]="'btn btn-outline orange-border ml-4'" (click)="prevTab()" [spinner]="false">Back
+              </app-button>
+              <app-button type="button" [class]="'btn btn-outline orange-border ml-4'" [spinner]="false"
+                (click)="nextTab()">Next</app-button>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+
+      <div class="" *ngIf="selectedtabs=='FATCA'">
+        <div class=" ">
+          <form [formGroup]="formGroup">
+            <div class="row mt-4">
+              <div class="col-md-4">
+                <label for="Plan">FACTA Status</label>
+                <p><img src="assets/images/Check_ring_light.png" alt=""> Compliant</p>
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">Gross Annual Income</label>
+                <input type="text" formControlName="AnnualIncome" class="form-control form-control-sm"
+                  placeholder="Enter Income">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Plan">Source Of Wealth</label>
+                <select name="custom-select" formControlName="SourceofWealth" class="custom-select form-control">
+                  <option value="">Select Source Of Wealth </option>
+
+                  <option *ngFor="let state of sourcesOfWealth" [value]="state.value">{{ state.label }}</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <label for="Plan">Politically Exposed Person</label>
+
+                <div class="radio-div">
+                  <input class="form-check-input" formControlName="Pep" type="radio" id="rbYes" name="Pep"
+                    [value]="true">
+                  <label class="form-check-label" for="rbYes">
+                    Yes
+                  </label>
+                  <input class="form-check-input" formControlName="Pep" type="radio" id="rbNo" name="Pep"
+                    [value]="false">
+                  <label class="form-check-label" for="rbNo">
+                    No
+                  </label>
+                </div>
+              </div>
+
+
+              <div class="col-md-4">
+                <label for="Plan">Are you a Tax resident of any country other than India?</label>
+
+                <div class="radio-div">
+                  <input class="form-check-input" formControlName="TaxOtherCountry" type="radio" id="rbYes"
+                    name="TaxOtherCountry" [value]="true">
+                  <label class="form-check-label" for="rbYes">
+                    Yes
+                  </label>
+                  <input class="form-check-input" formControlName="TaxOtherCountry" type="radio" id="rbNo"
+                    name="TaxOtherCountry" [value]="false">
+                  <label class="form-check-label" for="rbNo">
+                    No
+                  </label>
+                </div>
+              </div>
+              <ng-container *ngIf="formGroup.controls['TaxOtherCountry'].value === true">
+
+
+                <div class="col-md-4">
+                  <label for="Plan">Country of Tax Residence</label>
+                  <input type="text" formControlName="CitizenOtherCountry" class="form-control form-control-sm"
+                    placeholder="">
+                </div>
+                <div class="col-md-4">
+                  <label for="Plan">Tax Identification Number</label>
+                  <input type="text" formControlName="Guardian_Name" class="form-control form-control-sm"
+                    placeholder="">
+                </div>
+
+                <div class="col-md-4">
+                  <label for="Plan">Identification Type</label>
+                  <input type="text" formControlName="IdentificationType" class="form-control form-control-sm"
+                    placeholder="">
+                </div>
+                <div class="col-md-4">
+                  <label for="Plan">Nationality</label>
+                  <input type="text" formControlName="Nationality" class="form-control form-control-sm" placeholder="">
+                </div>
+                <div class="col-md-4">
+                  <label for="Plan">Overseas Address</label>
+                  <input type="text" formControlName="Overseas_Address" class="form-control form-control-sm"
+                    placeholder="">
+                </div>
+                <div class="col-md-4">
+                  <label for="Plan">City </label>
+                  <input type="text" formControlName="fCity" class="form-control form-control-sm" placeholder="">
+                </div>
+                <div class="col-md-4">
+                  <label for="Plan">PIN</label>
+                  <input type="text" formControlName="fPIN" class="form-control form-control-sm" placeholder="">
+                </div>
+                <div class="col-md-4">
+                  <label for="Plan">State</label>
+                  <input type="text" formControlName="fState" class="form-control form-control-sm" placeholder="">
+                </div>
+                <div class="col-md-4">
+                  <label for="Plan">Country</label>
+                  <input type="text" formControlName="fCountry" class="form-control form-control-sm" placeholder="">
+                </div>
+              </ng-container>
+
+
+            </div>
+            <div class="sub-btn">
+              <app-button [class]="'btn btn-outline orange-border ml-4'" (click)="prevTab()" [spinner]="false">Back
+              </app-button>
+              <app-button type="button" [class]="'btn btn-outline orange-border ml-4'" [spinner]="false"
+                (click)="nextTab()">Next</app-button>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+
+      <div class="" *ngIf="selectedtabs=='Communications'">
+        <div class=" ">
+          <form [formGroup]="formGroup">
+            <div class="row mt-4">
+              <div class="col-md-5">
+                <label for="Plan">Email ID</label>
+                <input type="text" formControlName="Email" class="form-control form-control-sm" placeholder="Enter">
+              </div>
+              <div class="col-md-5">
+                <label for="Plan">Phone No</label>
+                <div class="mobile-div">
+                  <!-- <select name="" class="form-control" id="">
+                  <option value="" disabled>+91</option>
+                </select> -->
+                  <input type="text" formControlName="Mobile" class="form-control form-control-sm " placeholder="">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">Address1</label>
+                <input type="text" formControlName="Address1" class="form-control form-control-sm" placeholder="Enter">
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">Address2</label>
+                <input type="text" formControlName="Address2" class="form-control form-control-sm" placeholder="Enter">
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">City</label>
+                <input type="text" formControlName="City" class="form-control form-control-sm" placeholder="Enter">
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">State</label>
+                <input type="text" formControlName="State" class="form-control form-control-sm" placeholder="Enter">
+
+                <!-- <select name="custom-select" formControlName="State" class="custom-select form-control">
+                  <option *ngFor="let state of stateData" [value]="state.key">{{ state.value }}</option>
+                </select> -->
+              </div>
+              <div class="col-md-4">
+                <label for="Plan">Pin code</label>
+                <input type="text" formControlName="Pin_code" class="form-control form-control-sm" placeholder="Enter">
+              </div>
+
+            </div>
+            <div class="sub-btn">
+              <app-button [class]="'btn btn-outline orange-border ml-4'" (click)="prevTab()" [spinner]="false">Back
+              </app-button>
+              <app-button type="button" [class]="'btn btn-outline orange-border ml-4'" [spinner]="false"
+                (click)="nextTab()">Next</app-button>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+
+      <div class="" *ngIf="selectedtabs=='Nominee'">
+        <div class=" ">
+          <form [formGroup]="formGroup">
+            <div class="row mt-3" *ngIf="!getInvestorNominee || (formGroup.controls['Name_Of_Nominee2'].value =='' || formGroup.controls['Name_Of_Nominee2'].value !=='')">
+              <div class="col-md-4">
+                <div class="sub-btn">
+                  <app-button *ngIf="formGroup.controls['Name_Of_Nominee'].value ==''" [class]="'btn btn-outline orange-border ml-4'" (click)="addNewNominee()">Add Nominee
+                  </app-button>
+                  <app-button type="button" [class]="'btn btn-outline orange-border ml-4'" *ngIf="nomineeData && nomineeData.length" (click)="editNominee()">Edit
+                    Nominee</app-button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="nomineeData && nomineeData.length > 0">
+              <!-- First Nominee -->
+              <div class="m-3">
+                <h4>First Nominee</h4>
+
+              </div>
+              <div class="col-md-4">
+                <label for="Name_Of_Nominee">Name</label>
+                <input type="text" formControlName="Name_Of_Nominee" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Guardian_Name">Guardian Name</label>
+                <input type="text" formControlName="Guardian_Name" class="form-control form-control-sm" placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Nominee_Percentage">Percentage Allocation</label>
+                <input type="text" formControlName="Nominee_Percentage" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Nominee_IsMinor">Is Minor</label>
+                <input type="text" formControlName="Nominee_IsMinor" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Relation_With_Nominee">Relation with Nominee</label>
+                <input type="text" formControlName="Relation_With_Nominee" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Date_Of_birth1">Date of Birth</label>
+                <input type="text" formControlName="Date_Of_birth1" class="form-control form-control-sm" placeholder="">
+              </div>
+            </div>
+
+            <div class="row" *ngIf="nomineeData && nomineeData.length > 1">
+              <!-- Second Nominee -->
+
+              <div class="m-3">
+                <h4>Second Nominee</h4>
+              </div>
+              <div class="col-md-4">
+                <label for="Name_Of_Nominee2">Name</label>
+                <input type="text" formControlName="Name_Of_Nominee2" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Guardian_Name2">Guardian Name</label>
+                <input type="text" formControlName="Guardian_Name2" class="form-control form-control-sm" placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Nominee_Percentage2">Percentage Allocation</label>
+                <input type="text" formControlName="Nominee_Percentage2" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Nominee_IsMinor2">Is Minor</label>
+                <input type="text" formControlName="Nominee_IsMinor2" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Relation_With_Nominee2">Relation with Nominee</label>
+                <input type="text" formControlName="Relation_With_Nominee2" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Date_Of_birth2">Date of Birth</label>
+                <input type="text" formControlName="Date_Of_birth2" class="form-control form-control-sm" placeholder="">
+              </div>
+            </div>
+
+            <div class="row" *ngIf="nomineeData && nomineeData.length > 2">
+              <!-- Third Nominee -->
+              <div class="m-3">
+                <h4>Third Nominee</h4>
+
+              </div>
+
+              <div class="col-md-4">
+                <label for="Name_Of_Nominee3">Name</label>
+                <input type="text" formControlName="Name_Of_Nominee3" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Guardian_Name3">Guardian Name</label>
+                <input type="text" formControlName="Guardian_Name3" class="form-control form-control-sm" placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Nominee_Percentage3">Percentage Allocation</label>
+                <input type="text" formControlName="Nominee_Percentage3" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Nominee_IsMinor3">Is Minor</label>
+                <input type="text" formControlName="Nominee_IsMinor3" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Relation_With_Nominee3">Relation with Nominee</label>
+                <input type="text" formControlName="Relation_With_Nominee3" class="form-control form-control-sm"
+                  placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Date_Of_birth3">Date of Birth</label>
+                <input type="text" formControlName="Date_Of_birth3" class="form-control form-control-sm" placeholder="">
+              </div>
+            </div>
+
+            <div class="sub-btn">
+              <app-button [class]="'btn btn-outline orange-border ml-4'" (click)="prevTab()" [spinner]="false">Back
+              </app-button>
+              <app-button type="button" [class]="'btn btn-outline orange-border ml-4'" [spinner]="false"
+                (click)="nextTab()">Next</app-button>
+              <app-button [class]="'btn mr-4 btn-animation'" [spinner]="spinnerLoader" (click)="submitKYC()">Submit
+              </app-button>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+
+      <div class="" *ngIf="selectedtabs=='Bank'">
+        <div class=" ">
+          <form [formGroup]="formGroup">
+
+            <div class="row mt-4">
+              <div class="col-md-4">
+                <label for="Plan">IFSC Code</label>
+                <input type="text" formControlName="IFSC_Code" class="form-control form-control-sm" placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Plan">Bank Name</label>
+                <input type="text" formControlName="Bank_Name" class="form-control form-control-sm" placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Plan">Branch Address1</label>
+                <input type="text" formControlName="Bank_Name" class="form-control form-control-sm" placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Plan">Branch Address2</label>
+                <input type="text" formControlName="Bank_Name" class="form-control form-control-sm" placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Plan">Account No</label>
+                <input type="text" formControlName="Account_Number" class="form-control form-control-sm" placeholder="">
+              </div>
+
+              <div class="col-md-4">
+                <label for="Plan">Account Type</label>
+                <!-- <input  type="text" formControlName="Account_Type"  class="form-control form-control-sm"
+                placeholder=""> -->
+
+                <select name="" id="" class="form-control" formControlName="Account_Type">
+                  <option value="SB">Saving</option>
+                  <option value="CR">Current</option>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="sub-btn">
+              <app-button [class]="'btn btn-outline orange-border ml-4'" (click)="prevTab()" [spinner]="false">Back
+              </app-button>
+              <app-button type="button" [class]="'btn btn-outline orange-border ml-4'" [spinner]="false"
+                (click)="nextTab()">Next</app-button>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+
+
+      <div class="" *ngIf="selectedtabs=='Folio'">
+        <div class=" ">
+          <form [formGroup]="formGroup">
+
+            <div class="row mt-4">
+              <div class="col-md-4">
+                <label for="Plan">Folio</label>
+                <div [ngClass]="{ 'position-relative spinning' : isLoading }">
+                  <ng-content></ng-content>
+                </div>
+                <ng-container *ngIf="onlyfolionos?.length">
+                  <select name="custom-select" formControlName="Folio" class="custom-select mb-3 form-control">
+                    <option value="">--Please Select--</option>
+
+                    - <option *ngFor="let folio of onlyfolionos" [value]="folio">{{folio}}
+                    </option>
+                  </select>
+                </ng-container>
+
+
+                <div *ngIf="!onlyfolionos.length">
+                  <h5> No Folio created for this account</h5>
+                </div>
+              </div>
+
+              
+            <div class="col-md-12" *ngIf="folioDetails.length">
+              <div class="table-responsive detail-table">
+                <table>
+                  <tr>
+                    <th>Name</th>
+                    <th>Contact Info</th>
+                    <th>email</th>
+                    <th>Mode of hold</th>
+                    <th>PAN</th>
+                    <th>Bank Account</th>
+                  </tr>
+                  <tr *ngFor="let data of folioDetails">
+                    <td>{{ data.invname}} </td>
+                    <td>{{ data.mobile}}</td>
+                    <td>{{ data.email}}</td>
+                    <td>{{ data.modeofhold}}</td>
+                    <td>{{ data.pan}}</td>
+                    <td>{{ data.accountnumber}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            </div>
+
+
+          </form>
+          <div class="sub-btn">
+            <app-button [class]="'btn btn-outline orange-border ml-4'" (click)="prevTab()" [spinner]="false">Back
+            </app-button>
+            <ng-container *ngIf="!getInvestorNominee">
+              <app-button type="button" [class]="'btn btn-outline orange-border ml-4'" [spinner]="false"
+              (click)="nextTab()">Next</app-button>
+          
+            </ng-container>
+            
+           
+
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="" *ngIf="selectedtabs !=='Demographic'">
+      No data for {{ selectedtabs}}
+    </div> -->
+
+    </div>
+
+
+
+
+  </div>
+
+</div>

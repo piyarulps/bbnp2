@@ -1,0 +1,91 @@
+@media screen and (min-width: 992px) {
+    ::ng-deep .modal-lg, ::ng-deep .modal-xl {
+        --bs-modal-width: 900px;
+    }
+}
+@media screen and (min-width: 576px) and (max-width: 991px) {
+    ::ng-deep .modal-dialog {
+        max-width: 95%;
+    }
+}
+.modal-header {
+    background: #3E8A61;
+    border-radius: 0;
+    color: #fff;
+    align-items: center;
+}
+.modal-title {
+    font-size: 24px;
+}
+::ng-deep .modal-content {
+    border-radius: 0;
+    border: 0;
+}
+.btn-close {
+    background-color: #fff;
+    opacity: 1;
+    border-radius: 50%;
+    right: 24px;
+    top: 27px;
+}
+
+.modal-body {
+    background-color: #F8F9FA;
+}
+.success-msg {
+    font-size: 14px!important;
+    font-weight: normal!important;
+    color: #D74B14;
+}
+.congrats-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.congrat-detail h4 {
+    color: #595B61;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.congrat-detail p {
+    color: #595B61;
+    font-size: 12px;
+}
+.congrat-disclaimer {
+    border-top: 1px solid #CDCDCD;
+    padding-top: 30px;
+    margin-top: 25px;
+
+    p, li {
+        color: #4A4A4A;
+        font-size: 12px;
+    }
+}
+ul {
+    margin: 20px 0;
+}
+
+@media screen and (min-width: 992px) {
+    .modal-header, .modal-body {
+        padding: 15px 25px;
+    }
+}
+@media screen and (min-width: 546px) and (max-width: 700px) {
+    .congrat-detail .col {
+        width: 33%;
+        flex: auto;
+    }
+}
+
+@media screen and (min-width: 381px) and (max-width: 545px) {
+    .congrat-detail .col {
+        width: 50%;
+        flex: auto;
+    }
+}
+@media screen and (max-width: 380px) {
+    .congrat-detail .col {
+        width: 100%;
+        flex: auto; 
+    }
+}

@@ -1,0 +1,282 @@
+.check {
+    display: flex;
+    justify-content: space-between;
+}
+
+.item2 {
+    margin-left: auto; /* Pushes this item to the right */
+  }
+
+  .card {
+    border: 1px solid rgb(213, 208, 208);
+    cursor: pointer;
+  }
+
+
+ .crd-img {
+    width: 43px;
+    height: 43px;
+  }
+
+  ::ng-deep.p-calendar .p-inputtext {
+    width: 100% !important;
+}
+.complete-card {
+  background: #3E8A61;
+  border-radius: 10px;
+  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.10);
+  color: #fff;
+  
+  
+}
+
+.complete-card .check {
+  gap: 15px;
+  
+  @media screen and (max-width:640px) {
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .item2 {
+      margin-left: inherit;
+    }
+
+  }
+}
+h6 {
+  font-size: 12px;
+  font-weight: normal;
+}
+.bigBtn {
+  background: #FF9E69;
+  min-width: 235px;
+  margin-top: 0px!important;
+
+  &:hover {
+    color: #fff;
+  }
+}
+.card-text {
+  font-size: 18px;
+  font-weight: normal;
+  margin-bottom: 2px;
+}
+
+.title-header h5:after, .title-header .h5:after {
+  display: none;
+}
+
+
+.sub-btn {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 10px 0;
+    row-gap: 15px;
+    
+}
+
+.small-heading {
+  color: #595B61;
+  font-size: 20px;
+}
+.investor-services {
+  margin-top: 20px;
+}
+.investor-services .card {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px 10px;
+  border: 0px;
+  position: relative;
+
+  &::before {
+    content: '';
+    background: url('/assets/images/Incomplete-circle.png') no-repeat;
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 19px;
+    height: 18px;
+    display: block;
+  }
+}
+.investor-services .card-body {
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+}
+.investor-services .card.active {
+  border: 1px solid var(--theme-color);
+
+  &::before {
+    content: '';
+    background: url('/assets/images/Check-tick.png') no-repeat;
+    width: 17px;
+    height: 18px;
+  }
+}
+
+.investor-services .card-title {
+  margin-bottom: 0;
+  padding: 0!important;
+  font-size: 14px;
+  margin-left: inherit;
+}
+@media screen and (min-width:1280px) and (max-width: 1366px) {
+  .investor-services .col-md-4 {
+    padding: 0 5px;
+  }
+  .investor-services .card-title {
+    font-size: 12px;
+  }
+  .crd-img {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media screen and (min-width:992px) and (max-width: 1279px) {
+  .investor-services .col-md-4 {
+    width: 33.33%;
+  }
+  
+}
+input.form-control {
+  background: #F9F9F9;
+  border: 1px solid #F9F9F9;
+}
+.form-control {
+  border-radius: 4px;
+  margin-bottom: 30px;
+  /* appearance: auto; */
+  padding: 8px 8px;
+  height: 40px;
+  font-size: 14px;
+}
+select.form-control {
+  background-image: url('/assets/images/dropdown-arrow.png');
+  background-repeat: no-repeat;
+  background-position: center right 10px;
+}
+::ng-deep .p-calendar {
+  width: 100%;
+  margin-bottom: 30px;
+}
+::ng-deep .p-inputtext {
+  border-radius: 4px;
+  border: 1px solid #D0D5DD;
+  height: 38px;
+}
+label {
+  color: #595B61;
+  margin-bottom: 4px;
+}
+.sub-btn {
+  display: inline-flex;
+  gap: 20px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+.sub-btn ::ng-deep .btn {
+  box-shadow: 5px 5px 10px #D5D5D5;
+}
+.sub-btn ::ng-deep .btn-animation {
+  min-width: 130px;
+  height: 38px;
+}
+.sub-btn ::ng-deep .orange-border {
+  border-color: var(--theme-color);
+  min-width: 130px;
+  height: 38px;
+  color: var(--theme-color);  
+}
+
+.sub-btn ::ng-deep .orange-border:hover {
+  color: #fff;
+  background-color: var(--theme-color);
+}
+.radio-div {
+  margin-top: 5px;
+}
+.form-check-input {
+  margin-top: 0;
+  margin-right: 8px;
+}
+
+.form-check-label {
+  margin-right: 20px;
+}
+.mobile-div {
+  display: flex;
+  gap: 8px;
+    
+}
+.mobile-div select {
+  background-color: #F9F9F9;
+  border: 0px;
+  background-size: 10px;
+  width: 75px;
+  
+}
+input.edit-icon {
+  background: url('/assets/images/pencil-edit.png') no-repeat;
+  background-position: center right 10px;
+  background-color: #F9F9F9;
+  border: 0;
+}
+
+.detail-table {
+  margin-bottom: 60px;
+  table {
+    width: 100%;
+  }
+
+  tr {
+    border-bottom: 1px solid #939393;
+  }
+  th {
+    color: #000;
+    font-weight: normal;   
+  }
+  td {
+    color: #707176;   
+  }
+  th, td {
+    padding: 15px 15px;
+  }
+}
+th:first-child, td:first-child {
+  padding-left: 0!important;
+}
+
+.shadowBox {
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  margin-bottom: 50px;
+}
+
+
+.spinning {
+  padding-right: 40px;
+  &::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    right: 10px;
+    top: 0;
+    position: absolute;
+    border: 2px solid white;
+    border-right: 3px solid #27ae60;
+    animation: rotate360 0.5s infinite linear;
+  }
+}
+
+@keyframes rotate360 {
+  100% {
+    transform: rotate(360deg);
+  }
+}

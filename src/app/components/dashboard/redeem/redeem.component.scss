@@ -1,0 +1,9 @@
+::ng-deep .title-header h5:after, .title-header .h5:after {
+    display: none;
+} 
+
+::ng-deep .col-xl-10 {
+    @media screen and (min-width: 1280px) {   
+        width: 90%;
+    }
+}

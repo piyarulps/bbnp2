@@ -1,0 +1,251 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="heading">{{ title}}</h2>
+        </div>
+    </div>
+    <div class="row list-top">
+        <div class="col" *ngIf="fundsCategory.length<2" class="mb-3">
+            <p-skeleton height="5rem" width="74rem"></p-skeleton>
+        </div>
+        <div class="col" *ngIf="fundsCategory.length>2">
+
+            <div class="filter-buttons">
+                <app-button [class]="(selectedActiveCategory=='ALL FUND')?'btn btn-animation':'btn btn-outline'"
+                    [spinner]="false" (click)="categorySection('ALL FUND')">
+                    All
+                </app-button>
+                <ng-container *ngFor="let data of fundType">
+                    <app-button [class]="(data.fund_id == selectedActiveCategory)?'btn btn-animation':'btn btn-outline'"
+                        [spinner]="false" (click)="categorySection(data.fund_id)">
+                        {{ data.fund_type_name }}
+                    </app-button>
+                </ng-container>
+            </div>
+        </div>
+        <!-- <div class="col-md-4" *ngIf="fundsCategory.length>2">
+            <div class="toggle-div">
+                <div class="filter-buttons switchToggle">
+                    <p-skeleton height="auto" styleClass="p-mb-2"></p-skeleton>
+                    <div class="form-check form-switch ps-0">
+                        <span class="green-switch">Direct</span>
+                        <label class="switch">
+
+                            <input type="checkbox" id="status" [formControl]="toggleControl">
+                            <span class="switch-state"></span>
+
+                        </label>
+                        <span class="orange-switch">Regular</span>
+
+                    </div>
+                </div>
+                <div class="filter-buttons switchToggle">
+                    <p-skeleton height="auto" styleClass="p-mb-2"></p-skeleton>
+                    <div class="form-check form-switch ps-0">
+                        <span class="green-switch">Open</span>
+
+                        <label class="switch">
+                            <input type="checkbox" id="status" [formControl]="openClose">
+                            <span class="switch-state"></span>
+
+                        </label>
+                        <span class="orange-switch">Close</span>
+
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="col" *ngIf="fundsCategory.length>2">
+            <div class="filter-buttons">
+                <p-skeleton height="8rem" styleClass="p-mb-2"></p-skeleton>
+                <div class="form-check form-switch ps-0">
+                    <span>Open</span>
+
+                    <label class="switch">
+                        <input type="checkbox" id="status" [formControl]="openClose">
+                        <span class="switch-state"></span>
+
+                    </label>
+                    <span>Close</span>
+
+                </div>
+            </div>
+        </div> -->
+
+
+    </div>
+</div>
+<div class="container-fluid mt-2 mb-2">
+<div class="card p-0">
+
+    <ng-container *ngIf="isLoading; else dataTemplate">
+        <div class="paddingSix">
+            <table class="fullwidth">
+                <tr>
+                    <th>
+                        <p-skeleton height="8rem" styleClass="p-mb-2"></p-skeleton>
+                    </th>
+                    <th>
+                        <p-skeleton height="8rem" styleClass="p-mb-2"></p-skeleton>
+                    </th>
+                    <th>
+                        <p-skeleton height="8rem" styleClass="p-mb-2"></p-skeleton>
+                    </th>
+                    <th>
+                        <p-skeleton height="8rem" styleClass="p-mb-2"></p-skeleton>
+                    </th>
+                    <th>
+                        <p-skeleton height="8rem" styleClass="p-mb-2"></p-skeleton>
+                    </th>
+                    <th>
+                        <p-skeleton height="8rem" styleClass="p-mb-2"></p-skeleton>
+                    </th>
+                    <th>
+                        <p-skeleton height="8rem" styleClass="p-mb-2"></p-skeleton>
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <div style="padding:1rem;">
+            <p-skeleton height="3rem" styleClass="p-mb-2"></p-skeleton>
+        </div>
+    </ng-container>
+
+    <ng-template #dataTemplate>
+        <p-table #dt1 [value]="fundTabledatas" [scrollable]="true" [paginator]="true" [rows]="5"  [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5, 10, 20,50,100]" 
+        [globalFilterFields]="['fund_name']">
+
+            <ng-template pTemplate="caption">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="search-full">
+                        <div class="form-group  w-100">
+                            <input class="demo-input Typeahead-input form-control-plaintext w-100" (input)="onGlobalFilter(dt1, $event)"  type="text"
+                              autocomplete="off" placeholder="Search Fund Name...">
+                          </div>    
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                         <div class="toggle-div">
+                        
+                        <div class="filter-buttons switchToggle">
+                            <div class="form-check form-switch ps-0">
+                                <span class="green-switch">Direct</span>
+                                <label class="switch">
+        
+                                    <input type="checkbox" id="status" [formControl]="toggleControl">
+                                    <span class="switch-state"></span>
+        
+                                </label>
+                                <span class="orange-switch">Regular</span>
+        
+                            </div>
+                        </div>
+                        <div class="filter-buttons switchToggle">
+                            <p-skeleton height="auto" styleClass="p-mb-2"></p-skeleton>
+                            <div class="form-check form-switch ps-0">
+                                <span class="green-switch">Open</span>
+        
+                                <label class="switch">
+                                    <input type="checkbox" id="status" [formControl]="openClose">
+                                    <span class="switch-state"></span>
+        
+                                </label>
+                                <span class="orange-switch">Close</span>
+        
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+            </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pFrozenColumn class="width25" rowspan="2" pSortableColumn="fund_name">Fund Name<p-sortIcon field="fund_name"></p-sortIcon>
+                    </th>
+                    <th colspan="4" class="bg_green text-center">Returns(CAGR)</th>
+                    <th class="width10" pSortableColumn="risk_type" rowspan="2">RISKOMETER <p-sortIcon field="risk_type"></p-sortIcon>
+                    </th>
+                    <th class="width15"  rowspan="2">NAV</th>
+                    <th class="width10"  rowspan="2">Actions</th>
+                    <th class="width10"  rowspan="2">View</th>
+                </tr>
+                <tr>
+
+                    <th class="bg_green" >1 YRS <p-sortIcon  class="sorticon" (click)="customSort('cagr_1_year')" ></p-sortIcon>
+                    </th>
+                    <th class="bg_green" >3 YRS <p-sortIcon class="sorticon"(click)="customSort('cagr_3_year')" ></p-sortIcon>
+                    </th>
+                    <th class="bg_green" >5 YRS <p-sortIcon class="sorticon" (click)="customSort('cagr_5_year')"></p-sortIcon>
+                    </th>
+                    <th class="bg_green" >SINCE <br> INCEPTION <p-sortIcon (click)="customSort('cagr_inception')"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-fundTabledata let-rowIndex="rowIndex">
+                <tr>
+
+                    <!--<p-skeleton *ngIf="!fundTabledata.fund_name" height="2rem" styleClass="p-mb-2"></p-skeleton> -->
+                    <td pFrozenColumn>{{fundTabledata.fund_name}} <br> <span class="fundType"><img src="assets/images/ribbon-icon.png"
+                                alt=""> {{fundTabledata.fund_type ==='1'? 'Equity':
+                        fundTabledata.fund_type ==='2'?'Hybrid':
+                        fundTabledata.fund_type ==='3'?'Debt':
+                        fundTabledata.fund_type ==='4'?'International Fund Of Fund':
+                        fundTabledata.fund_type ==='5'?'ETF':
+                        fundTabledata.fund_type ==='6'?'Index':
+                                 ''
+                                 }}</span></td>
+                    <td class="bg_green lightGreen">{{fundTabledata.cagr_1_year==0?'NA':fundTabledata.cagr_1_year}}</td>
+                    <td class="bg_green">{{fundTabledata.cagr_3_year==0?'NA':fundTabledata.cagr_3_year}}</td>
+                    <td class="bg_green">{{fundTabledata.cagr_5_year==0?'NA':fundTabledata.cagr_5_year}}</td>
+                    <td class="bg_green colorBlack">
+                        {{(fundTabledata.cagr_inception==0)?'NA':fundTabledata.cagr_inception}}
+                    </td>
+
+                    <td><img class="maxWidthImg" [src]="'assets/images/riskometer/'+fundTabledata.risk_type+'.png'"
+                            alt=""></td>
+
+                    <td>
+                        <!-- <app-button *ngIf="!fundTabledata?.showButton" [class]="'btn mb-2 btn-animation'"
+                            (click)="getNAV(fundTabledata.fund_code, rowIndex)" [spinner]="false">Get Latest NAV
+                        </app-button> -->
+                        <a  *ngIf="!fundTabledata?.showButton" class="viewBtn"
+                        (click)="getNAV(fundTabledata.fund_code, rowIndex)" > Get Latest NAV</a>
+
+                        <div *ngIf="fundTabledata.showButton">{{ fundTabledata?.nav }}</div>
+                        <div *ngIf="fundTabledata.showButton"> <h6> (As on {{ fundTabledata?.navDate | date: "dd MMMM YYYY"  }})</h6></div>
+                        <!-- Assuming nav is dynamically updated -->
+                    </td>
+                    <td>
+                        <app-button *ngIf="!prodCheck" [class]="'btn btn-animation mb-0'" [spinner]="false"
+                            (click)="transact(fundTabledata,rowIndex)">Quick Invest</app-button>
+                            <app-button *ngIf="prodCheck"  [class]="'btn btn-animation mb-0'" [spinner]="false"
+                           [disabled]="true">Quick Invest not allowed</app-button>
+                        <!-- <a style="display: block; text-align: center; cursor: pointer; margin-top: 2; color: rgb(215, 153, 72); font-weight: 500;"
+                            (click)="viewDetails(fundTabledata)"> View details</a> -->
+                    </td>
+
+                    <!-- <td *ngIf="!fundTabledata?.added"><img src="assets/images/cart-black-icon.png" class="shopping-cart-line"
+                            (click)="addToCart(fundTabledata,rowIndex)"></td> -->
+                    <td>
+                        <a class="viewBtn"
+                        (click)="viewDetails(fundTabledata,rowIndex)"> View details</a>
+                    </td>
+                    <!-- <td *ngIf="fundTabledata?.added"><i  style="font-size: 1.5rem;" class="ri-checkbox-circle-fill"></i></td> -->
+                    <!-- <td style="cursor: pointer;" ><img  [ngClass]="fundTabledata?.added ? 'disabled-td' : ''"  src="assets/images/cart-black-icon.png" class="shopping-cart-line" 
+                                (click)="addToCart(fundTabledata,rowIndex)"></td> -->
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+        </p-table>
+    </ng-template>
+</div>
+</div>

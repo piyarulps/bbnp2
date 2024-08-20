@@ -1,0 +1,146 @@
+<app-page-wrapper [title]="'Redeem'">
+<form class="theme-form theme-form-2 mega-form" [formGroup]="form" (ngSubmit)="submit()">
+   
+   
+    <app-form-fields [label]="'Folio'" [for]="'Folio'" [required]="true" (change)="onChangeFolioObj($event)">
+        <select name="custom-select"   formControlName="Folio" 
+                            class="custom-select mb-3 form-control">
+                            <option  value="">--Please Select--</option>
+                            <option *ngFor="let folio of onlyfolionos" [value]="folio">{{folio}}
+                            </option>
+                          </select>
+        <div class="invalid-feedback" *ngIf="form.controls['Folio'].touched && form.controls['Folio'].errors?.['required']">
+          Folio is required
+        </div>
+    </app-form-fields>
+
+
+
+    <app-form-fields [label]="'scheme'" [for]="'scheme'" [required]="true">
+        <select name="custom-select"   formControlName="Schemeid"  (change)="onChangeObj($event)"
+                            class="custom-select mb-3 form-control">
+                            <option value="">--Please Select--</option>
+                            <option *ngFor="let folio of selectedfolioval" [value]="folio?.schemeid">{{folio?.desc}}
+                            </option>
+                          </select>
+        <div class="invalid-feedback" *ngIf="form.controls['Schemeid'].touched && form.controls['Schemeid'].errors?.['required']">
+          Scheme is required
+        </div>
+    </app-form-fields>
+    <div class="col-md-12 lable-sz">
+        <div class="row mt-2">
+            <div class="form-group col-md-3"></div>
+            <div class="form-group col-md-4">
+                <span>Balance Units</span>: <span id="txtbalunt">{{selectedschemeval?.balanceunits}}</span>
+            </div>
+            <div class="form-group col-md-5">
+                <span>Current Value</span>: <span id="txtcurval">{{selectedschemeval?.currentvalue}}</span>
+            </div>
+        </div>
+        <div class="row mt-md-2">
+            <div class="form-group col-md-3"></div>
+
+            <div class="form-group col-md-4">
+                <span>NAV as on Date</span>: <span id="txtNavAsOnDateValue">{{selectedschemeval?.nav}}</span>
+            </div>
+            <!-- <div class="form-group col-md-5">
+                <span>Cost value</span>: <span id="txtminamt"> {{selectedschemeval?.costvalue}} </span><br>
+              
+            </div> -->
+        </div>
+    </div>
+      
+    <app-form-fields [label]="'Redemption Type'" [for]="'Redemption Type'" [required]="true">
+    <div class="col-md-12 lable-sz">
+        <div class="row mt-2">
+            <div class="form-group col-md-2">
+                <input formControlName="Redflg"    class="form-check-input" type="radio" name="Redflg" id="Redflg1" value="P">
+                <label class="form-check-label" for="Redflg">
+                 Partial
+                </label>
+            </div>
+           
+
+            <div class="form-group col-md-2">
+                <input formControlName="Redflg"    class="form-check-input" type="radio" name="Redflg" id="Redflg2" value="F">
+                <label class="form-check-label" for="Redflg">
+                 Full
+                </label>
+            </div>
+
+            <div class="form-group col-md-8">
+                
+            </div>
+            
+        </div>
+      </div>  
+    </app-form-fields>
+
+    <app-form-fields [label]="'Redemption Mode'" [for]="'Redemption Mode'" [required]="true">
+        <div class="col-md-12 lable-sz">
+            <div class="row mt-2">
+                <!-- <div class="form-group col-md-2">
+                    <input formControlName="Untamtflg"    class="form-check-input" type="radio" name="Untamtflg" id="Untamtflg1" value="U" >
+                    <label class="form-check-label" for="Untamtflg">
+                     Unit
+                    </label>
+                </div> -->
+               
+    
+                <div class="form-group col-md-2">
+                    <input formControlName="Untamtflg" class="form-check-input" type="radio" name="Untamtflg" id="Untamtflg2" value="A" >
+                    <label class="form-check-label" for="Untamtflg">
+                     Amount
+                    </label>
+                </div>
+    
+                <div class="form-group col-md-8">
+                    
+                </div>
+                
+            </div>
+          </div>  
+        </app-form-fields>
+
+        <app-form-fields [label]="'Investment Amount'" [for]="'Untamtvalue'" [required]="true">
+        <input class="form-control" type="number" placeholder="Enter Amount" name="Untamtvalue" formControlName="Untamtvalue">
+        <div *ngIf="minimumAMount">
+            <p>Minimum Investment Amount is: {{ this.schemesbyCodeData?.stp_minamt}}   <p>
+
+        </div>
+        <div class="invalid-feedback" *ngIf="form.controls['Untamtvalue'].touched && form.controls['Untamtvalue'].errors?.['required']">
+          
+            Investment Amount Required
+        </div>
+      
+    </app-form-fields>
+
+   
+    <app-form-fields [label]="'Payment Bank'" [for]="'Payment Bank'" [required]="true">
+        <select class="form-control" name="custom-select"  formControlName="selectedbank"  (change)="onChangeBankObj($event)" 
+                            class="custom-select mb-3 form-control">
+                            <option  value="">--Please Select--</option>
+                            <option  *ngFor="let data of bankdata; let i=index" [value]="i">{{data.bankname}}
+                            </option>
+                          </select>
+        <div class="invalid-feedback" *ngIf="form.controls['selectedbank'].touched && form.controls['selectedbank'].errors?.['required']">
+        Bank selection Required
+        </div>
+    </app-form-fields>
+<!-- <app-form-fields [label]="'Payment Bank'" [for]="'Payment Bank'" [required]="true">
+        <select name="custom-select"  formControlName="selectedbank"  (change)="onChangeBankObj($event)" 
+                            class="custom-select mb-3 form-control">
+                            <option  value="">--Please Select--</option>
+                            <option *ngFor="let bank of bankdata" [value]="bank.accountnumber">{{bank.bankname+'-'+ bank.accountnumber}}
+                            </option>
+                          </select>
+        <div class="invalid-feedback" *ngIf="form.controls['selectedbank'].touched && form.controls['selectedbank'].errors?.['required']">
+        Bank selection Required
+        </div>
+        <p>static data to be changed ,account type missing in the API,'GET REGISTRED BANKS ACTIVE MANDATES' </p>
+    </app-form-fields> -->
+    <app-button [id]="'user_btn'" [spinner]="spinnerLoader">Submit</app-button>
+   
+     
+</form>
+</app-page-wrapper>

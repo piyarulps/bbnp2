@@ -1,0 +1,52 @@
+ [
+  {
+    "id": 1,
+    "title": "Diversification",
+    "description": "Investing in mutual funds allows for diversification across various asset classes, reducing risk.",
+    "flag": "NA",
+    "pancard": "",
+    "content": "text",
+    "link": "",
+    "datetime": "30-03-2024 10:10 AM"
+  },
+  {
+    "id": 2,
+    "title": "Professional Management",
+    "description": "Mutual funds are managed by professional fund managers who make investment decisions on behalf of investors.",
+    "flag": "NA",
+    "pancard": "",
+    "content": "text",
+    "link": "",
+    "datetime": "30-03-2024 10:10 AM"
+  }, 
+  {
+    "id": 3,
+    "title": "Liquidity",
+    "description": "Most mutual funds offer liquidity, allowing investors to buy or sell their shares at the current net asset value (NAV) on any business day.",
+    "flag": "NA",
+    "pancard": "",
+    "content": "text",
+    "link": "",
+    "datetime": "30-03-2024 10:10 AM"
+  },
+  {
+    "id": 4,
+    "title": "Affordability",
+    "description": "Mutual funds typically have low minimum investment requirements, making them accessible to a wide range of investors.",
+    "flag": "NA",
+    "pancard": "",
+    "content": "text",
+    "link": "",
+    "datetime": "30-03-2024 10:10 AM"
+  },
+  {
+    "id": 5,
+    "title": "Ideal Asset Allocation",
+    "description": "<span class='colorPink' style='color: #FF7E78;'></span> Equity 60%",
+    "flag": "NA",
+    "pancard": "",
+    "content": "html",
+    "link": "",
+    "datetime": "30-03-2024 10:10 AM"
+  }
+]

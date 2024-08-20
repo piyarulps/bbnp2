@@ -1,0 +1,267 @@
+<app-loader *ngIf="!loadingStatus"></app-loader>
+
+<div class="col-sm-12">
+  <div class="container fullWidth" *ngIf=" portfolioData ">
+    <div class="row">
+      <div class="col-md-12 current-sec">
+        <div class="card">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <!-- First Section -->
+              <div class="col-md-4">
+
+                <div class="top-section">
+                  <div class="wallet-info wallet-amount">
+
+
+                    <ul>
+                      <li class="current-value">
+                        <h4>Current Value </h4>
+                        <p class="value">&#8377;
+                          {{ portfolioData?.TotalCurrentValue?.totalcostvalue }}
+                          <span class="percent"><img src="assets/images/green-uparrow.png" alt="">
+                            {{ portfolioData?.TotalCurrentValue?.['totalabsolutereturn%'] }}%</span>
+                        </p>
+                        <p>as of
+                          {{ portfolioData?.FolioDetails[0]?.currentdate | date: "dd MMMM" }}
+                        </p>
+                      </li>
+                      <li>
+                        <h4>Investment Amount</h4>
+                        <p>&#8377; {{ portfolioData?.TotalCurrentValue?.totalcostvalue }}
+                        </p>
+                      </li>
+                      <li>
+                        <h4>Returns</h4>
+                        <p>&#8377;
+                          {{ portfolioData?.TotalCurrentValue?.totalabsolutereturn }}</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+
+
+
+
+
+              </div>
+              <div class="col-md-3">
+                <!-- Buttons Section -->
+                <div class="row justify-content-center mt-4 btn-sec">
+                  <!-- Added mt-4 for margin-top -->
+                  <div class="col-md-10 text-center">
+                    <app-button [class]="'btn mr-4 mb-4 greenBtn'" [spinner]="false">Invest Now
+                    </app-button>
+                    <!-- Added mb-4 for margin-bottom -->
+                    <app-button [class]="'btn btn-outline ml-4 mb-4'" [spinner]="false">Start an
+                      SIP</app-button>
+                    <!-- Added mb-4 for margin-bottom -->
+                  </div>
+                </div>
+
+
+              </div>
+              <!-- Second Section -->
+              <div class="col-md-5">
+                <div class="notifications-container">
+                  <!-- <h5>Notifications</h5> -->
+                  <div class="notification-list" infiniteScroll [infiniteScrollDistance]="2"
+                    [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false"
+                    style="height: 150px; overflow-y: scroll;">
+                    <div *ngFor="let item of NotificationDetails" class="notification-item"
+                      [ngClass]="item.flag=='New' ? 'new-notification' : '' ">
+                      <div class="card-body">
+                        <div class="noti-top">
+                          <h5 class="card-title"><span class="new-tag" *ngIf="item.flag=='New'">New</span>
+                            {{ item.title }}
+                          </h5>
+                          <span class="icons-sec">
+                            <a href="#"><i class="ri-star-fill"></i></a>
+                            <a href="#"><i class="ri-delete-bin-6-line"></i></a>
+                          </span>
+                        </div>
+                        <p class="card-text">{{ item.description }}</p>
+
+                        <div class="notiBtm">
+                          <a href="#" class="link-btn">Explore</a>
+                          <p class="card-subtext">{{ item.datetime }}</p>
+                        </div>
+
+                      </div>
+
+
+                    </div>
+                    <div *ngIf="NotificationDetails.length > 2" class="notification-msg">
+                      {{ notiMsg ? notiMsg : 'Please wait..' }}</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container fullWidth" *ngIf=" !portfolioData">
+  <div class="row">
+    <div class="col-md-12 current-sec">
+      <div class="card">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-4">
+
+              <div class="wallet-info wallet-amount">
+
+                <div class="new-funds">
+                  <h2 class="mb-3">New to mutual Funds? </h2>
+                  <h5>Start investing in a plan as low as Rs 100</h5>
+                </div>
+
+
+
+              </div>
+            </div>
+
+
+            <div class="col-md-3">
+              <!-- Buttons Section -->
+              <div class="row justify-content-center mt-4 btn-sec">
+                <div class="col-md-10 text-center">
+                  <app-button [class]="'btn greenBtn mb-4'" (click)="route.navigateByUrl('/fund-list')"
+                    [spinner]="false">Invest Now</app-button>
+                  <app-button [class]="'btn btn-outline'" (click)="route.navigateByUrl('/fund-list')" [spinner]="false">
+                    Start an SIP</app-button>
+                </div>
+              </div>
+            </div>
+            <!-- Second Section -->
+            <div class="col-md-5">
+              <div class="notifications-container">
+                <div class="notification-list" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+                  (scrolled)="onScroll()" [scrollWindow]="false" style="height: 150px; overflow-y: scroll;">
+                  <div *ngFor="let item of NotificationDetails" class="notification-item"
+                    [ngClass]="item.flag=='New' ? 'new-notification' : '' ">
+                    <div class="card-body">
+                      <div class="noti-top">
+                        <h5 class="card-title"><span class="new-tag" *ngIf="item.flag=='New'">New</span>
+                          {{ item.title }}
+                        </h5>
+                        <span class="icons-sec">
+                          <a href="#"><i class="ri-star-fill"></i></a>
+                          <a href="#"><i class="ri-delete-bin-6-line"></i></a>
+                        </span>
+                      </div>
+                      <p class="card-text">{{ item.description }}</p>
+                      <div class="notiBtm">
+                        <a href="#" class="link-btn">Explore</a>
+                        <p class="card-subtext">{{ item.datetime }}</p>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div *ngIf="NotificationDetails.length > 2" class="notification-msg">
+                    {{ notiMsg ? notiMsg : 'Please wait..' }}</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MY SIP  only for existing users-->
+<section>
+  <div class="container-fluid fullWidth" *ngIf=" portfolioData ">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="pos-product-screen">
+              <div class="title-header">
+                <div class="d-flex align-items-center">
+                  <h5>My Family Members</h5>
+                </div>
+              </div>
+
+              <owl-carousel-o [options]="customOptions">
+
+                <ng-container *ngFor="let item of FolioDetails; let i = index">
+                  <ng-template carouselSlide>
+                    <div class="card sipCard">
+
+                      <div class="card-body">
+                        <div class="sip-top">
+                          <h5 class="sip-title">{{ item?.category}}
+                            <span class="bgText">Equity</span>
+                          </h5>
+                          <i class="ri-heart-fill"></i>
+                        </div>
+                        <p class="sip-text">{{ item?.schdesc}}</p>
+                        <p class="sip-subtext folio-number">Folio:{{item?.folio}} | {{ item?.desc.split("-")[1] }}</p>
+
+                        <div class="sip-amt">
+                          <img src="assets/images/arrow-down.png" alt="" class="downArrow">
+                          <div>
+                            <h3 class="sip-title"> Amount </h3>
+                            <p class="sip-value">{{item?.currentvalue}} </p>
+                          </div>
+                        </div>
+                        <app-button [class]="'btn btn-animation'" [spinner]="false">
+                          Repeat Transaction
+                        </app-button>
+
+
+
+                      </div>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </owl-carousel-o>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blogs Section -->
+
+<section>
+  <div class="container fullWidth">
+    <div class="row">
+      <div class="col">
+        <div class="card" style="overflow-x: auto;">
+          <div class="card-body" style="white-space: nowrap;">
+            <div class="title-header">
+              <h5 class="">Goals For Your Family</h5>
+            </div>
+            <div class="row flex-nowrap">
+              <ng-container *ngFor="let item of blogsdata">
+                <div class="col">
+                  <div class="card blog-card" style="width: 18rem;">
+
+                    <div class="card-body">
+                     
+                      <img [src]="item.imageUrl" class="card-img-top blog-cardImg" alt="...">
+                      <h5 class="blog-title text-center">Retirement </h5>
+                      <p class="blog-text text-center">LONG TERM</p>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

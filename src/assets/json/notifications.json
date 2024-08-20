@@ -1,0 +1,60 @@
+ [
+
+    {
+      "id": 11,
+      "title": "Manufacturing NFO launched",
+      "description": "Big Savings! Invest Now",
+      "flag":"New",
+      "pancard":"",
+      "link":"",
+      "datetime":"30-03-2024 10:10 AM"
+    },
+      {
+        "id": 1,
+        "title": "Feature Enhancement",
+        "description": "Improved performance and stability",
+        "flag":"New",
+        "pancard":"",
+        "link":"",
+        "datetime":"30-03-2024 10:10 AM"
+      },
+      {
+        "id": 2,
+        "title": "New Website",
+        "description": "Visit our revamped website",
+        "flag":"NA",
+        "pancard":"",
+        "link":"https://barodabnpparibasmf.in/",
+        "datetime":"30-03-2024 10:10 AM"
+      },
+      {
+        "id": 3,
+        "title": "New Content Added",
+        "description": "Explore exciting new content",
+        "flag":"NA",
+        "pancard":"",
+        "link":"",
+        "datetime":"30-03-2024 10:10 AM"
+      },
+      {
+        "id": 4,
+        "title": "Security Patch",
+        "description": "Enhanced security measures implemented",
+        "flag":"NA",
+        "pancard":"",
+        "link":"",
+        "datetime":"30-03-2024 10:10 AM"
+      },
+      {
+        "id": 5,
+        "title": "UI/UX Tweaks",
+        "description": "Enhancements for better user experience",
+        "flag":"NA",
+        "pancard":"",
+        "link":"",
+        "datetime":"30-03-2024 10:10 AM"
+      }
+    ]
+
+
+  

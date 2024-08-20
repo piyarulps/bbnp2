@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+    <h4 class="modal-title" id="modal-basic-title">Verify your PAN  </h4>
+    
+</div>
+
+<div class="modal-body" >
+    <h5 style="font-size: 12px; font-weight: 400;"> Please check pan register mobile number and verify OTP..</h5>
+
+    <form class="row g-4 mt-2" [formGroup]="formOtp" (ngSubmit)="submitOTP();">
+        <div class="col-12" >
+            <label for="">Pan Number : {{ panCard}}</label>
+
+          <div class="form-floating theme-form-floating log-in-form">
+            <input type="text" class="form-control" id="Otp" formControlName="Otp" maxlength="6"
+              placeholder="Enter your OTP" aria-label="Enter your OTP" />
+            <label for="Otp">OTP</label>
+            <p *ngIf="displayTimer" class="otpTimer">{{ display }}</p>
+            <a href="javascript:void(0)" *ngIf="resendOtp"  (click)="submit()">Resend OTP</a>
+
+            <div *ngIf="formOtp.controls['Otp'].touched && formOtp.controls['Otp'].errors?.['required']"
+            class="invalid-feedback" role="alert">
+            OTP is required.
+          </div>
+          <div *ngIf="formOtp.controls['Otp'].hasError('minlength')" class="invalid-feedback">
+            Invalid OTP. Please enter a valid OTP.
+          </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <app-button [disabled]="!formOtp.valid" [class]="'btn btn-theme w-100 justify-content-center'" [id]="'login_btn'">
+            Verify OTP
+          </app-button>
+        </div>
+      </form>
+
+</div>

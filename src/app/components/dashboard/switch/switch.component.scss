@@ -1,0 +1,67 @@
+::ng-deep .title-header h5:after, .title-header .h5:after {
+    display: none;
+} 
+
+::ng-deep .col-xl-10 {
+    @media screen and (min-width: 1280px) {   
+        width: 90%;
+    }
+}
+.customCheck input {
+    padding: 0;
+    height: initial;
+    width: initial;
+    margin-bottom: 0;
+    cursor: pointer;
+    appearance: none;
+}
+.customCheck input:before {
+    content:'';
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: 2px solid #DEDEDE;
+    padding: 8px;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+.customCheck input:checked:before {
+    background-color: #D74B14;
+    border: 2px solid #D74B14;
+  }
+  .customCheck input:checked:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 6px;
+    left: 19px;
+    width: 5px;
+    height: 12px;  
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+.ri-information-line {
+  cursor: pointer; 
+  font-size: 18px;
+}
+
+//   .form-group input:checked + label:before {
+//     background-color: #D74B14;
+//     border: 2px solid #D74B14;
+//   }
+//   .form-group input:checked + label:after {
+//     content: '';
+//     display: block;
+//     position: absolute;
+//     top: 2px;
+//     left: 7px;
+//     width: 5px;
+//     height: 12px;  
+//     border: solid #fff;
+//     border-width: 0 2px 2px 0;
+//     transform: rotate(45deg);
+//   }
